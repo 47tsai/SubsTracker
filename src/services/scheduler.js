@@ -104,7 +104,7 @@ export async function checkExpiringSubscriptions(env) {
           .map((h) => {
             const up = h.toUpperCase();
             if (up === '*' || up === 'ALL') return '*';
-            // 仅对纯数字做两位补齐；'*' 之类通配符保持原样
+            // 僅補齊純數字至兩位；'*' 等萬用字元維持原樣
             return /^\d+$/.test(h) ? h.padStart(2, '0') : up;
           })
       : [];
@@ -121,7 +121,7 @@ export async function checkExpiringSubscriptions(env) {
     let sentCount = 0;
     let autoRenewedCount = 0;
 
-    // 不在通知时段：不发送但仍跑自動續訂（业务上希望续订总能发生）
+    // 不在通知時段：不傳送通知，但仍執行自動續訂（業務上希望續訂流程照常進行）
     /** @type {Array<{ sub: any, rule: any, daysDiff: number, hoursDiff: number }>} */
     const candidates = [];
 
@@ -132,22 +132,22 @@ export async function checkExpiringSubscriptions(env) {
       if (!subscription.isActive) continue;
       activeCount++;
 
-      // 計算到期天數（按用户 TZ）
+      // 計算到期天數（依使用者時區）
       let expiryDate = new Date(subscription.expiryDate);
       let daysDiff = getDaysBetween(now.utc, expiryDate, timezone);
       let hoursDiff = (expiryDate.getTime() - now.utc.getTime()) / MS_PER_HOUR;
 
-      // 自動續訂：已过期 + autoRenew=true → 推进到期日并写支付记录
+      // 自動續訂：已過期且 autoRenew=true → 推進到期日並寫入付款紀錄
       if (subscription.autoRenew && daysDiff < 0) {
         const renewed = autoRenew(subscription, now.utc, timezone, config);
         if (renewed) {
           updatedSubsToSave.push(renewed.next);
           autoRenewedCount++;
-          // 续订后重算 diff
+          // 續訂後重新計算差值
           expiryDate = new Date(renewed.next.expiryDate);
           daysDiff = getDaysBetween(now.utc, expiryDate, timezone);
           hoursDiff = (expiryDate.getTime() - now.utc.getTime()) / MS_PER_HOUR;
-          // 用续订后的对象作后续判断
+          // 使用續訂後的物件進行後續判斷
           subscription.expiryDate = renewed.next.expiryDate;
           subscription.startDate = renewed.next.startDate;
           subscription.lastPaymentDate = renewed.next.lastPaymentDate;
@@ -201,7 +201,7 @@ export async function checkExpiringSubscriptions(env) {
         sentCount: 0,
         autoRenewedCount,
         status: 'skipped',
-        reason: `目前 ${timezone} ${now.hourString} 點不在允許傳送的時段 [${normalizedHours.join(',') || '未限制=每小时'}] 内（正常跳过，不会发通知）`
+        reason: `目前 ${timezone} ${now.hourString} 點不在允許傳送的時段 [${normalizedHours.join(',') || '未限制=每小時'}] 內（正常略過，不會傳送通知）`
       });
       return entry;
     }
@@ -248,11 +248,11 @@ export async function checkExpiringSubscriptions(env) {
       return entry;
     }
 
-    // 排序：按剩余天数升序，更紧迫的在前
+    // 排序：依剩餘天數由小到大，越急迫的排越前面
     ready.sort((a, b) => a.daysDiff - b.daysDiff);
 
     // 將所有訂閱彙整成一則通知（符合既有管道的介接規範）
-    // notify_log 按 (subId, ruleId, channel) 维度落，仍可细粒度查询
+    // notify_log 依 (subId, ruleId, channel) 維度寫入，仍可細部查詢
     const enrichedSubs = ready.map((c) => ({
       ...c.sub,
       daysRemaining: c.daysDiff,
@@ -262,7 +262,7 @@ export async function checkExpiringSubscriptions(env) {
     const content = formatNotificationContent(enrichedSubs, config);
     const title = '訂閱到期／續訂提醒';
 
-    // 给 dispatch 提供主 subId+ruleId（聚合通知用第一条做归属）
+    // 提供主要 subId + ruleId 給 dispatch（彙整通知以第一筆作為歸屬）
     const primary = ready[0];
     const dispatchResult = await dispatch(
       { title, content },
@@ -349,10 +349,10 @@ export async function checkExpiringSubscriptions(env) {
 /**
  * 自動續訂：依週期推進已到期的訂閱，並建立 auto 類型的付款紀錄。
  *
- * 按"cycle / reset 模式 + 公历 / 农历分支。
+ * 依 cycle／reset 模式，以及公曆／農曆分支處理。
  *
  * @param {any} sub
- * @param {Date} now UTC 时刻
+ * @param {Date} now UTC 時刻
  * @param {string} timezone
  * @param {any} config
  * @returns {{ next: any } | null}
@@ -392,7 +392,7 @@ function autoRenew(sub, now, timezone, config) {
   } else {
     while (getTimezoneMidnightTimestamp(expiryDate, tz) <= nowMidnight) {
       if (mode === 'reset') {
-        // 重置：从「现在」所在本地日重新起算一个周期
+        // 重設：從「現在」所在的當地日期重新起算一個週期
         const p = getTimezoneDateParts(now, tz);
         expiryDate = atTimezoneMidnight(p.year, p.month, p.day);
       }
@@ -419,7 +419,7 @@ function autoRenew(sub, now, timezone, config) {
     amount: sub.amount || 0,
     type: 'auto',
     note: `自動續訂 (${mode === 'reset' ? '重置模式' : '接续模式'}${
-      periodsAdded > 1 ? ', 补齐' + periodsAdded + '周期' : ''
+      periodsAdded > 1 ? '，補齊 ' + periodsAdded + ' 個週期' : ''
     })`,
     periodStart: newStartDate.toISOString(),
     periodEnd: newExpiryDate.toISOString()
