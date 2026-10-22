@@ -59,7 +59,7 @@ npm run deploy:safe
 1. `npm run setup` — 自動建立 / 綁定 KV（`SUBSCRIPTIONS_KV`）
 2. `npm run deploy` — 部署 Worker
 
-部署成功後，終端會顯示類似：
+部署成功後，終端機會顯示類似：
 
 `https://subscription-manager.<你的子域>.workers.dev`
 
@@ -274,7 +274,7 @@ Telegram · NotifyX · Webhook · 企業微信 · Resend 電子郵件 · Bark ·
 ### 4. 清單提醒一直顯示「提前 7 天」？
 
 目前版本清單會讀取實際的提醒規則摘要。請 **強制重新整理**（Ctrl+Shift+R）。  
-若仍不對，開啟瀏覽器開發者工具 → Network → `subscriptions`，看返回中是否有 `reminderRulesSummary`。
+若仍不對，開啟瀏覽器開發者工具 → Network → `subscriptions`，查看回應中是否有 `reminderRulesSummary`。
 
 ### 5. 複製按鈕看不見或沒有顏色？
 
