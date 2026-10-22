@@ -370,7 +370,7 @@
               </div>
               <div>
                 <label for="tgTopicId" class="block text-sm font-medium text-gray-700">Topic ID（可選）</label>
-                <input type="text" id="tgTopicId" placeholder="Forum 群組話題 ID，对應 message_thread_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="tgTopicId" placeholder="Forum 群組話題 ID，對應 message_thread_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <p class="mt-1 text-xs text-gray-500">僅在開啟 Topics 的群組中填寫；留空則傳送到一般對話/群組。</p>
               </div>
             </div>
@@ -774,7 +774,7 @@
     </div>
   </div>
 
-  <!-- 悬浮儲存欄 -->
+  <!-- 浮動儲存欄 -->
   <div id="floatingSaveBar" class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg py-3 px-6 flex justify-between items-center z-50 transform translate-y-full transition-transform duration-300" style="display:none;">
     <span class="text-sm text-gray-600"><i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>有尚未儲存的變更</span>
     <button type="button" onclick="document.getElementById('configForm').requestSubmit()" class="btn-primary text-white px-5 py-2 rounded-md text-sm font-medium">
@@ -818,7 +818,7 @@
       toast.querySelector('.toast-close').addEventListener('click', () => clearTimeout(timer));
     }
 
-    // 紀錄使用者是否點擊了“清空”某個金鑰字段；儲存時會提交给後端處理
+    // 紀錄使用者是否點擊了“清空”某個金鑰欄位；儲存時會提交給後端處理
     const CLEAR_SECRET_FIELDS = new Set();
 
     function setSecretStatus(key, text) {
@@ -849,7 +849,7 @@
       input.addEventListener('input', () => {
         const value = input.value.trim();
         if (value.length > 0) {
-          // 使用者輸入了新值，视為將被更新
+          // 使用者輸入了新值，視為將被更新
           CLEAR_SECRET_FIELDS.delete(key);
           setSecretStatus(key, '將更新（儲存後生效）');
         } else {
@@ -878,19 +878,19 @@
         const config = await response.json();
 
         // === 安全策略 ===
-        // 1) 所有 token/金鑰類字段，後端不會下發真實值；這裡只顯示「已設定（隱藏）」狀態。
-        // 2) 不填寫 token/金鑰字段並儲存時，後端會保持原值不變。
-        // 3) 如需清空，請點对應的“清空”按鈕（會在儲存時生效）。
+        // 1) 所有 token/金鑰類欄位，後端不會下發真實值；這裡只顯示「已設定（隱藏）」狀態。
+        // 2) 不填寫 token/金鑰欄位並儲存時，後端會保持原值不變。
+        // 3) 如需清空，請點對應的“清空”按鈕（會在儲存時生效）。
 
         document.getElementById('adminUsername').value = config.ADMIN_USERNAME || '';
         const _banner = document.getElementById('defaultPasswordBanner');
         if (_banner) {
-          // 無法讀取密碼；使用者名稱仍為 admin 時提示改密（預設部署風险）
+          // 無法讀取密碼；使用者名稱仍為 admin 時提示改密（預設部署風險）
           _banner.classList.toggle('hidden', (config.ADMIN_USERNAME || 'admin') !== 'admin');
         }
         document.getElementById('themeModeSelect').value = config.THEME_MODE || 'system';  // 回顯主題設定
 
-        // 非敏感字段正常回顯
+        // 非敏感欄位正常回顯
         document.getElementById('tgChatId').value = config.TG_CHAT_ID || '';
         const tgTopicEl = document.getElementById('tgTopicId');
         if (tgTopicEl) tgTopicEl.value = config.TG_TOPIC_ID || '';
@@ -912,7 +912,7 @@
         if (document.getElementById('wpushChannel')) document.getElementById('wpushChannel').value = config.WPUSH_CHANNEL || '';
         if (document.getElementById('wpushTopicCode')) document.getElementById('wpushTopicCode').value = config.WPUSH_TOPIC_CODE || '';
 
-        // 敏感字段：清空輸入框（不回顯真實值）
+        // 敏感欄位：清空輸入框（不回顯真實值）
         document.getElementById('tgBotToken').value = '';
         document.getElementById('notifyxApiKey').value = '';
         document.getElementById('webhookUrl').value = '';
@@ -1122,7 +1122,7 @@
         ADMIN_USERNAME: document.getElementById('adminUsername').value.trim(),
         THEME_MODE: document.getElementById('themeModeSelect').value,      // 儲存主題設定
 
-        // token/金鑰類字段：預設留空=不修改；要清空則走 CLEAR_SECRET_FIELDS
+        // token/金鑰類欄位：預設留空=不修改；要清空則走 CLEAR_SECRET_FIELDS
         TG_BOT_TOKEN: document.getElementById('tgBotToken').value.trim(),
         NOTIFYX_API_KEY: document.getElementById('notifyxApiKey').value.trim(),
         WEBHOOK_URL: document.getElementById('webhookUrl').value.trim(),
@@ -1136,7 +1136,7 @@
         PUSHPLUS_TOKEN: document.getElementById('pushplusToken').value.trim(),
         WPUSH_APIKEY: (document.getElementById('wpushApikey') && document.getElementById('wpushApikey').value.trim()) || '',
 
-        // 非敏感字段正常提交
+        // 非敏感欄位正常提交
         TG_CHAT_ID: document.getElementById('tgChatId').value.trim(),
         TG_TOPIC_ID: (document.getElementById('tgTopicId') && document.getElementById('tgTopicId').value.trim()) || '',
         WEBHOOK_METHOD: document.getElementById('webhookMethod').value,
@@ -1161,7 +1161,7 @@
         ENABLED_NOTIFIERS: enabledNotifiers,
         TIMEZONE: document.getElementById('timezone').value.trim(),
 
-        // 標記“清空哪些金鑰字段”
+        // 標記“清空哪些金鑰欄位”
         CLEAR_SECRET_FIELDS: Array.from(CLEAR_SECRET_FIELDS),
 
         DEBUG_LOGS: document.getElementById('debugLogs').checked === true,
@@ -1213,7 +1213,7 @@
           globalTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
           showSystemTime();
           
-          // 標記時區已更新，供其他頁面检測
+          // 標記時區已更新，供其他頁面檢測
           localStorage.setItem('timezoneUpdated', Date.now().toString());
           
           // 如果目前在訂閱清單頁面，則自動重新整理頁面以更新時區顯示
@@ -1421,7 +1421,7 @@
     });
 
     window.addEventListener('load', () => {
-      // 綁定敏感字段輸入/清空按鈕
+      // 綁定敏感欄位輸入/清空按鈕
       wireSecretInput('tgBotToken', 'TG_BOT_TOKEN');
       wireSecretInput('notifyxApiKey', 'NOTIFYX_API_KEY');
       wireSecretInput('webhookUrl', 'WEBHOOK_URL');
@@ -1452,7 +1452,7 @@
 
       loadConfig();
 
-      // 表單變更检測：顯示悬浮儲存欄 + beforeunload 提示
+      // 表單變更檢測：顯示浮動儲存欄 + beforeunload 提示
       let configDirty = false;
       const form = document.getElementById('configForm');
       const floatingBar = document.getElementById('floatingSaveBar');
@@ -1472,7 +1472,7 @@
         }
       });
 
-      // 儲存成功後隱藏悬浮欄
+      // 儲存成功後隱藏浮動欄
       form.addEventListener('submit', () => {
         setTimeout(() => {
           configDirty = false;
@@ -1643,7 +1643,7 @@
 
     // ───────────────────────────────────────────────────────
     // 通知小時即時預覽（與調度器同一套規則）
-    // 註意：必須在 loadConfig 寫入輸入框之後再重新整理，否則會誤顯示「空=全天」
+    // 注意：必須在 loadConfig 寫入輸入框之後再重新整理，否則會誤顯示「空=全天」
     // ───────────────────────────────────────────────────────
     (function () {
       const tzSelect = document.getElementById('timezone');
@@ -1658,10 +1658,10 @@
         'Asia/Taipei': '台北時間',
         'Asia/Tokyo': '東京時間',
         'Asia/Singapore': '新加坡時間',
-        'UTC': '世界协調時(UTC)',
-        'America/New_York': '纽約時間',
-        'America/Los_Angeles': '洛杉矶時間',
-        'Europe/London': '伦敦時間'
+        'UTC': '世界協調時(UTC)',
+        'America/New_York': '紐約時間',
+        'America/Los_Angeles': '洛杉磯時間',
+        'Europe/London': '倫敦時間'
       };
 
       function friendlyTz(tz) {
@@ -1739,7 +1739,7 @@
 
       exportBtn.addEventListener('click', async () => {
         const includeSecrets = document.getElementById('exportIncludeSecrets').checked;
-        if (includeSecrets && !confirm('將匯出包含 Token / 金鑰的完整備份，請確認檔案會安全儲存。继續？')) {
+        if (includeSecrets && !confirm('將匯出包含 Token / 金鑰的完整備份，請確認檔案會安全儲存。繼續？')) {
           return;
         }
         const original = exportBtn.innerHTML;
@@ -1786,7 +1786,7 @@
         if (mode === 'replace' && !confirm('覆蓋模式會刪除目前全部訂閱後再匯入，且不可復原。確定要繼續嗎？')) {
           return;
         }
-        if (!confirm('確認從備份還原？建議先匯出一份目前資料作為回滚。')) {
+        if (!confirm('確認從備份還原？建議先匯出一份目前資料作為復原。')) {
           return;
         }
 
