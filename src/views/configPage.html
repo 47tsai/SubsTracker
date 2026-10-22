@@ -972,7 +972,7 @@
         }
       } catch (error) {
         console.error('載入設定失敗:', error);
-        showToast('載入設定失敗，請重新整理頁面重试', 'error');
+        showToast('載入設定失敗，請重新整理頁面重試', 'error');
         // 禁用表單防止誤提交覆蓋資料
         const form = document.getElementById('configForm');
         Array.from(form.elements).forEach(el => { el.disabled = true; });
@@ -1346,7 +1346,7 @@
         }
       } catch (error) {
         console.error('測試通知失敗:', error);
-        showToast(serviceName + ' 測試失敗，請檢查網路後重试', 'error');
+        showToast(serviceName + ' 測試失敗，請檢查網路後重試', 'error');
       } finally {
         button.innerHTML = originalContent;
         button.disabled = false;
