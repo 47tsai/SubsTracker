@@ -165,7 +165,7 @@ function validateBackup(raw) {
     if (err) return { ok: false, message: err };
   }
   if (raw.reminderRules != null && typeof raw.reminderRules !== 'object') {
-    return { ok: false, message: 'reminderRules 必须是对象' };
+    return { ok: false, message: 'reminderRules 必須是物件' };
   }
   return { ok: true, backup: raw };
 }
