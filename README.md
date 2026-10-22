@@ -1,6 +1,6 @@
 # SubsTracker — 訂閱管理與提醒系統
 
-基於 **Cloudflare Workers + KV** 的輕量級訂閱到期提醒。在網頁中管理訂閱，到期時透過 Telegram / Bark / 企業微信 / ntfy 等 **11 種管道** 推送，並內建通知紀錄與排程紀錄，方便除錯。
+基於 **Cloudflare Workers + KV** 的輕量級訂閱到期提醒。在網頁中管理訂閱，到期時透過 Telegram／Bark／企業微信／ntfy 等 **11 種管道** 推播，並內建通知紀錄與排程紀錄，方便除錯。
 
 **適合**：個人自行架設、網域、會員資格或帳單的到期提醒。  
 **不適用情境**：多人協作或複雜的企業簽核流程。
@@ -130,7 +130,7 @@ Cloudflare Dashboard → **Workers & Pages → KV** → 開啟 `SUBSCRIPTIONS_KV
 | 企業微信 | 群機器人 Webhook |
 | ntfy | Server（預設 ntfy.sh）+ Topic；可選 Token |
 | WPUSH | API Key；可選 Channel / Topic 編碼 |
-| 電子郵件 | Resend API Key + 收發郵箱 |
+| 電子郵件 | Resend API Key + 寄件與收件電子郵件地址 |
 | Webhook | 任意 HTTP 地址 + 可選模板 |
 
 ### 5. 加一條測試訂閱
@@ -147,7 +147,7 @@ Cloudflare Dashboard → **Workers & Pages → KV** → 開啟 `SUBSCRIPTIONS_KV
 | 操作 | 說明 |
 |------|------|
 | 新增 / 編輯 | 名稱、週期、金額、分類、農曆等 |
-| **複製** | 複製一筆（名稱帶「副本」），適合 esim 保號等同構訂閱 |
+| **複製** | 複製一筆（名稱帶「副本」），適合 eSIM 保號等類似訂閱 |
 | 續訂 | 手動延長週期並記錄付款 |
 | 停用 / 啟用 | 停用後不再提醒（在清單中重新整理即可，不必重新載入整個頁面） |
 | 測試 | 立即對該訂閱傳送測試通知 |
@@ -158,7 +158,7 @@ Cloudflare Dashboard → **Workers & Pages → KV** → 開啟 `SUBSCRIPTIONS_KV
 
 預設提醒規則：**到期前 7 天、3 天、1 天 + 到期當天**。
 
-**重要語義（很多人誤解這裡）：**
+**重要語意（這點很容易被誤解）：**
 
 > 「到期前 N 天」= **只在剩餘天數正好等於 N 的當天傳送一次**  
 > **不會**從第 N 天起每天連發。
@@ -187,11 +187,11 @@ Cloudflare Dashboard → **Workers & Pages → KV** → 開啟 `SUBSCRIPTIONS_KV
 在 **系統設定** 最下方：
 
 1. **匯出備份** → 下載 JSON（預設可不包含金鑰）
-2. 換帳號變更或重新安裝後 **匯入**  
-   - **合併**：按訂閱 ID 覆蓋同名，保留其他  
+2. 更換帳號或重新安裝後 **匯入**  
+   - **合併**：依訂閱 ID 覆蓋同名項目，並保留其他資料  
    - **覆蓋**：先清空再整包匯入（有風險，先匯出目前資料）
 
-升級大版本或遷移 CF 帳號前，**先匯出一份**。
+升級主要版本或遷移 Cloudflare 帳號前，**先匯出一份**。
 
 ---
 
@@ -273,7 +273,7 @@ Telegram · NotifyX · Webhook · 企業微信 · Resend 電子郵件 · Bark ·
 
 ### 4. 清單提醒一直顯示「提前 7 天」？
 
-目前版本清單會讀真實規則摘要。請 **強制重新整理**（Ctrl+Shift+R）。  
+目前版本清單會讀取實際的提醒規則摘要。請 **強制重新整理**（Ctrl+Shift+R）。  
 若仍不對，開啟瀏覽器開發者工具 → Network → `subscriptions`，看返回中是否有 `reminderRulesSummary`。
 
 ### 5. 複製按鈕看不見或沒有顏色？
@@ -321,7 +321,7 @@ curl -X POST "https://你的網域名稱.workers.dev/api/notify/你的令牌" \
   -d '{"title":"標題","content":"內文"}'
 ```
 
-也可使用要求標頭：`Authorization: Bearer 你的令牌`。
+也可使用請求標頭：`Authorization: Bearer 你的令牌`。
 
 ---
 
