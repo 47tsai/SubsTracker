@@ -250,7 +250,7 @@ describe('getTimezoneOffset & formatTimezoneDisplay', () => {
 
   it('formatTimezoneDisplay 包含中文名 + 偏移', () => {
     const s = formatTimezoneDisplay('Asia/Shanghai');
-    expect(s).toContain('中国');
+    expect(s).toContain('中國');
     expect(s).toContain('+8');
   });
 });
