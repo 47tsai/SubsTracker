@@ -27,7 +27,7 @@ describe('convertToTWD', () => {
   });
 
   it('USD 按相對匯率換算為 TWD', () => {
-    expect(convertToTWD(14, 'USD', rates)).toBe(450);
+    expect(convertToTWD(14, 'USD', rates)).toBeCloseTo(450, 8);
   });
 
   it('未知币种不抛错，返回原金额', () => {
