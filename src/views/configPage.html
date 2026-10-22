@@ -107,7 +107,7 @@
         </div>
 
         <div class="flex items-center md:hidden ml-auto">
-          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="切換導航菜單" class="text-gray-600 hover:text-indigo-600 focus:outline-none p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors">
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="切換導覽選單" class="text-gray-600 hover:text-indigo-600 focus:outline-none p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors">
             <i class="fas fa-bars text-xl"></i>
           </button>
         </div>
@@ -878,7 +878,7 @@
         const config = await response.json();
 
         // === 安全策略 ===
-        // 1) 所有 token/金鑰類字段，後端不會下發真實值；這里只顯示“已設定(隱藏)”狀態。
+        // 1) 所有 token/金鑰類字段，後端不會下發真實值；這裡只顯示「已設定（隱藏）」狀態。
         // 2) 不填寫 token/金鑰字段並儲存時，後端會保持原值不變。
         // 3) 如需清空，請點对應的“清空”按鈕（會在儲存時生效）。
 
@@ -947,7 +947,7 @@
         document.getElementById('paymentHistoryLimit').value = Number(config.PAYMENT_HISTORY_LIMIT) || 100;
         const notificationHoursInput = document.getElementById('notificationHours');
         if (notificationHoursInput) {
-          // 將通知小時數组格式化為逗號分隔的字符串，便於管理員查看與編輯
+          // 將通知時段清單格式化為逗號分隔的字符串，便於管理員檢視與編輯
           const hours = Array.isArray(config.NOTIFICATION_HOURS) ? config.NOTIFICATION_HOURS : [];
           notificationHoursInput.value = hours.join(', ');
         }
@@ -1011,7 +1011,7 @@
       // 清空現有選項
       timezoneSelect.innerHTML = '';
 
-      // 推荐分组
+      // 預設時區分組
       const recGroup = document.createElement('optgroup');
       recGroup.label = '預設時區';
       recommended.forEach(tz => {
@@ -1022,7 +1022,7 @@
       });
       timezoneSelect.appendChild(recGroup);
 
-      // 其他常用時區分组
+      // 其他常用時區分組
       const otherGroup = document.createElement('optgroup');
       otherGroup.label = '其他常用時區';
       others.forEach(tz => {
@@ -1060,7 +1060,7 @@
         config.classList.add('inactive');
       });
 
-      // 激活選中的設定區域
+      // 啟用選取的設定區域
       enabledNotifiers.forEach(type => {
         if (type === 'telegram') {
           telegramConfig.classList.remove('inactive');
@@ -1264,7 +1264,7 @@
       button.disabled = true;
 
       const config = {};
-      // 方案 B：敏感字段不回顯。測試通知時如果使用者沒填，就按“使用伺服器已儲存的設定”處理。
+      // 方案 B：敏感欄位不會回顯。測試通知時如果使用者沒填，就按「使用伺服器已儲存的設定」處理。
       if (type === 'telegram') {
         config.TG_CHAT_ID = document.getElementById('tgChatId').value.trim();
         const topicEl = document.getElementById('tgTopicId');
@@ -1486,7 +1486,7 @@
       });
     });
     
-    // 前端展示時區（固定使用瀏覽器本機時區）
+    // 前端顯示時區（固定使用瀏覽器本機時區）
     let globalTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
     let systemTimeTimer = null;
     let timezoneCheckTimer = null;
@@ -1519,7 +1519,7 @@
             const utc = now.getTime();
             const offset = Math.round((target - utc) / (1000 * 60 * 60));
             
-            // 時區中文名稱映射
+            // 時區中文名稱對照表
             const timezoneNames = {
               'UTC': '世界標準時間',
               'Asia/Shanghai': '中國標準時間',
@@ -1596,7 +1596,7 @@
       }
     }
     showSystemTime();
-    // --- 新增：移動端菜單控制指令碼 ---
+    // --- 新增：行動裝置選單控制程式碼 ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
