@@ -239,7 +239,7 @@
                 <li>上面選的<strong>時區</strong>決定「現在幾點」——使用中國標準時間時，請選 <b>Asia/Shanghai（中國標準時間）</b>。</li>
                 <li>填 <code>08</code> = 只在<strong>中國標準時間早上 8 點那一小時</strong>發（約 8:00–8:59）。</li>
                 <li>現在若是 19 點，填了 08，則<strong>不會發</strong>，工作歷史會寫「不在允許傳送的小時」——這是正常的。</li>
-                <li>改完後請點「儲存設定」才會生效；下方预覽會按輸入框內容實時判斷。</li>
+                <li>改完後請點「儲存設定」才會生效；下方預覽會按輸入框內容實時判斷。</li>
               </ul>
             </div>
           </div>
@@ -725,10 +725,10 @@
         </div>
       </form>
 
-      <!-- 備份與恢複（不在 configForm 內，避免触發表單提交） -->
+      <!-- 備份與還原（不在 configForm 內，避免觸發表單提交） -->
       <div class="config-section active mt-8" id="backupSection">
         <h3 class="text-lg font-semibold text-gray-800 mb-2">
-          <i class="fas fa-file-export text-indigo-500 mr-2"></i>資料備份與恢複
+          <i class="fas fa-file-export text-indigo-500 mr-2"></i>資料備份與還原
         </h3>
         <p class="text-sm text-gray-500 mb-4">
           匯出系統設定、訂閱清單與提醒規則，便於換帳號部署或升級遷移。
@@ -742,14 +742,14 @@
               <input type="checkbox" id="exportIncludeSecrets" class="form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300">
               <span class="ml-2">包含敏感設定（Token / 密碼等）</span>
             </label>
-            <p class="text-xs text-amber-600 mb-3">勾選後請妥善保管 JSON 檔案，勿上传公開仓庫。</p>
+            <p class="text-xs text-amber-600 mb-3">勾選後請妥善保管 JSON 檔案，勿上傳公開儲存庫。</p>
             <button type="button" id="exportBackupBtn" class="btn-secondary text-white px-4 py-2 rounded-md text-sm font-medium">
               <i class="fas fa-file-download mr-2"></i>下載 JSON 備份
             </button>
           </div>
 
           <div class="bg-white border border-gray-200 rounded-lg p-4">
-            <h4 class="text-sm font-semibold text-gray-700 mb-3"><i class="fas fa-upload mr-1"></i>匯入恢複</h4>
+            <h4 class="text-sm font-semibold text-gray-700 mb-3"><i class="fas fa-upload mr-1"></i>匯入還原</h4>
             <input type="file" id="importBackupFile" accept="application/json,.json" class="block w-full text-sm text-gray-600 mb-3">
             <div class="flex flex-col gap-2 mb-3">
               <label class="inline-flex items-center text-sm text-gray-700 cursor-pointer">
@@ -766,7 +766,7 @@
               </label>
             </div>
             <button type="button" id="importBackupBtn" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium">
-              <i class="fas fa-file-import mr-2"></i>從檔案恢複
+              <i class="fas fa-file-import mr-2"></i>從檔案還原
             </button>
           </div>
         </div>
@@ -966,7 +966,7 @@
 
         toggleNotificationConfigs(enabledNotifiers);
 
-        // 設定載入完成後再重新整理「是否可傳送」预覽（避免空輸入被當成全天）
+        // 設定載入完成後再重新整理「是否可傳送」預覽（避免空輸入被當成全天）
         if (typeof window.__refreshNotificationHoursPreview === 'function') {
           window.__refreshNotificationHoursPreview();
         }
@@ -1501,7 +1501,7 @@
         
         // 格式化目前時間
         function formatTime(dt, tz) {
-          return dt.toLocaleString('zh-CN', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          return dt.toLocaleString('zh-TW', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
         }
         function formatTimezoneDisplay(tz) {
           try {
@@ -1642,7 +1642,7 @@
     }
 
     // ───────────────────────────────────────────────────────
-    // 通知小時實時预覽（與調度器同一套規則）
+    // 通知小時實時預覽（與調度器同一套規則）
     // 註意：必須在 loadConfig 寫入輸入框之後再重新整理，否則會誤顯示「空=全天」
     // ───────────────────────────────────────────────────────
     (function () {
@@ -1717,7 +1717,7 @@
 
         preview.innerHTML =
           '<div class="text-gray-800">' + statusHtml + '</div>'
-          + '<div class="text-xs text-gray-500 mt-2">時區代碼：' + tz + ' · 预覽僅反映輸入框內容，儲存後調度器才用伺服器上的值。</div>';
+          + '<div class="text-xs text-gray-500 mt-2">時區代碼：' + tz + ' · 預覽僅反映輸入框內容，儲存後調度器才用伺服器上的值。</div>';
       }
 
       window.__refreshNotificationHoursPreview = update;
@@ -1730,7 +1730,7 @@
     })();
 
     // ───────────────────────────────────────────────────────
-    // 備份匯出 / 匯入恢複
+    // 備份匯出 / 匯入還原
     // ───────────────────────────────────────────────────────
     (function () {
       const exportBtn = document.getElementById('exportBackupBtn');
@@ -1786,13 +1786,13 @@
         if (mode === 'replace' && !confirm('覆蓋模式會刪除目前全部訂閱後再匯入，且不可撤销。确定继續？')) {
           return;
         }
-        if (!confirm('確認從備份恢複？建議先匯出一份目前資料作為回滚。')) {
+        if (!confirm('確認從備份還原？建議先匯出一份目前資料作為回滚。')) {
           return;
         }
 
         const original = importBtn.innerHTML;
         importBtn.disabled = true;
-        importBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>恢複中...';
+        importBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>還原中...';
         try {
           const text = await file.text();
           let backup;
@@ -1812,7 +1812,7 @@
           }
           const stats = result.stats || {};
           showToast(
-            '恢複成功：訂閱 ' + (stats.subscriptions || 0) +
+            '還原成功：訂閱 ' + (stats.subscriptions || 0) +
             ' 條，規則 ' + (stats.reminderRules || 0) + ' 條',
             'success',
             5000
@@ -1826,7 +1826,7 @@
         } catch (e) {
           if (e && e.message === 'AUTH_EXPIRED') return;
           console.error(e);
-          showToast('恢複失敗: ' + (e.message || e), 'error', 6000);
+          showToast('還原失敗: ' + (e.message || e), 'error', 6000);
         } finally {
           importBtn.disabled = false;
           importBtn.innerHTML = original;
