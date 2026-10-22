@@ -96,10 +96,10 @@ function formatNotificationContent(subscriptions, config) {
       statusText = '今天到期！';
     } else if (sub.daysRemaining < 0) {
       statusEmoji = '🚨';
-      statusText = `已过期 ${Math.abs(sub.daysRemaining)} 天`;
+      statusText = `已過期 ${Math.abs(sub.daysRemaining)} 天`;
     } else {
       statusEmoji = '📅';
-      statusText = `将在 ${sub.daysRemaining} 天后到期`;
+      statusText = `將於 ${sub.daysRemaining} 天後到期`;
     }
 
     const reminderSuffix = reminderSetting?.value === 0
@@ -118,8 +118,8 @@ function formatNotificationContent(subscriptions, config) {
 類型：${typeText} ${periodText}
 分類：${categoryText}${amountText}
 曆法類型：${calendarType}
-到期日期: ${formattedExpiryDate}${lunarExpiryText}
-自动续期: ${autoRenewText}
+到期日期：${formattedExpiryDate}${lunarExpiryText}
+自動續訂：${autoRenewText}
 ${reminderText}
 到期状态: ${statusText}`;
 

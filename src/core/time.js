@@ -1,22 +1,22 @@
 // @ts-check
 /**
- * 时区核心模块
+ * 時區核心模組
  *
- * ── 设计原则 ────────────────────────────────────────────────
- * 1. 数据存储层：所有日期一律 ISO 8601 UTC 字符串（如 "2026-05-24T17:30:00.000Z"）
- * 2. 业务逻辑层：判断"通知时段""剩余天数"前先把 UTC 时刻转到用户配置的时区下取
+ * ── 設計原則 ────────────────────────────────────────────────
+ * 1. 資料儲存層：所有日期一律 ISO 8601 UTC 字符串（如 "2026-05-24T17:30:00.000Z"）
+ * 2. 業務邏輯層：判斷"通知时段""剩餘天數"前先把 UTC 时刻转到使用者設定的時區下取
  *    年/月/日/时；本模块是这层的"唯一真相源"
- * 3. 展示层：所有面向用户的日期显示都走 formatLocalDate / formatTimezoneDisplay
+ * 3. 顯示層：所有顯示給使用者的日期都走 formatLocalDate / formatTimezoneDisplay
  *
  * ── 关键设计 ────────────────────────────────────────────
- * - 旧 getCurrentTimeInTimezone() 只 `return new Date()`，把"当前 UTC 时刻"
- *   伪装成"用户本地时间"对象返回；调用方把它当作时区相关 Date 用，导致
- *   严重误用（#52 / #91 / #166）。本版本改为：
- *   - 保留 getCurrentTimeInTimezone(tz) 作为兼容 wrapper（返回原生 Date 即 UTC 时刻）
+ * - 舊版 getCurrentTimeInTimezone() 只 `return new Date()`，把"目前的 UTC 時刻"
+ *   伪装成"使用者當地時間"对象返回；调用方把它当作时区相关 Date 用，導致
+ *   嚴重誤用（#52 / #91 / #166）。本版本改为：
+ *   - 保留 getCurrentTimeInTimezone(tz) 作為相容 wrapper（回傳原生 Date，也就是 UTC 時刻）
  *   - 新增 getNowInTimezone(tz) 返回结构体 {utc, parts, hourString, isoLocal}
- *     强制调用方显式选择"我要的是 UTC 时刻"还是"用户 TZ 下的字段"
- * - 新增 getDaysBetween(fromIso, toIso, tz) 基于"用户 TZ 各自零点"算整天数差，
- *   修复"凌晨 0–8 点创建订阅默认日期变前一天"的 #166
+ *     要求呼叫端明確選擇"我要的是 UTC 时刻"还是"使用者時區下的欄位"
+ * - 新增 getDaysBetween(fromIso, toIso, tz) 依「使用者時區各自的午夜」計算整天數差，
+ *   修正"凌晨 0–8 点创建订阅預設日期變成前一天"的 #166
  * - 所有公开函数 JSDoc 标注 + 中文用途说明，从此可被 // @ts-check 守护
  *
  */
@@ -37,7 +37,7 @@ export const MS_PER_DAY = MS_PER_HOUR * 24;
  */
 
 /**
- * @typedef {Object} TimezoneNow 当前时刻在某时区下的完整快照
+ * @typedef {Object} TimezoneNow 目前時刻在指定時區下的完整快照
  * @property {Date} utc 原生 Date（UTC 时刻，等价于 new Date()）
  * @property {TimezoneDateParts} parts 该时刻在 timezone 下的年月日时分秒
  * @property {string} hourString parts.hour 的两位字符串（如 "08"），调度器对比通知时段直接用它
@@ -46,7 +46,7 @@ export const MS_PER_DAY = MS_PER_HOUR * 24;
  */
 
 /**
- * 判断字符串是否为 IANA 合法时区。
+ * 判斷字符串是否为 IANA 合法时区。
  *
  * @param {string} timezone
  * @returns {boolean}
@@ -62,10 +62,10 @@ export function isValidTimezone(timezone) {
 }
 
 /**
- * 兜底获取一个安全可用的时区字符串。
+ * 取得安全可用時區字串的備援函式。
  *
- * @param {string=} timezone 用户传入的时区
- * @returns {string} 合法 IANA 时区，非法时返回 'UTC'
+ * @param {string=} timezone 使用者傳入的時區
+ * @returns {string} 合法的 IANA 時區；無效時回傳 'UTC'
  */
 function safeTimezone(timezone) {
   if (timezone && isValidTimezone(timezone)) return timezone;
@@ -73,7 +73,7 @@ function safeTimezone(timezone) {
 }
 
 /**
- * 将一个 Date / ISO 字符串 / 时间戳分解为目标时区下的年月日时分秒。
+ * 將 Date／ISO 字串／時間戳記轉換為目標時區的年月日時分秒。
  *
  * 内部用 Intl.DateTimeFormat（en-US 12h=false）解析，无 DST/夏令时手算坑。
  *
@@ -85,7 +85,7 @@ export function getTimezoneDateParts(date, timezone = 'UTC') {
   const tz = safeTimezone(timezone);
   const d = date instanceof Date ? date : new Date(date);
   if (Number.isNaN(d.getTime())) {
-    // 无效输入，返回当前时间作为兜底
+    // 輸入無效時，回傳目前時間作為備援
     return getTimezoneDateParts(new Date(), tz);
   }
 
@@ -117,7 +117,7 @@ export function getTimezoneDateParts(date, timezone = 'UTC') {
       second: pick('second')
     };
   } catch {
-    // 极少数 runtime 不支持该时区，回退 UTC
+    // 極少數 runtime 不支援該時區時，改用 UTC
     return {
       year: d.getUTCFullYear(),
       month: d.getUTCMonth() + 1,
@@ -130,16 +130,16 @@ export function getTimezoneDateParts(date, timezone = 'UTC') {
 }
 
 /**
- * 获取"当前时刻"在指定时区下的完整快照。
+ * 取得「目前時刻」在指定時區下的完整快照。
  *
- * 业务代码请优先使用本函数而非 `getCurrentTimeInTimezone`，
+ * 業務程式碼請優先使用本函式，而非 `getCurrentTimeInTimezone`，
  * 因为本函数明确告诉你：
  * - utc：UTC 原生 Date（用于持久化、计算时间差）
- * - parts.hour：你设置的时区下的当前小时（用于通知时段判断）
+ * - parts.hour：你設定的時區下的目前小時（用于通知时段判斷）
  * - hourString：直接拿来和 NOTIFICATION_HOURS 字符串数组比较
  *
  * @param {string} [timezone='UTC']
- * @param {Date} [now] 可选注入当前时间（测试用）
+ * @param {Date} [now] 可選擇注入目前時間（測試用）
  * @returns {TimezoneNow}
  */
 export function getNowInTimezone(timezone = 'UTC', now) {
@@ -152,9 +152,9 @@ export function getNowInTimezone(timezone = 'UTC', now) {
 }
 
 /**
- * 获取指定时刻在某时区下的小时（两位字符串）。
+ * 取得指定時刻在指定時區下的小時（两位字符串）。
  *
- * 调度器判断"现在是不是允许发送通知的小时"专用。
+ * 调度器判斷"目前是否為允許傳送通知的時段"专用。
  *
  * @param {Date | string | number} [date]
  * @param {string} [timezone='UTC']
@@ -167,7 +167,7 @@ export function getTimezoneHourString(date, timezone = 'UTC') {
 }
 
 /**
- * 计算 from → to 在指定时区下"跨过几个本地零点"的整天数。
+ * 計算 from → to 在指定時區下「跨過幾個當地午夜」的整天數。
  *
  * 例：
  *   from = "2026-05-24T16:00:00Z"  to = "2026-05-25T16:00:00Z"  tz=UTC
@@ -179,7 +179,7 @@ export function getTimezoneHourString(date, timezone = 'UTC') {
  *   from = "2026-05-24T20:00:00Z"  to = "2026-05-24T22:00:00Z"  tz=Asia/Shanghai
  *   → 0 天（本地 04:00 → 06:00 同一天）
  *
- * 当 to < from 时返回负数。
+ * 若 to < from，則回傳負數。
  *
  * @param {Date | string | number} from
  * @param {Date | string | number} to
@@ -194,7 +194,7 @@ export function getDaysBetween(from, to, timezone = 'UTC') {
 }
 
 /**
- * 计算指定时刻在某时区下的"零点"对应的 UTC 时间戳。
+ * 計算指定時刻在指定時區下「午夜」對應的 UTC 時間戳記。
  *
  * 例：date=2026-05-24T15:30:00Z, tz=Asia/Shanghai → 2026-05-24 23:30 北京时间
  *     → 该日北京零点 = 2026-05-24T16:00:00Z (因为北京 00:00 = UTC 前一天 16:00)
@@ -202,7 +202,7 @@ export function getDaysBetween(from, to, timezone = 'UTC') {
  *
  * @param {Date | string | number} date
  * @param {string} [timezone='UTC']
- * @returns {number} UTC ms 时间戳
+ * @returns {number} UTC 毫秒時間戳記
  */
 export function getTimezoneMidnightTimestamp(date, timezone = 'UTC') {
   const tz = safeTimezone(timezone);
@@ -247,7 +247,7 @@ function formatPartsAsDateOnly(parts) {
 }
 
 /**
- * 把 Date 转成 UTC ms 整数（兼容 Date 与时间戳）。
+ * 將 Date 轉換為 UTC 毫秒整數（相容 Date 與時間戳記）。
  *
  * @param {Date | number} d
  * @returns {number}
@@ -257,7 +257,7 @@ function utcMillis(d) {
 }
 
 /**
- * 根据目标时区下的本地日期分量，反推对应的 UTC 时间戳。
+ * 依目標時區的當地日期欄位，反推出對應的 UTC 時間戳記。
  *
  * @param {{ year: number, month: number, day: number, hour?: number, minute?: number, second?: number }} parts
  * @param {string} [timezone='UTC']
@@ -302,7 +302,7 @@ export function getTimestampForTimezoneParts(parts, timezone = 'UTC') {
 /**
  * 以指定时区的本地零点解释 "YYYY-MM-DD" 日期输入。
  *
- * 若输入是完整 ISO / 时间戳，则保持其绝对时刻语义直接解析。
+ * 若輸入為完整 ISO／時間戳記，則保留其絕對時刻語意並直接解析。
  *
  * @param {Date | string | number} value
  * @param {string} [timezone='UTC']
@@ -345,7 +345,7 @@ export function formatDateInputInTimezone(value, timezone = 'UTC') {
 }
 
 /**
- * 获取指定时区下"今天"的 YYYY-MM-DD。
+ * 取得指定時區的「今天」（YYYY-MM-DD）。
  *
  * @param {string} [timezone='UTC']
  * @param {Date} [now]
@@ -393,7 +393,7 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
     } else {
       const temp = new Date(Date.UTC(year, targetMonthIndex, day, 0, 0, 0));
       // 若溢出到下月（如 1/31 + 1 月），钳制到目标月最后一天更符合「同号续订」预期
-      // 这里保持与历史 JS setUTCMonth 一致：允许溢出，避免改变既有用户行为
+      // 此處維持與舊版 JS setUTCMonth 一致：允許日期溢位，避免改變既有使用者行為
       year = temp.getUTCFullYear();
       month = temp.getUTCMonth() + 1;
       day = temp.getUTCDate();
@@ -433,7 +433,7 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
  * 不同 fmt 用于：
  * - 'date'      → "2026/05/24"
  * - 'datetime'  → "2026/05/24 17:30:00"
- * - 'full'（默认）→ 带星期等本地化完整字符串
+ * - 'full'（預設）→ 包含星期等資訊的完整在地化字串
  * - 'isoLocal'  → "2026-05-24T17:30:00"（无时区后缀）
  *
  * @param {Date | string | number} time
@@ -490,7 +490,7 @@ export function formatTimeInTimezone(time, timezone = 'UTC', format = 'full') {
 }
 
 /**
- * 计算时区相对 UTC 的整小时偏移量（夏令时下取当前时刻偏移）。
+ * 計算時區相對 UTC 的整數小時偏移（夏令時間以目前時刻的偏移為準）。
  *
  * @param {string} [timezone='UTC']
  * @returns {number} 偏移小时数（如 +8 表示 UTC+8）
@@ -532,7 +532,7 @@ export function formatTimezoneDisplay(timezone = 'UTC') {
       UTC: '世界标准时间',
       'Asia/Shanghai': '中國標準時間',
       'Asia/Hong_Kong': '香港時間',
-      'Asia/Taipei': '台北时间',
+      'Asia/Taipei': '台灣時間',
       'Asia/Singapore': '新加坡時間',
       'Asia/Tokyo': '日本時間',
       'Asia/Seoul': '韓國時間',
@@ -569,7 +569,7 @@ export function formatBeijingTime(date = new Date(), format = 'full') {
 /**
  * 从请求中推断时区：query > Header > Accept-Language。
  *
- * 注意：本版本前端展示用的是 config.TIMEZONE（用户配置的时区），
+ * 注意：本版本前端展示用的是 config.TIMEZONE（使用者設定的時區），
  * 此函数主要用于 API 兼容场景。
  *
  * @param {Request} request
@@ -599,9 +599,9 @@ export function extractTimezone(request) {
 // ─────────────────────────────────────────────────────────────
 
 /**
- * 兼容老调用：返回当前 UTC 时刻的 Date。
+ * 兼容老调用：返回目前的 UTC 時刻的 Date。
  *
- * 老 API 名字误导（"InTimezone"），但语义就是"当前时刻"。
+ * 舊 API 名稱容易誤導（"InTimezone"），實際語意是「目前時刻」。
  * 后续 Task 会把所有调用方迁移到 getNowInTimezone。
  *
  * @param {string} [timezone='UTC']
@@ -613,7 +613,7 @@ export function getCurrentTimeInTimezone(timezone = 'UTC') {
 }
 
 /**
- * 兼容老调用：返回当前 UTC ms 时间戳。
+ * 兼容老调用：返回当前 UTC 毫秒時間戳記。
  *
  * @param {string} [timezone='UTC']
  * @returns {number}

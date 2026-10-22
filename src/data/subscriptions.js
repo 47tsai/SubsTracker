@@ -6,11 +6,11 @@
  * 刪除付款紀錄回退週期、農曆週期推算、初始付款紀錄等）。
  *
  * 重构：
- * - 数据存储从单 Key 数组改为 sub:{id} 多個 Key（見 subscriptions.repo.js）
- * - 单条读写通过 repo.getById / repo.save，不再加载整个数组，降低并发风险
- * - 业务逻辑保持兼容，外部 API 签名不变
+ * - 資料儲存從單一 Key 陣列改為多個 sub:{id} Key（見 subscriptions.repo.js）
+ * - 單筆讀寫透過 repo.getById／repo.save，不再載入整個陣列，以降低並行風險
+ * - 業務邏輯維持相容，外部 API 簽章不變
  *
- * 注意：reminderUnit/reminderValue 字段保留兼容，Task 8 会在新 API 引入
+ * 注意：reminderUnit／reminderValue 欄位為了相容而保留，Task 8 將在新 API 引入
  * 多條提醒規則（reminder_rules:{id}），屆時 Service 層會同步兩邊。
  */
 
@@ -28,7 +28,7 @@ import * as subRepo from './subscriptions.repo.js';
 import { addCategory } from './categories.js';
 
 /**
- * 裁切付款歷史，保留 1 筆 initial + 最近 N 条其他紀錄。
+ * 裁切付款歷史，保留 1 筆 initial 紀錄及最近 N 筆其他紀錄。
  *
  * @param {Array} records
  * @param {number} limit
@@ -72,8 +72,8 @@ function buildTimezoneDate(year, month, day, timezone) {
 }
 
 /**
- * 取得所有訂閱（从新 repo 讀取）。
- * 会附带 reminderRules / reminderRulesSummary，供列表展示真实提醒策略。
+ * 取得所有訂閱（從新的 repo 讀取）。
+ * 會附帶 reminderRules／reminderRulesSummary，供清單顯示實際提醒策略。
  *
  * @param {any} env
  * @returns {Promise<Array<any>>}

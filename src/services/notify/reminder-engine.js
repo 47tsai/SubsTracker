@@ -1,19 +1,19 @@
 // @ts-check
 /**
- * 提醒规则触发引擎
+ * 提醒規則觸發引擎
  *
- * 给定一条规则 + 当前到期距离（天/小时）+ 上次触发时间，
- * 判断"现在这一小时是否应该发出提醒"。
+ * 給定一條規則、目前距離到期的時間（天／小時）及上次觸發時間，
+ * 判斷「目前這個小時是否應該發出提醒」。
  *
- * 设计成纯函数，与 KV / 网络解耦，便于单元测试覆盖所有边界。
+ * 設計為純函式，與 KV／網路解耦，方便單元測試涵蓋所有邊界。
  *
- * 三种规则类型语义：
+ * 三種規則類型的語意：
  * - before_expiry: value 表示"提前 N 天/小时"。当 daysDiff/hoursDiff 落在 [0, value] 区间触发。
- *   特别地，value=0 等同于 on_expiry。
- * - on_expiry: 仅当到期日（daysDiff===0）触发。
- * - after_expiry: 已过期场景。每隔 repeatInterval 小时触发一次，直到达到终止条件
- *   （renewed/acknowledged/never）。本引擎不关心终止判断（由 scheduler 在加载规则前过滤），
- *   但会校验"距上次触发是否超过 repeatInterval"。
+ *   特別的是，value=0 等同于 on_expiry。
+ * - on_expiry: 僅在到期日（daysDiff===0）触发。
+ * - after_expiry: 已過期的情境。每隔 repeatInterval 小时触发一次，直到符合終止條件
+ *   （renewed/acknowledged/never）。本引擎不處理終止條件判斷（由 scheduler 在載入規則前篩選），
+ *   但會檢查"距上次触发是否超过 repeatInterval"。
  *
  */
 
@@ -23,20 +23,20 @@
 
 /**
  * @typedef {Object} FireContext
- * @property {number} daysDiff 距到期天数（基于用户 TZ 零点；可为负数 = 已过期天数）
- * @property {number} hoursDiff 距到期小时数（可为负数 = 已过期小时数）
- * @property {string} [lastFireAtIso] 同一规则上次触发的 ISO 时间（用于 after_expiry 重复间隔）
- * @property {string} [nowIso] 当前 ISO 时间，默认 new Date().toISOString()
+ * @property {number} daysDiff 距離到期的天數（依使用者時區的午夜計算；可为负数 = 已过期天数）
+ * @property {number} hoursDiff 距離到期的小時數（可为负数 = 已过期小时数）
+ * @property {string} [lastFireAtIso] 同一規則上次觸發的 ISO 時間（用于 after_expiry 重复间隔）
+ * @property {string} [nowIso] 目前的 ISO 時間，預設 new Date().toISOString()
  */
 
 /**
  * @typedef {Object} FireDecision
- * @property {boolean} fire 是否应该触发
- * @property {string} [reason] 触发或拒绝的原因（便于日志诊断）
+ * @property {boolean} fire 是否應該觸發
+ * @property {string} [reason] 觸發或拒絕的原因（便于日志诊断）
  */
 
 /**
- * 判断规则是否应该在"本次调度"触发。
+ * 判斷規則是否應在「本次排程」觸發。
  *
  * @param {ReminderRule} rule
  * @param {FireContext} ctx
@@ -73,13 +73,13 @@ function decideBeforeExpiry(rule, ctx) {
   const { daysDiff, hoursDiff } = ctx;
 
   if (rule.unit === 'hours') {
-    // hours 模式：value=0 意味着"到期当小时内"
+    // hours 模式：value=0 代表"到期当小时内"
     if (rule.value === 0) {
       return hoursDiff >= 0 && hoursDiff < 1
         ? { fire: true, reason: 'within_hour' }
         : { fire: false, reason: 'not_within_hour' };
     }
-    // 其余：剩余小时刚好等于规则 value（精确触发）
+    // 其他情況：剩餘小時剛好等於規則 value（精準觸發）
     if (hoursDiff < 0) return { fire: false, reason: 'already_expired' };
     if (Math.round(hoursDiff) === rule.value) {
       return { fire: true, reason: `hours_diff_eq_${rule.value}` };
@@ -93,7 +93,7 @@ function decideBeforeExpiry(rule, ctx) {
       ? { fire: true, reason: 'days_diff_zero' }
       : { fire: false, reason: `days_diff=${daysDiff}_not_zero` };
   }
-  // 其余：精确匹配剩余天数
+  // 其他情況：精準比對剩餘天數
   if (daysDiff === rule.value) {
     return { fire: true, reason: `days_diff_eq_${rule.value}` };
   }
@@ -120,8 +120,8 @@ function decideOnExpiry(rule, ctx) {
 function decideAfterExpiry(rule, ctx) {
   if (ctx.daysDiff >= 0) return { fire: false, reason: 'not_expired_yet' };
 
-  // 没设 repeatInterval → 仅在过期当天 / 当天后某一时点触发一次（这里取每天 1 次）
-  // 正常用法：repeatInterval > 0
+  // 未設定 repeatInterval → 僅在到期當天／到期後某個時間點觸發一次（此處採每天一次）
+  // 一般用法：repeatInterval > 0
   const interval = Number.isFinite(rule.repeatInterval) && rule.repeatInterval > 0
     ? rule.repeatInterval
     : 24;
@@ -144,12 +144,12 @@ function decideAfterExpiry(rule, ctx) {
 }
 
 /**
- * 计算规则的下次触发时间（ISO 字符串）。
+ * 計算規則下次觸發的時間（ISO 字串）。
  *
  * @param {ReminderRule} rule
- * @param {string} expiryDateIso 订阅到期日 ISO
- * @param {string} [nowIso] 当前时间 ISO（默认 now）
- * @returns {string|null} 下次触发的 ISO 时间，或 null（规则已禁用/不再触发）
+ * @param {string} expiryDateIso 訂閱到期日 ISO
+ * @param {string} [nowIso] 目前時間 ISO（預設 now）
+ * @returns {string|null} 下次觸發的 ISO 時間，或 null（規則已停用／不再觸發）
  */
 export function getNextFireTime(rule, expiryDateIso, nowIso) {
   if (!rule || rule.isEnabled === false) return null;

@@ -55,9 +55,9 @@ async function handleTestNotification(request, env) {
           : config.NOTIFYX_API_KEY
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '## 這是一則測試通知\n\n用來確認 NotifyX 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
-      const description = '测试NotifyX通知功能';
+      const description = '測試 NotifyX 通知功能';
 
       success = await sendNotifyXNotification(title, content, description, testConfig);
       message = success ? 'NotifyX 通知傳送成功' : 'NotifyX 通知傳送失敗，請檢查設定';
@@ -74,7 +74,7 @@ async function handleTestNotification(request, env) {
         WEBHOOK_TEMPLATE: body.WEBHOOK_TEMPLATE || config.WEBHOOK_TEMPLATE
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認Webhook 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendWebhookNotification(title, content, testConfig);
@@ -90,7 +90,7 @@ async function handleTestNotification(request, env) {
         WECHATBOT_AT_ALL: body.WECHATBOT_AT_ALL || config.WECHATBOT_AT_ALL
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認企業微信機器人功能是否正常工作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendWechatBotNotification(title, content, testConfig);
@@ -106,7 +106,7 @@ async function handleTestNotification(request, env) {
         EMAIL_TO: body.EMAIL_TO || config.EMAIL_TO
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認電子郵件通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendEmailNotification(title, content, testConfig);
@@ -121,7 +121,7 @@ async function handleTestNotification(request, env) {
         BARK_IS_ARCHIVE: body.BARK_IS_ARCHIVE || config.BARK_IS_ARCHIVE
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認Bark通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendBarkNotification(title, content, testConfig);
@@ -135,7 +135,7 @@ async function handleTestNotification(request, env) {
           : config.GOTIFY_APP_TOKEN
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認Gotify通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendGotifyNotification(title, content, testConfig);
@@ -148,7 +148,7 @@ async function handleTestNotification(request, env) {
           : config.SERVERCHAN_SENDKEY
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認Server酱通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendServerChanNotification(title, content, testConfig);
@@ -163,7 +163,7 @@ async function handleTestNotification(request, env) {
         PUSHPLUS_CHANNEL: body.PUSHPLUS_CHANNEL || config.PUSHPLUS_CHANNEL
       };
 
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認PushPlus通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
 
       success = await sendPushPlusNotification(title, content, testConfig);
@@ -177,7 +177,7 @@ async function handleTestNotification(request, env) {
           ? body.NTFY_TOKEN.trim()
           : config.NTFY_TOKEN
       };
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認 ntfy 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
       success = await sendNtfyNotification(title, content, testConfig);
       message = success ? 'ntfy 通知傳送成功' : 'ntfy 通知傳送失敗，請檢查設定';
@@ -190,7 +190,7 @@ async function handleTestNotification(request, env) {
         WPUSH_CHANNEL: typeof body.WPUSH_CHANNEL === 'string' ? body.WPUSH_CHANNEL.trim() : config.WPUSH_CHANNEL,
         WPUSH_TOPIC_CODE: typeof body.WPUSH_TOPIC_CODE === 'string' ? body.WPUSH_TOPIC_CODE.trim() : config.WPUSH_TOPIC_CODE
       };
-      const title = '测试通知';
+      const title = '測試通知';
       const content = '這是一則測試通知，用來確認 WPUSH 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
       success = await sendWPushNotification(title, content, testConfig);
       message = success ? 'WPUSH 通知傳送成功' : 'WPUSH 通知傳送失敗，請檢查設定';
@@ -201,7 +201,7 @@ async function handleTestNotification(request, env) {
       { headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('测试通知失败:', error);
+    console.error('測試通知失敗：', error);
     return new Response(
       JSON.stringify({ success: false, message: '測試通知失敗：' + error.message }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
