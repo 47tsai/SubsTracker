@@ -935,7 +935,7 @@
     };
 	
 
-// 新增／修改，農曆轉國曆（簡化，適用1900-2100年）
+// 新增／修改：農曆轉國曆（簡化版，適用於 1900 至 2100 年）
 function lunar2solar(lunar) {
   for (let y = lunar.year - 1; y <= lunar.year + 1; y++) {
     for (let m = 1; m <= 12; m++) {
@@ -1961,7 +1961,7 @@ const lunarBiz = {
             try {
               result = await response.json();
             } catch (_) {
-              result = { success: false, message: '服務返回了無法解析的回應' };
+              result = { success: false, message: '服務回傳的內容無法解析' };
             }
 
             if (response.ok && result.success) {
@@ -2603,7 +2603,7 @@ const lunarBiz = {
     });
 
     /**
-     * 複製訂閱：打開新建表單並預填欄位（新 id 儲存時產生），同步複制提醒規則。
+     * 複製訂閱：打開新建表單並預填欄位（新 id 儲存時產生），同步複製提醒規則。
      */
     async function cloneSubscription(e) {
       const button = e.target.closest('button') || e.target;
@@ -2964,10 +2964,10 @@ const lunarBiz = {
         this.monthElement.textContent = (month + 1) + '月';
         this.yearElement.textContent = year;
         
-        // 清空日歷
+        // 清空日曆
         this.calendar.innerHTML = '';
         
-        // 獲取當月第一天和最後一天
+        // 取得當月第一天和最後一天
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const startDate = new Date(firstDay);
@@ -3960,7 +3960,7 @@ const lunarBiz = {
       const addSubBtn = document.getElementById('addSubscriptionBtn');
       if (addSubBtn) {
         addSubBtn.addEventListener('click', () => {
-          // 延遲一帧让原有 reset 流程跑完
+          // 延遲一個影格，讓原有 reset 流程先執行完畢
           setTimeout(() => setRules(defaultPresets()), 0);
         });
       }
