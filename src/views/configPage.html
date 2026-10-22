@@ -305,7 +305,7 @@
                 <i class="fas fa-external-link-alt ml-1"></i> 取得 Resend API Key
               </a>
               <a href="https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
-                <i class="fas fa-external-link-alt ml-1"></i> Bark iOS應用
+                <i class="fas fa-external-link-alt ml-1"></i> Bark iOS App
               </a>
               <a href="https://sct.ftqq.com/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
                 <i class="fas fa-external-link-alt ml-1"></i> Server酱官網
@@ -332,7 +332,7 @@
               </button>
             </div>
             <p id="THIRD_PARTY_API_TOKENStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-            <p class="mt-1 text-sm text-gray-500">調用 /api/notify/{token} 介面時需攜帶此令牌；留空表示停用第三方 API 推送。</p>
+            <p class="mt-1 text-sm text-gray-500">呼叫 /api/notify/{token} 介面時需附上此權杖；留空則停用第三方 API 推播。</p>
           </div>
 
           <div class="mb-6">
@@ -424,7 +424,7 @@
                 </select>
               </div>
               <div>
-                <label for="webhookHeaders" class="block text-sm font-medium text-gray-700">自定義要求頭 (JSON格式，可選)</label>
+                <label for="webhookHeaders" class="block text-sm font-medium text-gray-700">自訂要求標頭 (JSON格式，可選)</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-start gap-3">
                   <textarea id="webhookHeaders" rows="3" placeholder='留空表示不修改；輸入新值後會更新' class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                   <button type="button" id="clearWebhookHeaders" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
@@ -432,12 +432,12 @@
                   </button>
                 </div>
                 <p id="WEBHOOK_HEADERSStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">JSON格式的自定義要求頭，留空使用預設</p>
+                <p class="mt-1 text-sm text-gray-500">JSON格式的自訂要求標頭，留空使用預設</p>
               </div>
               <div>
-                <label for="webhookTemplate" class="block text-sm font-medium text-gray-700">訊息模板 (JSON格式，可選)</label>
+                <label for="webhookTemplate" class="block text-sm font-medium text-gray-700">訊息範本（JSON 格式，可選）</label>
                 <textarea id="webhookTemplate" rows="4" placeholder='{"title": "{{title}}", "content": "{{content}}", "timestamp": "{{timestamp}}"}' class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-                <p class="mt-1 text-sm text-gray-500">支援變量: {{title}}, {{content}}, {{timestamp}}。留空使用預設格式</p>
+                <p class="mt-1 text-sm text-gray-500">支援變數： {{title}}, {{content}}, {{timestamp}}。留空則使用預設格式</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -490,7 +490,7 @@
           </div>
 
           <div id="emailConfig" class="config-section">
-            <h4 class="text-md font-medium text-gray-900 mb-3">電子郵件通知 設定</h4>
+            <h4 class="text-md font-medium text-gray-900 mb-3">電子郵件通知設定</h4>
             <div class="grid grid-cols-1 gap-4 mb-4">
               <div>
                 <label for="resendApiKey" class="block text-sm font-medium text-gray-700">Resend API Key</label>
@@ -818,7 +818,7 @@
       toast.querySelector('.toast-close').addEventListener('click', () => clearTimeout(timer));
     }
 
-    // 紀錄使用者是否點擊了“清空”某個金鑰欄位；儲存時會提交給後端處理
+    // 記錄使用者是否點選「清空」某個金鑰欄位，儲存時會送交後端處理
     const CLEAR_SECRET_FIELDS = new Set();
 
     function setSecretStatus(key, text) {
@@ -853,7 +853,7 @@
           CLEAR_SECRET_FIELDS.delete(key);
           setSecretStatus(key, '將更新（儲存後生效）');
         } else {
-          // 空表示“不修改”（預設）
+          // 留空表示「不修改」（預設）
           const cfg = window.SECRET_CONFIGURED || {};
           setSecretStatus(key, cfg[key] ? '已設定（已隱藏）' : '未設定');
         }
@@ -868,7 +868,7 @@
         input.value = '';
         CLEAR_SECRET_FIELDS.add(key);
         setSecretStatus(key, '將清空（儲存後生效）');
-        showToast('已標記清空：' + key + '（點擊“儲存設定”後生效）', 'warning', 4500);
+        showToast('已標記清空：' + key + '（點選「儲存設定」後生效）', 'warning', 4500);
       });
     }
 
@@ -880,7 +880,7 @@
         // === 安全策略 ===
         // 1) 所有 token/金鑰類欄位，後端不會下發真實值；這裡只顯示「已設定（隱藏）」狀態。
         // 2) 不填寫 token/金鑰欄位並儲存時，後端會保持原值不變。
-        // 3) 如需清空，請點對應的“清空”按鈕（會在儲存時生效）。
+        // 3) 如需清空，請點選對應的「清空」按鈕（儲存後生效）。
 
         document.getElementById('adminUsername').value = config.ADMIN_USERNAME || '';
         const _banner = document.getElementById('defaultPasswordBanner');
