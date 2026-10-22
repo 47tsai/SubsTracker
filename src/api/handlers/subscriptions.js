@@ -45,7 +45,7 @@ async function testSingleSubscriptionNotification(id, env) {
     const formattedAmount = formatAmount(subscription.amount, subscription.currency || 'TWD');
     const amountText = formattedAmount ? `\n金額： ${formattedAmount}／週期` : '';
 
-    const categoryText = subscription.category ? subscription.category : '未分类';
+    const categoryText = subscription.category ? subscription.category : '未分類';
 
     const commonContent = `**訂閱详情**
 类型: ${subscription.customType || '其他'}${amountText}
@@ -53,7 +53,7 @@ async function testSingleSubscriptionNotification(id, env) {
 日历类型: ${calendarType}
 到期日期: ${formattedExpiryDate}${lunarExpiryText}
 自动续期: ${autoRenewText}
-备注: ${subscription.notes || '无'}
+备注: ${subscription.notes || '無'}
 傳送時間: ${currentTime}
 目前時區: ${formatTimezoneDisplay(timezone)}`;
 
@@ -72,7 +72,7 @@ async function testSingleSubscriptionNotification(id, env) {
     }
 
     if (successCount === 0) {
-      return { success: false, message: `測試通知傳送失敗（已尝试 ${attempted} 个管道）` };
+      return { success: false, message: `測試通知傳送失敗（已嘗試 ${attempted} 個管道）` };
     }
 
     if (failedCount > 0) {
@@ -101,7 +101,7 @@ async function handleSubscriptions(request, env, path) {
         subscription = await request.json();
       } catch {
         return new Response(
-          JSON.stringify({ success: false, message: '请求体不是合法 JSON' }),
+          JSON.stringify({ success: false, message: '請求本文不是有效的 JSON' }),
           { status: 400, headers: { 'Content-Type': 'application/json' } }
         );
       }
@@ -198,7 +198,7 @@ async function handleSubscriptions(request, env, path) {
         subscription = await request.json();
       } catch {
         return new Response(
-          JSON.stringify({ success: false, message: '请求体不是合法 JSON' }),
+          JSON.stringify({ success: false, message: '請求本文不是有效的 JSON' }),
           { status: 400, headers: { 'Content-Type': 'application/json' } }
         );
       }
