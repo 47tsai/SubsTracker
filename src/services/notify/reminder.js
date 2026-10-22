@@ -131,7 +131,7 @@ ${reminderText}
   }
 
   const currentTime = formatTimeInTimezone(new Date(), timezone, 'datetime');
-  content += `发送时间: ${currentTime}\n当前时区: ${formatTimezoneDisplay(timezone)}`;
+  content += `傳送時間：${currentTime}\n目前時區：${formatTimezoneDisplay(timezone)}`;
 
   return content;
 }
