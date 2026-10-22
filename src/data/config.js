@@ -46,16 +46,16 @@ const DEFAULT_CONFIG = {
 
 async function getConfig(env) {
   if (!env.SUBSCRIPTIONS_KV) {
-    console.error('[配置] KV 儲存未繫結');
+    console.error('[設定] KV 儲存未繫結');
     throw new Error('KV 儲存未繫結');
   }
   const data = await env.SUBSCRIPTIONS_KV.get('config');
-  console.log('[配置] 從 KV 讀取設定:', data ? '成功' : '空配置');
+  console.log('[設定] 從 KV 讀取設定:', data ? '成功' : '空設定');
   const config = data ? JSON.parse(data) : {};
 
   let jwtSecret = config.JWT_SECRET;
   if (!jwtSecret) {
-    console.log('[配置] 產生新的 JWT 密鑰');
+    console.log('[設定] 產生新的 JWT 密鑰');
     jwtSecret = crypto.randomUUID();
     const updatedConfig = { ...config, JWT_SECRET: jwtSecret };
     await env.SUBSCRIPTIONS_KV.put('config', JSON.stringify(updatedConfig));
