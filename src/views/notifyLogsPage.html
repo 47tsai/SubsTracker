@@ -96,7 +96,7 @@
           <i class="fas fa-history text-indigo-600 mr-2"></i>通知紀錄
         </h2>
         <p class="text-sm text-gray-500 mt-1">
-          每條通知（成功/失敗）都有紀錄，30 天 TTL；方便自行排查"為什么沒收到通知"
+          每條通知（成功/失敗）都有紀錄，30 天 TTL；方便自行排查"為什麼沒收到通知"
         </p>
       </div>
       <button id="reloadBtn" class="btn-primary text-white px-4 py-2 rounded-md text-sm font-medium self-start md:self-auto">
@@ -178,11 +178,11 @@
       </div>
     </div>
 
-    <!-- 排程日誌快速预覽（與訂閱清單"批量操作"區一致的折叠風格） -->
+    <!-- 排程日誌快速預覽（與訂閱清單"批次操作"區一致的摺疊風格） -->
     <details class="bg-white rounded-lg shadow-md mb-6">
       <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
         <i class="fas fa-clock text-indigo-600 mr-2"></i>最近 10 次排程執行紀錄
-        <span class="text-xs text-gray-500 ml-2">點擊展開查看链路明細</span>
+        <span class="text-xs text-gray-500 ml-2">點擊展開查看執行明細</span>
       </summary>
       <div id="schedLogs" class="px-4 pb-4 mt-2 space-y-2 text-xs"></div>
     </details>
@@ -218,7 +218,7 @@
      *   GET /api/notification-logs?subId=&channel=&status=&since=&limit=
      *   GET /api/scheduler-logs?limit=10
      *   GET /api/config （取 TIMEZONE 用於本機時間顯示）
-     *   GET /api/subscriptions （映射 subId → 訂閱名稱）
+     *   GET /api/subscriptions （映射 subId → 訂閱名稱稱）
      */
     let userTz = 'UTC';
     let subNameMap = {};
@@ -306,8 +306,8 @@
           return '<div class="flex flex-wrap items-center gap-3 border-b border-gray-100 py-1.5 last:border-0">'
             + '<span class="text-gray-500 font-mono">' + escapeHtml(fmtTime(l.startedAt)) + '</span>'
             + '<span class="' + color + ' font-medium">' + statusLabel + '</span>'
-            + '<span class="text-gray-700">' + escapeHtml(l.timezone) + ' · 本機小時 <b>' + escapeHtml(l.currentHour) + '</b> · 在窗口=' + (l.inWindow ? '是' : '否') + '</span>'
-            + '<span class="text-gray-700">命中 <b>' + l.matchedCount + '</b> / 去重 <b>' + l.dedupedCount + '</b> / 傳送 <b>' + l.sentCount + '</b> / 續订 <b>' + l.autoRenewedCount + '</b></span>'
+            + '<span class="text-gray-700">' + escapeHtml(l.timezone) + ' · 本機小時 <b>' + escapeHtml(l.currentHour) + '</b> · 位於傳送時段=' + (l.inWindow ? '是' : '否') + '</span>'
+            + '<span class="text-gray-700">命中 <b>' + l.matchedCount + '</b> / 去重 <b>' + l.dedupedCount + '</b> / 傳送 <b>' + l.sentCount + '</b> / 續訂 <b>' + l.autoRenewedCount + '</b></span>'
             + (l.reason ? '<span class="text-gray-500 italic">' + escapeHtml(l.reason) + '</span>' : '')
             + '</div>';
         }).join('');
@@ -403,7 +403,7 @@
           'Europe/Berlin': '柏林時間',
           'Europe/Moscow': '莫斯科時間',
           'Australia/Sydney': '悉尼時間',
-          'Australia/Melbourne': '墨尔本時間',
+          'Australia/Melbourne': '墨爾本時間',
           'Pacific/Auckland': '奥克兰時間'
         };
         const cn = names[tz] || tz;
