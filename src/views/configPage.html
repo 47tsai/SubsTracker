@@ -53,7 +53,7 @@
       background-color: #f9fafb; 
       opacity: 0.7; 
     }
-    /* === Config Page 暗黑模式修複 === */
+    /* === Config Page 深色模式修複 === */
     html.dark .config-section {
       border-color: #374151;
     }
@@ -166,11 +166,11 @@
           <div class="mb-6">
             <label for="themeModeSelect" class="block text-sm font-medium text-gray-700 mb-1">主題模式</label>
             <select id="themeModeSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white sm:text-sm">
-              <option value="light">🌞 浅色模式</option>
-              <option value="dark">🌙 暗黑模式</option>
-              <option value="system">🖥️ 跟随系統</option>
+              <option value="light">🌞 淺色模式</option>
+              <option value="dark">🌙 深色模式</option>
+              <option value="system">🖥️ 跟隨系統</option>
             </select>
-            <p class="mt-1 text-sm text-gray-500">選擇系統的外观風格</p>
+            <p class="mt-1 text-sm text-gray-500">選擇系統的外觀風格</p>
           </div>
           
           <div class="mb-6">
@@ -188,7 +188,7 @@
           <div class="mb-6">
           <label for="timezone" class="block text-sm font-medium text-gray-700 mb-1">時區選擇</label>
           <select id="timezone" name="timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-            <optgroup label="🇨🇳 推荐">
+            <optgroup label="🇨🇳 推薦">
               <option value="Asia/Shanghai">中國標準時間（UTC+8）</option>
             </optgroup>
             <optgroup label="其他常用時區">
@@ -196,7 +196,7 @@
               <option value="Asia/Taipei">台北時間（UTC+8）</option>
               <option value="Asia/Singapore">新加坡時間（UTC+8）</option>
               <option value="Asia/Tokyo">日本時間（UTC+9）</option>
-              <option value="Asia/Seoul">韩國時間（UTC+9）</option>
+              <option value="Asia/Seoul">韓國時間（UTC+9）</option>
               <option value="UTC">世界標準時間（UTC+0）</option>
               <option value="America/New_York">美國東部時間（UTC-5）</option>
               <option value="America/Chicago">美國中部時間（UTC-6）</option>
@@ -206,9 +206,9 @@
               <option value="Europe/Paris">巴黎時間（UTC+1）</option>
               <option value="Europe/Berlin">柏林時間（UTC+1）</option>
               <option value="Europe/Moscow">莫斯科時間（UTC+3）</option>
-              <option value="Australia/Sydney">悉尼時間（UTC+10）</option>
+              <option value="Australia/Sydney">雪梨時間（UTC+10）</option>
               <option value="Australia/Melbourne">墨爾本時間（UTC+10）</option>
-              <option value="Pacific/Auckland">奥克兰時間（UTC+12）</option>
+              <option value="Pacific/Auckland">奧克蘭時間（UTC+12）</option>
             </optgroup>
           </select>
             <p class="mt-1 text-sm text-gray-500">所有時間相關的判斷（通知時段、剩餘天數、日期顯示）都按此時區計算。若使用中國標準時間，可保留預設值 <code>Asia/Shanghai</code> 即可。</p>
@@ -224,11 +224,11 @@
                 允許傳送的小時
                 <span id="tzLabelInline" class="text-indigo-600 font-semibold">（按下方時區）</span>
               </label>
-              <input type="text" id="notificationHours" placeholder="例如：8 或 08, 12, 20；留空或 * = 每小時都可發"
+              <input type="text" id="notificationHours" placeholder="例如：8 或 08, 12, 20；留空或 * = 每小時都可傳送"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <p class="mt-1 text-sm text-gray-500">
-                填入 0–23 的整點（可多個，逗號分隔）。系統每小時檢查一次：只有「目前這個整點」落在清單中才會發提醒。
-                <strong>留空或填 *</strong> 表示每個整點都可以發。
+                填入 0–23 的整點（可多個，逗號分隔）。系統每小時檢查一次：只有「目前這個整點」落在清單中才會傳送提醒。
+                <strong>留空或填 *</strong> 表示每個整點都允許傳送。
                 多個小時只是允許傳送的時間窗口；同一訂閱的同一日級規則當天成功傳送後不會再次傳送。
               </p>
               <div id="tzWindowPreview" class="mt-2 p-3 rounded-md border border-gray-200 bg-gray-50 text-sm leading-relaxed"></div>
@@ -237,9 +237,9 @@
               <p class="font-semibold mb-1"><i class="fas fa-lightbulb mr-1"></i>該如何理解？</p>
               <ul class="list-disc pl-5 space-y-1">
                 <li>上面選的<strong>時區</strong>決定「現在幾點」——使用中國標準時間時，請選 <b>Asia/Shanghai（中國標準時間）</b>。</li>
-                <li>填 <code>08</code> = 只在<strong>中國標準時間早上 8 點那一小時</strong>發（約 8:00–8:59）。</li>
-                <li>現在若是 19 點，填了 08，則<strong>不會發</strong>，工作歷史會寫「不在允許傳送的小時」——這是正常的。</li>
-                <li>改完後請點「儲存設定」才會生效；下方預覽會依據輸入框內容即時判斷。</li>
+                <li>填 <code>08</code> = 只在<strong>中國標準時間早上 8 點那一小時</strong>傳送（約 8:00–8:59）。</li>
+                <li>現在若是 19 點，填了 08，則<strong>不會傳送</strong>，執行紀錄會顯示「不在允許傳送的小時」——這是正常的。</li>
+                <li>改完後請點「儲存設定」才會生效；下方預覽會依據輸入框內容進行即時判斷。</li>
               </ul>
             </div>
           </div>
@@ -551,7 +551,7 @@
                   <input type="checkbox" id="barkIsArchive" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
                   <span class="ml-2 text-sm text-gray-700">將推播內容儲存至歷史紀錄</span>
                 </label>
-                <p class="mt-1 text-sm text-gray-500">勾選後推送訊息會儲存到 Bark 的歷史紀錄中</p>
+                <p class="mt-1 text-sm text-gray-500">勾選後推播訊息會儲存至 Bark 的歷史紀錄中</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -992,7 +992,7 @@
         { value: 'Asia/Taipei', name: '台北時間', offset: '+8' },
         { value: 'Asia/Singapore', name: '新加坡時間', offset: '+8' },
         { value: 'Asia/Tokyo', name: '日本時間', offset: '+9' },
-        { value: 'Asia/Seoul', name: '韩國時間', offset: '+9' },
+        { value: 'Asia/Seoul', name: '韓國時間', offset: '+9' },
         { value: 'UTC', name: '世界標準時間', offset: '+0' },
         { value: 'America/New_York', name: '美國東部時間', offset: '-5' },
         { value: 'America/Chicago', name: '美國中部時間', offset: '-6' },
@@ -1002,9 +1002,9 @@
         { value: 'Europe/Paris', name: '巴黎時間', offset: '+1' },
         { value: 'Europe/Berlin', name: '柏林時間', offset: '+1' },
         { value: 'Europe/Moscow', name: '莫斯科時間', offset: '+3' },
-        { value: 'Australia/Sydney', name: '悉尼時間', offset: '+10' },
+        { value: 'Australia/Sydney', name: '雪梨時間', offset: '+10' },
         { value: 'Australia/Melbourne', name: '墨爾本時間', offset: '+10' },
-        { value: 'Pacific/Auckland', name: '奥克兰時間', offset: '+12' }
+        { value: 'Pacific/Auckland', name: '奧克蘭時間', offset: '+12' }
       ];
       const allTimezones = [...recommended, ...others];
       
@@ -1013,7 +1013,7 @@
 
       // 推荐分组
       const recGroup = document.createElement('optgroup');
-      recGroup.label = '🇨🇳 推荐';
+      recGroup.label = '🇨🇳 推薦';
       recommended.forEach(tz => {
         const o = document.createElement('option');
         o.value = tz.value;
@@ -1527,7 +1527,7 @@
               'Asia/Taipei': '台北時間',
               'Asia/Singapore': '新加坡時間',
               'Asia/Tokyo': '日本時間',
-              'Asia/Seoul': '韩國時間',
+              'Asia/Seoul': '韓國時間',
               'America/New_York': '美國東部時間',
               'America/Los_Angeles': '美國太平洋時間',
               'America/Chicago': '美國中部時間',
@@ -1536,9 +1536,9 @@
               'Europe/Paris': '巴黎時間',
               'Europe/Berlin': '柏林時間',
               'Europe/Moscow': '莫斯科時間',
-              'Australia/Sydney': '悉尼時間',
+              'Australia/Sydney': '雪梨時間',
               'Australia/Melbourne': '墨爾本時間',
-              'Pacific/Auckland': '奥克兰時間'
+              'Pacific/Auckland': '奧克蘭時間'
             };
             
             const offsetStr = offset >= 0 ? '+' + offset : offset;
@@ -1705,7 +1705,7 @@
         let statusHtml;
         if (allowAll) {
           statusHtml = '<span class="text-green-700 font-medium">✓ 目前會允許傳送</span>'
-            + '<div class="text-xs text-gray-600 mt-1">未限制小時（留空或 *）= 每個整點檢查時都可以發。</div>';
+            + '<div class="text-xs text-gray-600 mt-1">未限制小時（留空或 *）= 每個整點檢查時都允許傳送。</div>';
         } else if (inWindow) {
           statusHtml = '<span class="text-green-700 font-medium">✓ 目前這個整點在允許清單內，會傳送</span>'
             + '<div class="text-xs text-gray-600 mt-1">允許的小時：<b>' + hours.join('、') + '</b>；現在是 <b>' + hh + ':' + mm + '</b>（' + tzName + '）。</div>';
