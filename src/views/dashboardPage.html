@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>仪表盘 - SubsTracker</title>
+  <title>儀表板 - SubsTracker</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   ${themeResources}  <style>
@@ -40,7 +40,7 @@
     .empty-state{text-align:center;padding:3rem 1rem;color:#9ca3af}
     .empty-state-icon{font-size:3rem;margin-bottom:1rem;opacity:0.5}
     .empty-state-text{font-size:0.875rem}
-    /* === Dashboard 暗黑模式修复 === */
+    /* === Dashboard 暗黑模式修複 === */
     html.dark .stat-card {
       background: #1f2937; /* 深色卡片背景 */
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
@@ -53,13 +53,13 @@
     html.dark .stat-card-trend.down { background: rgba(239, 68, 68, 0.2); }
     html.dark .list-item:hover { background: #374151; }
     html.dark .list-item:not(:last-child) { border-bottom-color: #374151; }
-    html.dark .list-item-name { color: #f3f4f6; } /* 列表项名称变白 */
+    html.dark .list-item-name { color: #f3f4f6; } /* 清單項名稱變白 */
     html.dark .list-item-meta { color: #9ca3af; }
     html.dark .list-item-badge { background: #3730a3; color: #c7d2fe; }
-    html.dark .ranking-item-name { color: #f3f4f6; } /* 排行榜名称变白 */
-    html.dark .ranking-item-amount { color: #e5e7eb; } /* 金额变白 */
+    html.dark .ranking-item-name { color: #f3f4f6; } /* 排行榜名稱變白 */
+    html.dark .ranking-item-amount { color: #e5e7eb; } /* 金額變白 */
     html.dark .ranking-progress { background: #374151; }
-    /* 修复右上角的标签 */
+    /* 修複右上角的標籤 */
     html.dark .bg-indigo-100 { background-color: rgba(99, 102, 241, 0.2) !important; color: #a5b4fc !important; }
     html.dark .text-indigo-800 { color: #c7d2fe !important; }
     .loading-skeleton{background:linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 50%,#f3f4f6 75%);background-size:200% 100%;animation:loading 1.5s infinite;height:100px;border-radius:8px}
@@ -75,31 +75,31 @@
         <div class="flex items-center shrink-0">
           <div class="flex items-center">
             <i class="fas fa-calendar-check text-indigo-600 text-2xl mr-2"></i>
-            <span class="font-bold text-xl text-gray-800">订阅管理系统</span>
+            <span class="font-bold text-xl text-gray-800">訂閱管理系統</span>
           </div>
           <span id="systemTimeDisplay" class="ml-4 text-base text-indigo-600 font-normal hidden md:block pt-1"></span>
         </div>
         
         <div class="hidden md:flex items-center space-x-4 ml-auto">
           <a href="/admin/dashboard" class="text-indigo-600 border-b-2 border-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-chart-line mr-1"></i>仪表盘
+            <i class="fas fa-chart-line mr-1"></i>儀表板
           </a>
           <a href="/admin" class="text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-list mr-1"></i>订阅列表
+            <i class="fas fa-list mr-1"></i>訂閱清單
           </a>
           <a href="/admin/notify-logs" class="text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-history mr-1"></i>通知历史
+            <i class="fas fa-history mr-1"></i>通知紀錄
           </a>
           <a href="/admin/config" class="text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-cog mr-1"></i>系统配置
+            <i class="fas fa-cog mr-1"></i>系統設定
           </a>
           <a href="/api/logout" class="text-gray-700 hover:text-red-600 border-b-2 border-transparent hover:border-red-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-sign-out-alt mr-1"></i>退出登录
+            <i class="fas fa-sign-out-alt mr-1"></i>登出登入
           </a>
         </div>
 
         <div class="flex items-center md:hidden ml-auto">
-          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="切换导航菜单" class="text-gray-600 hover:text-indigo-600 focus:outline-none p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors">
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="切換導航菜單" class="text-gray-600 hover:text-indigo-600 focus:outline-none p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors">
             <i class="fas fa-bars text-xl"></i>
           </button>
         </div>
@@ -110,19 +110,19 @@
       <div class="px-4 pt-2 pb-4 space-y-2">
         <div id="mobileTimeDisplay" class="px-3 py-2 text-xs text-indigo-600 text-right border-b border-gray-100 mb-2"></div>
         <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 active:bg-indigo-100 transition-colors">
-          <i class="fas fa-chart-line w-6 text-center mr-2"></i>仪表盘
+          <i class="fas fa-chart-line w-6 text-center mr-2"></i>儀表板
         </a>
         <a href="/admin" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 active:bg-indigo-100 transition-colors">
-          <i class="fas fa-list w-6 text-center mr-2"></i>订阅列表
+          <i class="fas fa-list w-6 text-center mr-2"></i>訂閱清單
         </a>
         <a href="/admin/notify-logs" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 active:bg-indigo-100 transition-colors">
-          <i class="fas fa-history w-6 text-center mr-2"></i>通知历史
+          <i class="fas fa-history w-6 text-center mr-2"></i>通知紀錄
         </a>
         <a href="/admin/config" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 active:bg-indigo-100 transition-colors">
-          <i class="fas fa-cog w-6 text-center mr-2"></i>系统配置
+          <i class="fas fa-cog w-6 text-center mr-2"></i>系統設定
         </a>
         <a href="/api/logout" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 active:bg-red-100 transition-colors">
-          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>退出登录
+          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出登入
         </a>
       </div>
     </div>
@@ -131,16 +131,16 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
       <h2 class="text-2xl font-bold text-gray-800">📊 仪表板</h2>
-      <p class="text-sm text-gray-500 mt-1">订阅费用和活动概览（统计金额已折合为 CNY）</p>
+      <p class="text-sm text-gray-500 mt-1">订阅費用和活動概覽（統計金額已折合為 CNY）</p>
     </div>
 
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i class="fas fa-history text-indigo-500"></i>
-          <h3 class="text-lg font-medium text-gray-900">自动提醒任务状态</h3>
+          <h3 class="text-lg font-medium text-gray-900">自動提醒工作狀態</h3>
         </div>
-        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">Cron 可观测性</span>
+        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">Cron 可观測性</span>
       </div>
       <div class="p-6" id="schedulerStatus">
         <div class="loading-skeleton"></div>
@@ -148,9 +148,9 @@
     </div>
 
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-medium text-gray-900"><i class="fas fa-chart-pie text-indigo-500 mr-2"></i>数据概览</h2>
+      <h2 class="text-lg font-medium text-gray-900"><i class="fas fa-chart-pie text-indigo-500 mr-2"></i>資料概覽</h2>
       <button id="refreshBtn" onclick="manualRefresh()" class="text-sm text-indigo-600 hover:text-indigo-800 px-3 py-1 rounded hover:bg-indigo-50 transition">
-        <i class="fas fa-sync-alt mr-1"></i>刷新
+        <i class="fas fa-sync-alt mr-1"></i>重新整理
       </button>
     </div>
 
@@ -164,9 +164,9 @@
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i class="fas fa-calendar-check text-blue-500"></i>
-          <h3 class="text-lg font-medium text-gray-900">最近支付</h3>
+          <h3 class="text-lg font-medium text-gray-900">最近付款</h3>
         </div>
-        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">过去7天</span>
+        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">過去7天</span>
       </div>
       <div class="p-6" id="recentPayments">
         <div class="loading-skeleton"></div>
@@ -177,7 +177,7 @@
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i class="fas fa-clock text-yellow-500"></i>
-          <h3 class="text-lg font-medium text-gray-900">即将续费</h3>
+          <h3 class="text-lg font-medium text-gray-900">即將續費</h3>
         </div>
         <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">未来7天</span>
       </div>
@@ -190,7 +190,7 @@
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i class="fas fa-stream text-indigo-500"></i>
-          <h3 class="text-lg font-medium text-gray-900">自动提醒任务历史（最近10次）</h3>
+          <h3 class="text-lg font-medium text-gray-900">自動提醒工作歷史（最近10次）</h3>
         </div>
       </div>
       <div class="p-6" id="schedulerStatusHistory">
@@ -203,9 +203,9 @@
         <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <i class="fas fa-chart-bar text-purple-500"></i>
-            <h3 class="text-lg font-medium text-gray-900">按类型支出排行</h3>
+            <h3 class="text-lg font-medium text-gray-900">按類型支出排行</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度统计 (折合CNY)</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (折合CNY)</span>
         </div>
         <div class="p-6" id="expenseByType">
           <div class="loading-skeleton"></div>
@@ -216,9 +216,9 @@
         <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <i class="fas fa-folder text-green-500"></i>
-            <h3 class="text-lg font-medium text-gray-900">按分类支出统计</h3>
+            <h3 class="text-lg font-medium text-gray-900">按分類支出統計</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度统计 (折合CNY)</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (折合CNY)</span>
         </div>
         <div class="p-6" id="expenseByCategory">
           <div class="loading-skeleton"></div>
@@ -228,7 +228,7 @@
   </div>
 
   <script>
-    // 统一 API 请求封装：401 自动跳转登录页
+    // 統一 API 要求封装：401 自動跳轉登入頁
     async function apiFetch(url, options) {
       const response = await fetch(url, options);
       if (response.status === 401) {
@@ -238,7 +238,7 @@
       return response;
     }
 
-    // 定义货币符号映射
+    // 定義貨幣符號映射
     const currencySymbols = {
       'CNY': '¥', 'USD': '$', 'HKD': 'HK$', 'TWD': 'NT$', 
       'JPY': '¥', 'EUR': '€', 'GBP': '£', 'KRW': '₩', 'TRY': '₺'
@@ -247,7 +247,7 @@
       return currencySymbols[currency] || '¥';
     }
 
-    // 前端统一本地时区显示
+    // 前端統一本地時區顯示
     async function showSystemTime() {
       try {
         const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
@@ -269,7 +269,7 @@
             const offsetStr = offset >= 0 ? '+' + offset : offset;
             return `${tz} (UTC${offsetStr})`;
           } catch (error) {
-            console.error('格式化时区显示失败:', error);
+            console.error('格式化時區顯示失敗:', error);
             return tz;
           }
         }
@@ -303,7 +303,7 @@
       try {
         const r=await apiFetch('/api/dashboard/stats');
         const d=await r.json();
-        if(!d.success) throw new Error(d.message||'加载失败');
+        if(!d.success) throw new Error(d.message||'載入失敗');
         
         const data=d.data;
 
@@ -311,39 +311,39 @@
         if (schedulerStatusEl) {
           const status = data.schedulerStatus;
           if (!status) {
-            schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">暂无定时任务执行记录（等待下一次 Cron）</div></div>';
+            schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">暂無定時工作執行紀錄（等待下一次 Cron）</div></div>';
           } else {
             const sendResult = status.sendResult || {};
             const runAt = status.lastRunAt ? new Date(status.lastRunAt).toLocaleString('zh-CN') : '未知';
             const configuredHours = Array.isArray(status.configuredHours) && status.configuredHours.length > 0
               ? status.configuredHours.join(', ')
-              : '全部时段';
+              : '全部時段';
             const sentBadge = status.sent
-              ? '<span class="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">本次有发送</span>'
-              : '<span class="px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-700">本次未发送</span>';
+              ? '<span class="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">本次有傳送</span>'
+              : '<span class="px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-700">本次未傳送</span>';
 
             schedulerStatusEl.innerHTML = `
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div class="bg-gray-50 rounded-md p-3">
-                  <div class="text-gray-500">最近执行时间</div>
+                  <div class="text-gray-500">最近執行時間</div>
                   <div class="text-gray-900 font-medium mt-1">${runAt}</div>
                 </div>
                 <div class="bg-gray-50 rounded-md p-3">
-                  <div class="text-gray-500">状态</div>
+                  <div class="text-gray-500">狀態</div>
                   <div class="mt-1">${sentBadge}</div>
                 </div>
                 <div class="bg-gray-50 rounded-md p-3">
-                  <div class="text-gray-500">当前小时 / 配置时段（UTC）</div>
+                  <div class="text-gray-500">目前小時 / 設定時段（UTC）</div>
                   <div class="text-gray-900 font-medium mt-1">${status.currentHour || '--'} / ${configuredHours}</div>
                 </div>
                 <div class="bg-gray-50 rounded-md p-3">
-                  <div class="text-gray-500">检查与命中</div>
-                  <div class="text-gray-900 font-medium mt-1">检查 ${status.checkedSubscriptions || 0} 条，命中 ${status.expiringMatched || 0} 条</div>
+                  <div class="text-gray-500">检查與命中</div>
+                  <div class="text-gray-900 font-medium mt-1">检查 ${status.checkedSubscriptions || 0} 條，命中 ${status.expiringMatched || 0} 條</div>
                 </div>
                 <div class="bg-gray-50 rounded-md p-3 md:col-span-2">
-                  <div class="text-gray-500">发送结果</div>
-                  <div class="text-gray-900 font-medium mt-1">尝试 ${sendResult.attempted || 0} 个渠道，成功 ${sendResult.successCount || 0}，失败 ${sendResult.failedCount || 0}，去重跳过 ${status.dedupeSkipped || 0}</div>
-                  <div class="text-xs text-gray-500 mt-1">${status.reason || '暂无详情'}</div>
+                  <div class="text-gray-500">傳送結果</div>
+                  <div class="text-gray-900 font-medium mt-1">尝试 ${sendResult.attempted || 0} 個渠道，成功 ${sendResult.successCount || 0}，失敗 ${sendResult.failedCount || 0}，去重跳過 ${status.dedupeSkipped || 0}</div>
+                  <div class="text-xs text-gray-500 mt-1">${status.reason || '暂無詳情'}</div>
                 </div>
               </div>
             `;
@@ -354,11 +354,11 @@
         const schedulerHistoryEl = document.getElementById('schedulerStatusHistory');
         if (schedulerHistoryEl) {
           if (schedulerHistory.length === 0) {
-            schedulerHistoryEl.innerHTML = '<div class="text-sm text-gray-500">暂无历史记录</div>';
+            schedulerHistoryEl.innerHTML = '<div class="text-sm text-gray-500">暂無歷史紀錄</div>';
           } else {
             schedulerHistoryEl.innerHTML = schedulerHistory.slice(0, 10).map(item => {
-              const when = item.lastRunAt ? new Date(item.lastRunAt).toLocaleString('zh-CN') : '未知时间';
-              const sent = item.sent ? '已发送' : '未发送';
+              const when = item.lastRunAt ? new Date(item.lastRunAt).toLocaleString('zh-CN') : '未知時間';
+              const sent = item.sent ? '已傳送' : '未傳送';
               const reason = item.reason || '-';
               return `<div class="py-2 border-b border-gray-100 last:border-b-0 text-sm"><div class="font-medium text-gray-800">${when} · ${sent}</div><div class="text-xs text-gray-500 mt-1">${reason}</div></div>`;
             }).join('');
@@ -367,7 +367,7 @@
 
         document.getElementById('statsGrid').innerHTML=`
           <div class="stat-card">
-            <div class="stat-card-header">月度支出 (CNY)</div>
+            <div class="stat-card-header">每月支出 (CNY)</div>
             <div class="stat-card-value">¥${data.monthlyExpense.amount.toFixed(2)}</div>
             <div class="stat-card-subtitle">本月折合支出</div>
             <div class="stat-card-trend ${data.monthlyExpense.trendDirection}">
@@ -376,20 +376,20 @@
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-card-header">年度支出 (CNY)</div>
+            <div class="stat-card-header">每年支出 (CNY)</div>
             <div class="stat-card-value">¥${data.yearlyExpense.amount.toFixed(2)}</div>
             <div class="stat-card-subtitle">月均支出: ¥${data.yearlyExpense.monthlyAverage.toFixed(2)}</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-header">活跃订阅</div>
             <div class="stat-card-value">${data.activeSubscriptions.active}</div>
-            <div class="stat-card-subtitle">总订阅数: ${data.activeSubscriptions.total}</div>
-            ${data.activeSubscriptions.expiringSoon>0?`<div class="stat-card-trend down"><i class="fas fa-exclamation-circle"></i>${data.activeSubscriptions.expiringSoon} 即将到期</div>`:''}
+            <div class="stat-card-subtitle">總订阅數: ${data.activeSubscriptions.total}</div>
+            ${data.activeSubscriptions.expiringSoon>0?`<div class="stat-card-trend down"><i class="fas fa-exclamation-circle"></i>${data.activeSubscriptions.expiringSoon} 即將到期</div>`:''}
           </div>
         `;
         
         const rp=document.getElementById('recentPayments');
-        rp.innerHTML=data.recentPayments.length===0?'<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">过去7天内没有支付记录</div></div>':
+        rp.innerHTML=data.recentPayments.length===0?'<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">過去7天內沒有付款紀錄</div></div>':
         data.recentPayments.map(s=>`
           <div class="list-item">
             <div class="list-item-content">
@@ -404,14 +404,14 @@
         `).join('');
         
         const ur=document.getElementById('upcomingRenewals');
-        ur.innerHTML=data.upcomingRenewals.length===0?'<div class="empty-state"><div class="empty-state-icon">✅</div><div class="empty-state-text">未来7天内没有即将续费的订阅</div></div>':
+        ur.innerHTML=data.upcomingRenewals.length===0?'<div class="empty-state"><div class="empty-state-icon">✅</div><div class="empty-state-text">未来7天內沒有即將續費的订阅</div></div>':
         data.upcomingRenewals.map(s=>`
           <div class="list-item">
             <div class="list-item-content">
               <div class="list-item-name">${s.name}</div>
               <div class="list-item-meta">
                 <span><i class="fas fa-clock"></i> ${new Date(s.renewalDate).toLocaleDateString('zh-CN')}</span>
-                <span style="color:#f59e0b;font-weight:600">${s.daysUntilRenewal} 天后</span>
+                <span style="color:#f59e0b;font-weight:600">${s.daysUntilRenewal} 天後</span>
                 ${s.customType?`<span class="list-item-badge">${s.customType}</span>`:''}
               </div>
             </div>
@@ -420,7 +420,7 @@
         `).join('');
         
         const et=document.getElementById('expenseByType');
-        et.innerHTML=data.expenseByType.length===0?'<div class="empty-state"><div class="empty-state-icon">📊</div><div class="empty-state-text">暂无支出数据</div></div>':
+        et.innerHTML=data.expenseByType.length===0?'<div class="empty-state"><div class="empty-state-icon">📊</div><div class="empty-state-text">暂無支出資料</div></div>':
         data.expenseByType.map((item,i)=>`
           <div class="ranking-item">
             <div class="ranking-item-header">
@@ -437,7 +437,7 @@
         `).join('');
         
         const ec=document.getElementById('expenseByCategory');
-        ec.innerHTML=data.expenseByCategory.length===0?'<div class="empty-state"><div class="empty-state-icon">📂</div><div class="empty-state-text">暂无支出数据</div></div>':
+        ec.innerHTML=data.expenseByCategory.length===0?'<div class="empty-state"><div class="empty-state-icon">📂</div><div class="empty-state-text">暂無支出資料</div></div>':
         data.expenseByCategory.map((item,i)=>`
           <div class="ranking-item">
             <div class="ranking-item-header">
@@ -453,27 +453,27 @@
           </div>
         `).join('');
       } catch(e){
-        console.error('加载仪表盘数据失败:',e);
-        document.getElementById('statsGrid').innerHTML='<div class="empty-state"><div class="empty-state-icon">❌</div><div class="empty-state-text">加载失败: '+(e.message||'网络错误')+'</div><button onclick="manualRefresh()" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 px-3 py-1 rounded border border-indigo-200 hover:bg-indigo-50"><i class="fas fa-redo mr-1"></i>重试</button></div>';
+        console.error('載入儀表板資料失敗:',e);
+        document.getElementById('statsGrid').innerHTML='<div class="empty-state"><div class="empty-state-icon">❌</div><div class="empty-state-text">載入失敗: '+(e.message||'網路錯誤')+'</div><button onclick="manualRefresh()" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 px-3 py-1 rounded border border-indigo-200 hover:bg-indigo-50"><i class="fas fa-redo mr-1"></i>重试</button></div>';
       }
     }
     
-    // 手动刷新
+    // 手動重新整理
     async function manualRefresh() {
       const btn = document.getElementById('refreshBtn');
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>刷新中';
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>重新整理中';
       btn.disabled = true;
       await loadDashboardData();
-      btn.innerHTML = '<i class="fas fa-sync-alt mr-1"></i>刷新';
+      btn.innerHTML = '<i class="fas fa-sync-alt mr-1"></i>重新整理';
       btn.disabled = false;
     }
     window.manualRefresh = manualRefresh;
 
-    // 初始化时间显示和数据加载
+    // 初始化時間顯示和資料載入
     showSystemTime();
     loadDashboardData();
 
-    // 自动刷新：页面可见时每 60 秒刷新，不可见时暂停
+    // 自動重新整理：頁面可见時每 60 秒重新整理，不可见時暂停
     let refreshTimer = setInterval(loadDashboardData, 60000);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
@@ -485,7 +485,7 @@
       }
     });
 
-    // --- 移动端菜单控制脚本 ---
+    // --- 移動端菜單控制脚本 ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
