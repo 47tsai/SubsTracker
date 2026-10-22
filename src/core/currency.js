@@ -41,10 +41,10 @@ async function getDynamicRates(env) {
 
       return newRates;
     } else {
-      console.warn('[汇率] API 请求失败，使用兜底汇率');
+      console.warn('[匯率] API 請求失敗，改用備用匯率');
     }
   } catch (error) {
-    console.error('[汇率] 获取过程出错:', error);
+    console.error('[匯率] 取得匯率時發生錯誤：', error);
   }
   return FALLBACK_RATES;
 }
