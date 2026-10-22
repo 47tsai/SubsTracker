@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Webhook 通知渠道
+ * Webhook 通知管道
  *
  * 支援自訂請求方法、Header、訊息範本（{{title}} / {{content}} / {{tags}} 等）。
  */
@@ -8,7 +8,7 @@ import { ok, fail, errorMessage } from './channel.js';
 import { formatLocalDate } from '../../core/time.js';
 
 /**
- * 把 value 转成可嵌入 JSON 字符串的安全片段。
+ * 將 value 轉換為可嵌入 JSON 字串的安全片段。
  *
  * @param {any} value
  */
@@ -51,7 +51,7 @@ function buildTemplateData(payload, config) {
     payload.title,
     payload.content,
     tagsLine,
-    `发送时间：${timestamp}`
+    `傳送時間：${timestamp}`
   ]
     .filter((s) => s && s.trim().length > 0)
     .join('\n\n');
@@ -124,13 +124,13 @@ export const webhookChannel = {
 
   async test(config) {
     return webhookChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則 Webhook 測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則 Webhook 測試通知。' },
       config
     );
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendWebhookNotification(title, content, config, metadata = {}) {
   const r = await webhookChannel.send({ title, content, metadata }, config);
   if (!r.success) console.error('[Webhook]', r.error);
