@@ -256,7 +256,7 @@
       if (log.error) parts.push('<div class="text-red-600 mt-1"><b>錯誤：</b>' + escapeHtml(log.error) + '</div>');
       if (log.raw) {
         const raw = typeof log.raw === 'string' ? log.raw : JSON.stringify(log.raw, null, 2);
-        parts.push('<details class="mt-1"><summary class="cursor-pointer text-xs text-gray-500 hover:text-gray-700">展開原始返回</summary><pre class="raw-pre text-xs bg-gray-50 p-2 mt-1 rounded">' + escapeHtml(raw) + '</pre></details>');
+        parts.push('<details class="mt-1"><summary class="cursor-pointer text-xs text-gray-500 hover:text-gray-700">展開原始回應</summary><pre class="raw-pre text-xs bg-gray-50 p-2 mt-1 rounded">' + escapeHtml(raw) + '</pre></details>');
       }
       if (log.content) {
         const trimmed = String(log.content).slice(0, 300) + (log.content.length > 300 ? '…' : '');
@@ -342,7 +342,7 @@
         document.getElementById('metricLatest').textContent = logs.length ? fmtTime(logs[0].timestamp) : '-';
 
         if (logs.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-12 text-center text-gray-400">沒有匹配的紀錄</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-12 text-center text-gray-400">沒有符合條件的紀錄</td></tr>';
           return;
         }
         tbody.innerHTML = logs.map(l => {
