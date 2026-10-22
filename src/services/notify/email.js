@@ -30,9 +30,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   <div class="header"><h1>📅 ${safe(title)}</h1></div>
   <div class="content">
     <div class="highlight">${safe(stripMarkdown(content)).replace(/\n/g, '<br>')}</div>
-    <p style="color:#666;line-height:1.6;">此邮件由订阅管理系统自动发送，请及时处理相关订阅事务。</p>
+    <p style="color:#666;line-height:1.6;">此郵件由訂閱管理系統自動傳送，請及時處理相關訂閱事項。</p>
   </div>
-  <div class="footer"><p>订阅管理系统 | 发送时间: ${safe(ts)}</p></div>
+  <div class="footer"><p>訂閱管理系統｜傳送時間：${safe(ts)}</p></div>
 </div>
 </body></html>`;
 }
@@ -82,7 +82,7 @@ export const emailChannel = {
 
   async test(config) {
     return emailChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条邮件测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則電子郵件測試通知。' },
       config
     );
   }
