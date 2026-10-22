@@ -3,10 +3,10 @@
  * ntfy 通知渠道
  *
  * 文档：https://docs.ntfy.sh/publish/
- * 默认公共服务器 https://ntfy.sh，也可填自建地址。
+ * 預設公共伺服器 https://ntfy.sh，也可填自建地址。
  *
  * 配置：
- * - NTFY_SERVER  默认 https://ntfy.sh
+ * - NTFY_SERVER  預設 https://ntfy.sh
  * - NTFY_TOPIC   主题名（必填）
  * - NTFY_TOKEN   可选 Bearer Token（受保护主题）
  */
@@ -55,7 +55,7 @@ export const ntfyChannel = {
         const text = await r.text().catch(() => '');
         return fail('ntfy', `HTTP ${r.status}`, text);
       }
-      // ntfy 成功通常返回 JSON，但也可能是空；不强制解析
+      // ntfy 成功時通常會回傳 JSON，但也可能是空內容，因此不強制解析
       const raw = await r.json().catch(() => ({}));
       return ok('ntfy', raw);
     } catch (err) {
@@ -65,7 +65,7 @@ export const ntfyChannel = {
 
   async test(config) {
     return ntfyChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 ntfy 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 ntfy 測試通知。' },
       config
     );
   }
