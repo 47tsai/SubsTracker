@@ -3,17 +3,17 @@
  * 提醒规则 / 通知日志 / 调度日志 路由
  *
  * 接口表（路径前缀 /api）：
- *   GET    /subscriptions/:id/reminders           列出某订阅的提醒规则
- *   POST   /subscriptions/:id/reminders           新增一条规则
- *   PUT    /subscriptions/:id/reminders/:ruleId   更新一条规则
- *   DELETE /subscriptions/:id/reminders/:ruleId   删除一条规则
+ *   GET    /subscriptions/:id/reminders           列出某筆訂閱的提醒規則
+ *   POST   /subscriptions/:id/reminders           新增一條規則
+ *   PUT    /subscriptions/:id/reminders/:ruleId   更新一條規則
+ *   DELETE /subscriptions/:id/reminders/:ruleId   刪除一條規則
  *
  *   GET    /notification-logs?subId=&channel=&status=&since=&limit=
  *                                                 查询通知日志
- *   GET    /scheduler-logs?limit=N                查询调度执行日志
+ *   GET    /scheduler-logs?limit=N                查詢排程執行紀錄
  *
  * 鉴权：与既有客户端约定一致——需要登录（cookie token），由 router.js 在 routes 之前
- * 统一校验。本文件被 router.js 调用，不再单独校验。
+ * 統一驗證。本文件被 router.js 调用，不再单独校验。
  *
  */
 
@@ -34,7 +34,7 @@ function json(data, status = 200) {
 }
 
 /**
- * 规则变更后同步订阅上的 legacy 提醒字段，保证列表展示一致。
+ * 規則變更後同步訂閱上的 legacy 提醒字段，保证列表展示一致。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -52,11 +52,11 @@ async function syncLegacyAfterRulesChange(env, subId, rules) {
 
 /**
  * 处理提醒规则 / 通知日志 / 调度日志相关的 新 API。
- * 返回 null 表示路径不匹配，由调用方继续转给下一组路由。
+ * 回傳 null 表示路徑不符，由调用方继续转给下一组路由。
  *
  * @param {Request} request
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
- * @param {string} path 已剥离 /api 前缀的路径
+ * @param {string} path 已移除 /api 前綴的路徑
  */
 export async function handleExtraRoutes(request, env, path) {
   const method = request.method;
@@ -106,9 +106,9 @@ export async function handleExtraRoutes(request, env, path) {
     }
     if (method === 'POST') {
       let body;
-      try { body = await request.json(); } catch { return json({ success: false, message: '请求体不是合法 JSON' }, 400); }
+      try { body = await request.json(); } catch { return json({ success: false, message: '請求本文不是有效的 JSON' }, 400); }
       const name = body && body.name;
-      if (!name || !name.trim()) return json({ success: false, message: '分类名不能为空' }, 400);
+      if (!name || !name.trim()) return json({ success: false, message: '分類名稱不可空白' }, 400);
       await addCategory(env, name);
       return json({ success: true });
     }
@@ -137,10 +137,10 @@ async function handleReminderRoute(request, env, method, subId, ruleId) {
     try {
       body = await request.json();
     } catch {
-      return json({ success: false, message: '请求体不是合法 JSON' }, 400);
+      return json({ success: false, message: '請求本文不是有效的 JSON' }, 400);
     }
     if (body && body.preset === true) {
-      // 一次性应用智能预设（覆盖现有规则）
+      // 一次套用智慧預設（覆寫現有規則）
       const presets = remindersRepo.defaultPresetRules();
       await remindersRepo.replaceForSubscription(env, subId, presets);
       await syncLegacyAfterRulesChange(env, subId);
@@ -151,13 +151,13 @@ async function handleReminderRoute(request, env, method, subId, ruleId) {
     return json({ success: true, rule });
   }
 
-  // PUT /subscriptions/:id/reminders（不带 ruleId）→ 整体替换规则列表
+  // PUT /subscriptions/:id/reminders（不带 ruleId）→ 整份取代規則清單
   if (method === 'PUT' && !ruleId) {
     let body;
     try {
       body = await request.json();
     } catch {
-      return json({ success: false, message: '请求体不是合法 JSON' }, 400);
+      return json({ success: false, message: '請求本文不是有效的 JSON' }, 400);
     }
     const rules = Array.isArray(body && body.rules) ? body.rules : [];
     await remindersRepo.replaceForSubscription(env, subId, rules);
@@ -172,10 +172,10 @@ async function handleReminderRoute(request, env, method, subId, ruleId) {
     try {
       body = await request.json();
     } catch {
-      return json({ success: false, message: '请求体不是合法 JSON' }, 400);
+      return json({ success: false, message: '請求本文不是有效的 JSON' }, 400);
     }
     const updated = await remindersRepo.updateRule(env, subId, ruleId, body || {});
-    if (!updated) return json({ success: false, message: '规则不存在' }, 404);
+    if (!updated) return json({ success: false, message: '規則不存在' }, 404);
     await syncLegacyAfterRulesChange(env, subId);
     return json({ success: true, rule: updated });
   }
@@ -183,7 +183,7 @@ async function handleReminderRoute(request, env, method, subId, ruleId) {
   // DELETE /subscriptions/:id/reminders/:ruleId
   if (method === 'DELETE' && ruleId) {
     const ok = await remindersRepo.deleteRule(env, subId, ruleId);
-    if (!ok) return json({ success: false, message: '规则不存在' }, 404);
+    if (!ok) return json({ success: false, message: '規則不存在' }, 404);
     await syncLegacyAfterRulesChange(env, subId);
     return json({ success: true });
   }
