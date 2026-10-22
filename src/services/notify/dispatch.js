@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * 通知调度器：把一条通知并发分发到所有启用的渠道，并把结果写入通知日志。
+ * 通知调度器：將一則通知並行傳送至所有已啟用的管道，並將結果寫入通知紀錄。
  *
  * 调用方：
  * - services/scheduler.js（定时到期检查）
@@ -69,7 +69,7 @@ export async function dispatch(payload, config, options = {}) {
     .filter((ch) => ch != null);
 
   if (channels.length === 0) {
-    console.log(`${prefix} 未启用任何通知渠道`);
+    console.log(`${prefix} 尚未啟用任何通知管道`);
     return { attempted: 0, successCount: 0, failedCount: 0, results: [], channelResults: {} };
   }
 
@@ -103,10 +103,10 @@ export async function dispatch(payload, config, options = {}) {
     channelResults[r.channel] = r.success;
     if (r.success) {
       successCount++;
-      console.log(`${prefix} ${r.channel} 发送成功`);
+      console.log(`${prefix} ${r.channel} 傳送成功`);
     } else {
       failedCount++;
-      console.log(`${prefix} ${r.channel} 发送失败: ${r.error}`);
+      console.log(`${prefix} ${r.channel} 傳送失敗：${r.error}`);
     }
 
     // 写通知日志（带 env 时）
@@ -123,7 +123,7 @@ export async function dispatch(payload, config, options = {}) {
           raw: r.raw
         });
       } catch (err) {
-        console.warn(`${prefix} 写通知日志失败:`, err);
+        console.warn(`${prefix} 寫入通知紀錄失敗：`, err);
       }
     }
   }
@@ -138,7 +138,7 @@ export async function dispatch(payload, config, options = {}) {
 }
 
 /**
- * 测试某个渠道（用于配置页"测试发送"按钮）。
+ * 測試某個管道（用于配置页"测试发送"按钮）。
  *
  * @param {string} channelName
  * @param {any} config
@@ -150,7 +150,7 @@ export async function testChannel(channelName, config) {
     return {
       success: false,
       channel: channelName,
-      error: `未知渠道: ${channelName}`
+      error: `未知管道：${channelName}`
     };
   }
   try {
