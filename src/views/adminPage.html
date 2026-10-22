@@ -3528,7 +3528,7 @@ const lunarBiz = {
           document.getElementById('category').value = subscription.category || '';
           document.getElementById('notes').value = subscription.notes || '';
           document.getElementById('amount').value = subscription.amount !== null && subscription.amount !== undefined ? subscription.amount : '';
-          document.getElementById('currency').value = subscription.currency || 'TWD'; // 預設設定為 CNY
+          document.getElementById('currency').value = subscription.currency || 'TWD'; // 預設使用新台幣
           document.getElementById('isActive').checked = subscription.isActive !== false;
           document.getElementById('autoRenew').checked = subscription.autoRenew !== false;
           document.getElementById('startDate').value = subscription.startDate ? formatDateInputInTimezone(subscription.startDate, globalTimezone) : '';
@@ -3659,7 +3659,7 @@ const lunarBiz = {
         const response = await apiFetch('/api/config');
         const config = await response.json();
         window.DEBUG_LOGS = config.DEBUG_LOGS === true;
-        globalTimezone = config.TIMEZONE || 'Asia/Shanghai';
+        globalTimezone = config.TIMEZONE || 'Asia/Taipei';
 
         function formatTimezoneDisplay(tz) {
           try {
@@ -3955,7 +3955,7 @@ const lunarBiz = {
         if (presetBtn) presetBtn.addEventListener('click', () => setRules(defaultPresets()));
       });
 
-      // 钩入"新增訂閱"按鈕：清空 + 預設預設
+      // 掛接"新增訂閱"按鈕：清空 + 預設
       const addSubBtn = document.getElementById('addSubscriptionBtn');
       if (addSubBtn) {
         addSubBtn.addEventListener('click', () => {
@@ -3968,7 +3968,7 @@ const lunarBiz = {
     // 編輯訂閱時拉取規則（钩在 editSubscription / subscription detail 載入之後）
     (function () {
       const originalEditSubscription = window.editSubscription;
-      // editSubscription 是顶層 async 函數；通過點擊事件代理来钩入更稳。
+      // editSubscription 是顶層 async 函數；通過點擊事件代理来掛接更稳。
       // 這里改為：每次在 subscriptionId 欄位被填值後异步 GET 規則。
       const subIdField = document.getElementById('subscriptionId');
       if (!subIdField) return;
