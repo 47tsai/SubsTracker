@@ -50,14 +50,16 @@ async function getDynamicRates(env) {
 }
 
 function convertToTWD(amount, currency, rates) {
-  if (!amount || amount <= 0) return 0;
+  const numericAmount = Number(amount);
+  if (!Number.isFinite(numericAmount) || numericAmount <= 0) return 0;
   const code = String(currency || 'TWD').toUpperCase();
-  if (code === 'TWD') return amount;
-  const sourceRate = rates[code];
-  const twdRate = rates.TWD;
-  if (!sourceRate || !twdRate) return amount;
+  if (code === 'TWD') return numericAmount;
+  const sourceRate = Number(rates[code]);
+  const twdRate = Number(rates.TWD);
+  // 缺少有效匯率時保留原金額，避免產生 NaN；回傳值仍維持數字型別。
+  if (!Number.isFinite(sourceRate) || sourceRate <= 0 || !Number.isFinite(twdRate) || twdRate <= 0) return numericAmount;
   // rates 是每 1 CNY 可兌換的外幣數量，先換算回 CNY 再換算成 TWD。
-  return (amount / sourceRate) * twdRate;
+  return (numericAmount / sourceRate) * twdRate;
 }
 
 function calculateMonthlyExpense(subscriptions, timezone, rates) {
