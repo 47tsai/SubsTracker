@@ -154,7 +154,7 @@
             </div>
             <div>
               <label for="adminPassword" class="block text-sm font-medium text-gray-700">密碼</label>
-              <input type="password" id="adminPassword" placeholder="如不修變更密碼，請留空" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              <input type="password" id="adminPassword" placeholder="如不修改密碼，請留空" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <p class="mt-1 text-sm text-gray-500">留空表示不修改目前密碼</p>
             </div>
           </div>
@@ -207,11 +207,11 @@
               <option value="Europe/Berlin">柏林時間（UTC+1）</option>
               <option value="Europe/Moscow">莫斯科時間（UTC+3）</option>
               <option value="Australia/Sydney">悉尼時間（UTC+10）</option>
-              <option value="Australia/Melbourne">墨尔本時間（UTC+10）</option>
+              <option value="Australia/Melbourne">墨爾本時間（UTC+10）</option>
               <option value="Pacific/Auckland">奥克兰時間（UTC+12）</option>
             </optgroup>
           </select>
-            <p class="mt-1 text-sm text-gray-500">所有時間相關的判断（通知時段、剩餘天數、日期顯示）都按此時區計算。若使用中國標準時間，可保留預設值 <code>Asia/Shanghai</code> 即可。</p>
+            <p class="mt-1 text-sm text-gray-500">所有時間相關的判斷（通知時段、剩餘天數、日期顯示）都按此時區計算。若使用中國標準時間，可保留預設值 <code>Asia/Shanghai</code> 即可。</p>
           </div>
         </div>
 
@@ -227,19 +227,19 @@
               <input type="text" id="notificationHours" placeholder="例如：8 或 08, 12, 20；留空或 * = 每小時都可發"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <p class="mt-1 text-sm text-gray-500">
-                填入 0–23 的整點（可多個，逗號分隔）。系統每小時檢查一次：只有「目前這個整點」落在清單里才會發提醒。
+                填入 0–23 的整點（可多個，逗號分隔）。系統每小時檢查一次：只有「目前這個整點」落在清單中才會發提醒。
                 <strong>留空或填 *</strong> 表示每個整點都可以發。
                 多個小時只是允許傳送的時間窗口；同一訂閱的同一日級規則當天成功傳送後不會再次傳送。
               </p>
               <div id="tzWindowPreview" class="mt-2 p-3 rounded-md border border-gray-200 bg-gray-50 text-sm leading-relaxed"></div>
             </div>
             <div class="bg-blue-50 border border-blue-200 rounded-md p-3 text-sm text-blue-900">
-              <p class="font-semibold mb-1"><i class="fas fa-lightbulb mr-1"></i>怎么理解？</p>
+              <p class="font-semibold mb-1"><i class="fas fa-lightbulb mr-1"></i>該如何理解？</p>
               <ul class="list-disc pl-5 space-y-1">
                 <li>上面選的<strong>時區</strong>決定「現在幾點」——使用中國標準時間時，請選 <b>Asia/Shanghai（中國標準時間）</b>。</li>
                 <li>填 <code>08</code> = 只在<strong>中國標準時間早上 8 點那一小時</strong>發（約 8:00–8:59）。</li>
                 <li>現在若是 19 點，填了 08，則<strong>不會發</strong>，工作歷史會寫「不在允許傳送的小時」——這是正常的。</li>
-                <li>改完後請點「儲存設定」才會生效；下方预覽會按輸入框內容實時判断。</li>
+                <li>改完後請點「儲存設定」才會生效；下方预覽會按輸入框內容實時判斷。</li>
               </ul>
             </div>
           </div>
@@ -296,13 +296,13 @@
                 <i class="fas fa-external-link-alt ml-1"></i> NotifyX官網
               </a>
               <a href="https://webhook.site" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
-                <i class="fas fa-external-link-alt ml-1"></i> Webhook 調试工具
+                <i class="fas fa-external-link-alt ml-1"></i> Webhook 除錯工具
               </a>
               <a href="https://developer.work.weixin.qq.com/document/path/91770" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
-                <i class="fas fa-external-link-alt ml-1"></i> 企業微信機器人文檔
+                <i class="fas fa-external-link-alt ml-1"></i> 企業微信機器人文件
               </a>
               <a href="https://developers.cloudflare.com/workers/tutorials/send-emails-with-resend/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
-                <i class="fas fa-external-link-alt ml-1"></i> 獲取 Resend API Key
+                <i class="fas fa-external-link-alt ml-1"></i> 取得 Resend API Key
               </a>
               <a href="https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
                 <i class="fas fa-external-link-alt ml-1"></i> Bark iOS應用
@@ -320,9 +320,9 @@
           </div>
 
           <div class="mb-6">
-            <label for="thirdPartyToken" class="block text-sm font-medium text-gray-700">第三方 API 访問令牌</label>
+            <label for="thirdPartyToken" class="block text-sm font-medium text-gray-700">第三方 API 存取權杖</label>
             <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-              <input type="text" id="thirdPartyToken" placeholder="留空表示不修改；輸入新值將更新"
+              <input type="text" id="thirdPartyToken" placeholder="留空表示不修改；輸入新值後將更新"
                 class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <button type="button" id="generateThirdPartyToken" class="btn-info text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                 <i class="fas fa-magic mr-2"></i>產生令牌
@@ -336,10 +336,10 @@
           </div>
 
           <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">調试設定</label>
+            <label class="block text-sm font-medium text-gray-700 mb-3">除錯設定</label>
             <label class="inline-flex items-center cursor-pointer select-none">
               <input type="checkbox" id="debugLogs" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-              <span class="ml-2 text-sm text-gray-700">開啟調试日誌（影響主控台輸出）</span>
+              <span class="ml-2 text-sm text-gray-700">開啟除錯日誌（影響主控台輸出）</span>
             </label>
           </div>
 
@@ -357,7 +357,7 @@
               <div>
                 <label for="tgBotToken" class="block text-sm font-medium text-gray-700">Bot Token</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="tgBotToken" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="tgBotToken" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearTgBotToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -366,12 +366,12 @@
               </div>
               <div>
                 <label for="tgChatId" class="block text-sm font-medium text-gray-700">Chat ID</label>
-                <input type="text" id="tgChatId" placeholder="可從 @userinfobot 獲取" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="tgChatId" placeholder="可從 @userinfobot 取得" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               </div>
               <div>
                 <label for="tgTopicId" class="block text-sm font-medium text-gray-700">Topic ID（可選）</label>
                 <input type="text" id="tgTopicId" placeholder="Forum 群組話題 ID，对應 message_thread_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <p class="mt-1 text-xs text-gray-500">僅在開啟 Topics 的群組中填寫；留空則傳送到普通會话/群組。</p>
+                <p class="mt-1 text-xs text-gray-500">僅在開啟 Topics 的群組中填寫；留空則傳送到一般對話/群組。</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -386,13 +386,13 @@
             <div class="mb-4">
               <label for="notifyxApiKey" class="block text-sm font-medium text-gray-700">API Key</label>
               <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                <input type="text" id="notifyxApiKey" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="notifyxApiKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <button type="button" id="clearNotifyxApiKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                   <i class="fas fa-eraser mr-2"></i>清空
                 </button>
               </div>
               <p id="NOTIFYX_API_KEYStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-              <p class="mt-1 text-sm text-gray-500">從 <a href="https://www.notifyx.cn/" target="_blank" class="text-indigo-600 hover:text-indigo-800">NotifyX平台</a> 獲取的 API Key</p>
+              <p class="mt-1 text-sm text-gray-500">從 <a href="https://www.notifyx.cn/" target="_blank" class="text-indigo-600 hover:text-indigo-800">NotifyX平台</a> 取得的 API Key</p>
             </div>
             <div class="flex justify-end">
               <button type="button" id="testNotifyXBtn" class="btn-secondary text-white px-4 py-2 rounded-md text-sm font-medium">
@@ -407,7 +407,7 @@
               <div>
                 <label for="webhookUrl" class="block text-sm font-medium text-gray-700">Webhook 通知 URL</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="url" id="webhookUrl" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="url" id="webhookUrl" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWebhookUrl" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -426,7 +426,7 @@
               <div>
                 <label for="webhookHeaders" class="block text-sm font-medium text-gray-700">自定義要求頭 (JSON格式，可選)</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-start gap-3">
-                  <textarea id="webhookHeaders" rows="3" placeholder='留空表示不修改；輸入新值將更新' class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                  <textarea id="webhookHeaders" rows="3" placeholder='留空表示不修改；輸入新值後將更新' class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                   <button type="button" id="clearWebhookHeaders" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -453,18 +453,18 @@
               <div>
                 <label for="wechatbotWebhook" class="block text-sm font-medium text-gray-700">機器人 Webhook URL</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="url" id="wechatbotWebhook" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="url" id="wechatbotWebhook" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWechatbotWebhook" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
                 </div>
                 <p id="WECHATBOT_WEBHOOKStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從企業微信群聊中新增機器人獲取的 Webhook URL</p>
+                <p class="mt-1 text-sm text-gray-500">從企業微信群聊中新增機器人取得的 Webhook URL</p>
               </div>
               <div>
                 <label for="wechatbotMsgType" class="block text-sm font-medium text-gray-700">訊息類型</label>
                 <select id="wechatbotMsgType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                  <option value="text">文本訊息</option>
+                  <option value="text">文字訊息</option>
                   <option value="markdown">Markdown訊息</option>
                 </select>
                 <p class="mt-1 text-sm text-gray-500">選擇傳送的訊息格式類型</p>
@@ -495,13 +495,13 @@
               <div>
                 <label for="resendApiKey" class="block text-sm font-medium text-gray-700">Resend API Key</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="resendApiKey" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="resendApiKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearResendApiKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
                 </div>
                 <p id="RESEND_API_KEYStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從 <a href="https://resend.com/api-keys" target="_blank" class="text-indigo-600 hover:text-indigo-800">Resend控制台</a> 獲取的 API Key</p>
+                <p class="mt-1 text-sm text-gray-500">從 <a href="https://resend.com/api-keys" target="_blank" class="text-indigo-600 hover:text-indigo-800">Resend控制台</a> 取得的 API Key</p>
               </div>
               <div>
                 <label for="emailFrom" class="block text-sm font-medium text-gray-700">發件人郵箱</label>
@@ -537,16 +537,16 @@
               <div>
                 <label for="barkDeviceKey" class="block text-sm font-medium text-gray-700">裝置金鑰</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="barkDeviceKey" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="barkDeviceKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearBarkDeviceKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
                 </div>
                 <p id="BARK_DEVICE_KEYStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從 <a href="https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865" target="_blank" class="text-indigo-600 hover:text-indigo-800">Bark iOS 應用</a> 中獲取的裝置金鑰</p>
+                <p class="mt-1 text-sm text-gray-500">從 <a href="https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865" target="_blank" class="text-indigo-600 hover:text-indigo-800">Bark iOS App</a> 中取得的裝置金鑰</p>
               </div>
               <div>
-                <label for="barkIsArchive" class="block text-sm font-medium text-gray-700 mb-2">儲存推送</label>
+                <label for="barkIsArchive" class="block text-sm font-medium text-gray-700 mb-2">儲存推播紀錄</label>
                 <label class="inline-flex items-center">
                   <input type="checkbox" id="barkIsArchive" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
                   <span class="ml-2 text-sm text-gray-700">將推播內容儲存至歷史紀錄</span>
@@ -571,7 +571,7 @@
               </div>
               <label for="gotifyAppToken" class="block text-sm font-medium text-gray-700">Application Token</label>
               <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                <input type="text" id="gotifyAppToken" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="gotifyAppToken" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <button type="button" id="clearGotifyAppToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                   <i class="fas fa-eraser mr-2"></i>清空
                 </button>
@@ -622,13 +622,13 @@
               <div>
                 <label for="serverchanSendKey" class="block text-sm font-medium text-gray-700">SendKey</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="serverchanSendKey" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="serverchanSendKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearServerchanSendKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
                 </div>
                 <p id="SERVERCHAN_SENDKEYStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從 <a href="https://sct.ftqq.com/" target="_blank" class="text-indigo-600 hover:text-indigo-800">Server酱</a> 獲取 SendKey</p>
+                <p class="mt-1 text-sm text-gray-500">從 <a href="https://sct.ftqq.com/" target="_blank" class="text-indigo-600 hover:text-indigo-800">Server酱</a> 取得 SendKey</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -644,7 +644,7 @@
               <div>
                 <label for="pushplusToken" class="block text-sm font-medium text-gray-700">Token</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="pushplusToken" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="pushplusToken" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearPushplusToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -680,13 +680,13 @@
               <div>
                 <label for="wpushApikey" class="block text-sm font-medium text-gray-700">API Key</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="wpushApikey" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="wpushApikey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWpushApikey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
                 </div>
                 <p id="WPUSH_APIKEYStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從 <a href="https://wpush.cn/settings" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 設定頁</a> 獲取 API Key</p>
+                <p class="mt-1 text-sm text-gray-500">從 <a href="https://wpush.cn/settings" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 設定頁</a> 取得 API Key</p>
               </div>
               <div>
                 <label for="wpushChannel" class="block text-sm font-medium text-gray-700">管道（可選）</label>
@@ -703,7 +703,7 @@
                   <option value="clawbot">微信 ClawBot</option>
                   <option value="qqbot">QQ 機器人</option>
                 </select>
-                <p class="mt-1 text-sm text-gray-500">具體可用管道以 <a href="https://wpush.cn/docs" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 文檔</a> 為準</p>
+                <p class="mt-1 text-sm text-gray-500">具體可用管道以 <a href="https://wpush.cn/docs" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 文件</a> 為準</p>
               </div>
               <div>
                 <label for="wpushTopicCode" class="block text-sm font-medium text-gray-700">Topic 編碼（可選）</label>
@@ -754,7 +754,7 @@
             <div class="flex flex-col gap-2 mb-3">
               <label class="inline-flex items-center text-sm text-gray-700 cursor-pointer">
                 <input type="radio" name="importMode" value="merge" class="form-radio h-4 w-4 text-indigo-600" checked>
-                <span class="ml-2">合並（依 ID 覆蓋同名訂閱，並保留其他資料）</span>
+                <span class="ml-2">合併（依 ID 覆蓋同名訂閱，並保留其他資料）</span>
               </label>
               <label class="inline-flex items-center text-sm text-gray-700 cursor-pointer">
                 <input type="radio" name="importMode" value="replace" class="form-radio h-4 w-4 text-indigo-600">
@@ -1003,7 +1003,7 @@
         { value: 'Europe/Berlin', name: '柏林時間', offset: '+1' },
         { value: 'Europe/Moscow', name: '莫斯科時間', offset: '+3' },
         { value: 'Australia/Sydney', name: '悉尼時間', offset: '+10' },
-        { value: 'Australia/Melbourne', name: '墨尔本時間', offset: '+10' },
+        { value: 'Australia/Melbourne', name: '墨爾本時間', offset: '+10' },
         { value: 'Pacific/Auckland', name: '奥克兰時間', offset: '+12' }
       ];
       const allTimezones = [...recommended, ...others];
@@ -1494,7 +1494,7 @@
     // 實時顯示系統時間和時區
     async function showSystemTime() {
       try {
-        // 獲取後台設定的時區
+        // 取得後台設定的時區
         const response = await apiFetch('/api/config');
         const config = await response.json();
         globalTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
@@ -1537,7 +1537,7 @@
               'Europe/Berlin': '柏林時間',
               'Europe/Moscow': '莫斯科時間',
               'Australia/Sydney': '悉尼時間',
-              'Australia/Melbourne': '墨尔本時間',
+              'Australia/Melbourne': '墨爾本時間',
               'Pacific/Auckland': '奥克兰時間'
             };
             
