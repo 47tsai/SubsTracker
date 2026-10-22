@@ -159,8 +159,8 @@ describe('调度器 - 时区 + 通知时段', () => {
     expect(log.extra.candidates).toHaveLength(1);
     expect(log.extra.candidates[0].ruleValue).toBe(3);
     const sentBody = JSON.parse(fetchSpy.mock.calls[0][1].body);
-    expect(sentBody.text).toContain('提醒策略: 提前 3 天');
-    expect(sentBody.text).not.toContain('提醒策略: 提前 7 天');
+    expect(sentBody.text).toContain('提醒策略：提前 3 天');
+    expect(sentBody.text).not.toContain('提醒策略：提前 7 天');
   });
 
   it('场景4：同规则同小时第二次调用 → 去重跳过', async () => {
