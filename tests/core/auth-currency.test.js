@@ -19,24 +19,24 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe('convertToCNY', () => {
+describe('convertToTWD', () => {
   const rates = { CNY: 1, USD: 0.14, EUR: 0.125, TWD: 4.5 };
 
-  it('CNY 原样', () => {
-    expect(convertToCNY(10, 'CNY', rates)).toBe(10);
+  it('TWD 原樣', () => {
+    expect(convertToTWD(10, 'TWD', rates)).toBe(10);
   });
 
-  it('USD 用 rate 换算 amount/rate', () => {
-    expect(convertToCNY(14, 'USD', rates)).toBe(2);
+  it('USD 換算為新台幣', () => {
+    expect(convertToTWD(14, 'USD', rates)).toBe(450);
   });
 
   it('未知币种不抛错，返回原金额', () => {
-    expect(convertToCNY(5, 'XYZ', rates)).toBe(5);
+    expect(convertToTWD(5, 'XYZ', rates)).toBe(5);
   });
 
   it('非正金额返回 0', () => {
-    expect(convertToCNY(0, 'USD', rates)).toBe(0);
-    expect(convertToCNY(-1, 'USD', rates)).toBe(0);
+    expect(convertToTWD(0, 'USD', rates)).toBe(0);
+    expect(convertToTWD(-1, 'USD', rates)).toBe(0);
   });
 });
 
