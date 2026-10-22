@@ -49,7 +49,7 @@ async function handleAdminRequest(request, env) {
     });
   } catch (error) {
     console.error('[管理页面] 处理请求时出错:', error);
-    return new Response('服务器内部错误', {
+    return new Response('伺服器內部錯誤', {
       status: 500,
       headers: { 'Content-Type': 'text/plain; charset=utf-8' }
     });
