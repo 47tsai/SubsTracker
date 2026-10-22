@@ -4,7 +4,7 @@
  *
  * 用途：
  * - 检查 KV 绑定、配置完整性、JWT 密钥状态
- * - 新增"时区诊断"区块，直观展示 UTC vs 用户 TZ 的当前小时差异
+ * - 新增「時區診斷」區塊，直觀顯示 UTC 與使用者時區的目前小時差異
  *   这是 #91 / #52 / #166 类问题的自助排查入口
  *
  */
@@ -114,7 +114,7 @@ async function handleDebug(request, env) {
     <div class="row"><span class="k">配置的时区</span><span class="v">${esc(debugInfo.timezoneDisplay)}</span></div>
     <div class="row"><span class="k">时区偏移</span><span class="v">UTC${debugInfo.timezoneOffsetHours >= 0 ? '+' : ''}${debugInfo.timezoneOffsetHours} 小时</span></div>
     <div class="row"><span class="k">当前 UTC</span><span class="v">${esc(debugInfo.utcIso)}</span></div>
-    <div class="row"><span class="k">当前用户本地时间</span><span class="v">${esc(debugInfo.localIso)}</span></div>
+    <div class="row"><span class="k">目前使用者當地時間</span><span class="v">${esc(debugInfo.localIso)}</span></div>
     <div class="row"><span class="k">用于通知时段判断的小时</span><span class="v">${esc(debugInfo.currentHour)}</span></div>
     <div class="row"><span class="k">配置的通知小时（用户 TZ）</span><span class="v">${notificationHours.length === 0 ? '<em class="warn">空（默认全天发送）</em>' : `<code>${esc(notificationHours.join(', '))}</code>`}</span></div>
     <div class="row"><span class="k">现在是否允许发送</span><span class="v ${debugInfo.inNotificationWindow ? 'success' : 'warn'}">${debugInfo.inNotificationWindow ? '✓ 在窗口内' : '✗ 不在窗口内'}</span></div>
@@ -122,8 +122,8 @@ async function handleDebug(request, env) {
 
   <div class="info">
     <h3>提示</h3>
-    <p>1. 如果时区诊断中"当前小时"与你预期不符，请检查配置中的 <code>TIMEZONE</code> 是否与你所在地匹配。</p>
-    <p>2. 本版本 <code>NOTIFICATION_HOURS</code> <strong>按你配置的时区</strong>解释（不再是 UTC）。例如想让北京时间 8 点收到通知，<code>TIMEZONE=Asia/Shanghai</code> 时填 <code>08</code>。</p>
+    <p>1. 如果時區診斷中的「目前小時」與預期不符，請檢查設定中的 <code>TIMEZONE</code> 是否與所在地相符。</p>
+    <p>2. 本版本 <code>NOTIFICATION_HOURS</code> <strong>依照你設定的時區</strong>解释（不再使用 UTC）。例如想在台灣時間上午 8 點收到通知，<code>TIMEZONE=Asia/Shanghai</code> 时填 <code>08</code>。</p>
     <p>3. 详细发送记录请前往后台"通知历史"页（后续版本提供）。</p>
     <p>4. <a href="/admin">返回管理后台</a></p>
     <p>5. <a href="/debug?export=sched_logs&limit=50">📥 导出最近 50 条调度执行日志（JSON）</a></p>
@@ -133,7 +133,7 @@ async function handleDebug(request, env) {
       { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
     );
   } catch (error) {
-    return new Response(`调试页面错误: ${error && error.message ? error.message : error}`, {
+    return new Response(`除錯頁面錯誤：${error && error.message ? error.message : error}`, {
       status: 500,
       headers: { 'Content-Type': 'text/plain; charset=utf-8' }
     });
