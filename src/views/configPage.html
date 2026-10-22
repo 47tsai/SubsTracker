@@ -141,7 +141,7 @@
       <h2 class="text-2xl font-bold text-gray-800 mb-6">系統設定</h2>
       <div id="defaultPasswordBanner" class="hidden mb-4 p-3 rounded-md border border-amber-300 bg-amber-50 text-amber-900 text-sm">
         <i class="fas fa-exclamation-triangle mr-1"></i>
-        检測到仍可能使用預設管理員密碼。請立即修改下方「管理員密碼」並儲存，避免公網被接管。
+        偵測到仍可能使用預設管理員密碼。請立即修改下方「管理員密碼」並儲存，避免公網被接管。
       </div>
       
       <form id="configForm" class="space-y-8">
@@ -239,7 +239,7 @@
                 <li>上面選的<strong>時區</strong>決定「現在幾點」——使用中國標準時間時，請選 <b>Asia/Shanghai（中國標準時間）</b>。</li>
                 <li>填 <code>08</code> = 只在<strong>中國標準時間早上 8 點那一小時</strong>發（約 8:00–8:59）。</li>
                 <li>現在若是 19 點，填了 08，則<strong>不會發</strong>，工作歷史會寫「不在允許傳送的小時」——這是正常的。</li>
-                <li>改完後請點「儲存設定」才會生效；下方預覽會按輸入框內容實時判斷。</li>
+                <li>改完後請點「儲存設定」才會生效；下方預覽會依據輸入框內容即時判斷。</li>
               </ul>
             </div>
           </div>
@@ -459,7 +459,7 @@
                   </button>
                 </div>
                 <p id="WECHATBOT_WEBHOOKStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從企業微信群聊中新增機器人取得的 Webhook URL</p>
+                <p class="mt-1 text-sm text-gray-500">從在企業微信群組中新增機器人取得的 Webhook URL</p>
               </div>
               <div>
                 <label for="wechatbotMsgType" class="block text-sm font-medium text-gray-700">訊息類型</label>
@@ -776,7 +776,7 @@
 
   <!-- 悬浮儲存欄 -->
   <div id="floatingSaveBar" class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg py-3 px-6 flex justify-between items-center z-50 transform translate-y-full transition-transform duration-300" style="display:none;">
-    <span class="text-sm text-gray-600"><i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>有未儲存的更改</span>
+    <span class="text-sm text-gray-600"><i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>有尚未儲存的變更</span>
     <button type="button" onclick="document.getElementById('configForm').requestSubmit()" class="btn-primary text-white px-5 py-2 rounded-md text-sm font-medium">
       <i class="fas fa-save mr-2"></i>儲存設定
     </button>
@@ -1037,7 +1037,7 @@
       timezoneSelect.value = timezoneExists ? selectedTimezone : fallbackTimezone;
 
       if (!timezoneExists) {
-        showToast('检測到未知時區設定，已回退為 Asia/Shanghai，請重新確認後儲存', 'warning', 4500);
+        showToast('偵測到未知時區設定，已回退為 Asia/Shanghai，請重新確認後儲存', 'warning', 4500);
       }
     }
     
@@ -1491,7 +1491,7 @@
     let systemTimeTimer = null;
     let timezoneCheckTimer = null;
     
-    // 實時顯示系統時間和時區
+    // 即時顯示系統時間和時區
     async function showSystemTime() {
       try {
         // 取得後台設定的時區
@@ -1642,7 +1642,7 @@
     }
 
     // ───────────────────────────────────────────────────────
-    // 通知小時實時預覽（與調度器同一套規則）
+    // 通知小時即時預覽（與調度器同一套規則）
     // 註意：必須在 loadConfig 寫入輸入框之後再重新整理，否則會誤顯示「空=全天」
     // ───────────────────────────────────────────────────────
     (function () {
@@ -1712,12 +1712,12 @@
         } else {
           statusHtml = '<span class="text-amber-700 font-medium">✗ 目前不會傳送</span>'
             + '<div class="text-xs text-gray-600 mt-1">你只允許在 <b>' + hours.join('、') + '</b> 點傳送；現在是 <b>' + hh + ':' + mm + '</b>（' + tzName + '）。'
-            + '定時工作仍會每小時跑一次，但不推送，工作歷史會記「不在允許傳送的小時」——這是正常跳過。</div>';
+            + '排程仍會每小時執行一次，但不會傳送通知，執行紀錄會顯示「不在允許傳送的小時」——這是正常跳過。</div>';
         }
 
         preview.innerHTML =
           '<div class="text-gray-800">' + statusHtml + '</div>'
-          + '<div class="text-xs text-gray-500 mt-2">時區代碼：' + tz + ' · 預覽僅反映輸入框內容，儲存後調度器才用伺服器上的值。</div>';
+          + '<div class="text-xs text-gray-500 mt-2">時區代碼：' + tz + ' · 預覽僅反映輸入框內容，儲存後排程器才會使用伺服器上的設定值。</div>';
       }
 
       window.__refreshNotificationHoursPreview = update;
