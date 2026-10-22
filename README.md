@@ -96,7 +96,7 @@ Cloudflare Dashboard → **Workers & Pages → KV** → 開啟 `SUBSCRIPTIONS_KV
 
 ### 1. 修改密碼
 
-管理員使用者名稱稱 / 密碼改成自己的。頁面若提示仍是預設 `admin`，請務必處理。
+管理員使用者名稱 / 密碼改成自己的。頁面若提示仍是預設 `admin`，請務必處理。
 
 ### 2. 時區
 
