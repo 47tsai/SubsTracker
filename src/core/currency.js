@@ -190,7 +190,7 @@ function getExpenseByType(subscriptions, timezone, rates) {
       const paymentDate = new Date(payment.date);
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
-        const type = sub.customType || '未分类';
+        const type = sub.customType || '未分類';
         const amountTWD = convertToTWD(payment.amount, sub.currency, rates);
         typeMap[type] = (typeMap[type] || 0) + amountTWD;
         total += amountTWD;
@@ -221,11 +221,11 @@ function getExpenseByCategory(subscriptions, timezone, rates) {
       const paymentDate = new Date(payment.date);
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
-        const categories = sub.category ? sub.category.split(CATEGORY_SEPARATOR_REGEX).filter(c => c.trim()) : ['未分类'];
+        const categories = sub.category ? sub.category.split(CATEGORY_SEPARATOR_REGEX).filter(c => c.trim()) : ['未分類'];
         const amountTWD = convertToTWD(payment.amount, sub.currency, rates);
 
         categories.forEach(category => {
-          const cat = category.trim() || '未分类';
+          const cat = category.trim() || '未分類';
           categoryMap[cat] = (categoryMap[cat] || 0) + amountTWD / categories.length;
         });
         total += amountTWD;
