@@ -151,7 +151,7 @@ async function createSubscription(subscription, env) {
     }
 
     const config = await getConfig(env);
-    const timezone = config.TIMEZONE || 'Asia/Shanghai';
+    const timezone = config.TIMEZONE || 'Asia/Taipei';
     const now = getNowInTimezone(timezone);
     const todayMidnight = getTimezoneMidnightTimestamp(now.utc, timezone);
     const autoRenew = subscription.autoRenew !== false;
@@ -270,7 +270,7 @@ async function updateSubscription(id, subscription, env) {
     }
 
     const config = await getConfig(env);
-    const timezone = config.TIMEZONE || 'Asia/Shanghai';
+    const timezone = config.TIMEZONE || 'Asia/Taipei';
     const now = getNowInTimezone(timezone);
     const todayMidnight = getTimezoneMidnightTimestamp(now.utc, timezone);
     const autoRenew = subscription.autoRenew !== undefined
@@ -457,7 +457,7 @@ async function manualRenewSubscription(id, env, options = {}) {
     }
 
     const config = await getConfig(env);
-    const timezone = config.TIMEZONE || 'Asia/Shanghai';
+    const timezone = config.TIMEZONE || 'Asia/Taipei';
     const now = getNowInTimezone(timezone);
 
     const paymentDate = options.paymentDate
@@ -608,7 +608,7 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
     const subscription = await subRepo.getById(env, subscriptionId);
     if (!subscription) return { success: false, message: '订阅不存在' };
     const config = await getConfig(env);
-    const timezone = config.TIMEZONE || 'Asia/Shanghai';
+    const timezone = config.TIMEZONE || 'Asia/Taipei';
 
     const paymentHistory = subscription.paymentHistory || [];
     const paymentIndex = paymentHistory.findIndex((p) => p.id === paymentId);
