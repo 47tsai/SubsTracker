@@ -218,7 +218,7 @@
             <i class="fas fa-folder text-green-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按分類支出統計</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計（換算為 CNY）</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計（換算為新台幣）</span>
         </div>
         <div class="p-6" id="expenseByCategory">
           <div class="loading-skeleton"></div>
@@ -443,7 +443,7 @@
             <div class="ranking-item-header">
               <div class="ranking-item-name">${item.category}</div>
               <div class="ranking-item-value">
-                <span class="ranking-item-amount">¥${item.amount.toFixed(2)}</span>
+                <span class="ranking-item-amount">NT${item.amount.toFixed(0)}</span>
                 <span class="ranking-item-percentage">${item.percentage}%</span>
               </div>
             </div>
@@ -730,7 +730,7 @@
             <div class="ranking-item-header">
               <div class="ranking-item-name">${item.category}</div>
               <div class="ranking-item-value">
-                <span class="ranking-item-amount">¥${item.amount.toFixed(2)}</span>
+                <span class="ranking-item-amount">NT${item.amount.toFixed(0)}</span>
                 <span class="ranking-item-percentage">${item.percentage}%</span>
               </div>
             </div>
