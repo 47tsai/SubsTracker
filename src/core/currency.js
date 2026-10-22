@@ -17,7 +17,7 @@ const FALLBACK_RATES = {
 };
 
 async function getDynamicRates(env) {
-  const CACHE_KEY = 'SYSTEM_EXCHANGE_RATES';
+  const CACHE_KEY = 'SYSTEM_EXCHANGE_RATES_TWD_V2';
   const CACHE_TTL = 86400000; // 24小时
 
   try {
