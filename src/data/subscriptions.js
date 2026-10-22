@@ -2,7 +2,7 @@
 /**
  * 訂閱業務層
  *
- * 本檔案負責"订阅生命周期"相关的业务规则（建立時自动推算到期日、續訂產生付款紀錄、
+ * 本檔案負責"訂閱生命週期"相關的業務規則（建立時自動推算到期日、續訂產生付款紀錄、
  * 刪除付款紀錄回退週期、農曆週期推算、初始付款紀錄等）。
  *
  * 重构：
@@ -102,7 +102,7 @@ async function getAllSubscriptions(env) {
 }
 
 /**
- * 将多规则同步回订阅上的 legacy 提醒字段，避免列表/旧路径与规则脱节。
+ * 將多條規則同步回訂閱的 legacy 提醒字段，避免列表/舊路徑与规则脱节。
  *
  * @param {any} env
  * @param {string} subId
@@ -128,7 +128,7 @@ async function syncLegacyReminderFields(env, subId, rules) {
 }
 
 /**
- * 按 ID 获取单条订阅。
+ * 依 ID 取得單筆訂閱。
  *
  * @param {string} id
  * @param {any} env
@@ -229,7 +229,7 @@ async function createSubscription(subscription, env) {
                 amount: subscription.amount,
                 currency: subscription.currency || 'TWD',
                 type: 'initial',
-                note: '初始订阅',
+                note: '初始訂閱',
                 periodStart: normalizedStartDate || initialPaymentDate,
                 periodEnd: normalizedExpiryDate
               }
@@ -262,7 +262,7 @@ async function updateSubscription(id, subscription, env) {
   try {
     const existing = await subRepo.getById(env, id);
     if (!existing) {
-      return { success: false, message: '订阅不存在' };
+      return { success: false, message: '找不到訂閱' };
     }
 
     if (!subscription.name || !subscription.expiryDate) {
@@ -354,7 +354,7 @@ async function updateSubscription(id, subscription, env) {
         amount: newAmount,
         currency: subscription.currency || existing.currency || 'TWD',
         type: 'initial',
-        note: '初始订阅',
+        note: '初始訂閱',
         periodStart: existing.startDate || initialDate,
         periodEnd: existing.expiryDate || initialDate
       });
@@ -420,13 +420,13 @@ async function updateSubscription(id, subscription, env) {
 async function deleteSubscription(id, env) {
   try {
     const ok = await subRepo.deleteById(env, id);
-    if (!ok) return { success: false, message: '订阅不存在' };
+    if (!ok) return { success: false, message: '找不到訂閱' };
     // 联动清理提醒规则，避免孤儿 reminder_rules:{id}
     try {
       const remindersRepo = await import('./reminders.repo.js');
       await remindersRepo.clearForSubscription(env, id);
     } catch (err) {
-      console.error('[subscriptions] 清理提醒规则失敗（订阅已刪除）:', err);
+      console.error('[subscriptions] 清理提醒规则失敗（訂閱已刪除）:', err);
     }
     return { success: true };
   } catch (error) {
@@ -450,7 +450,7 @@ async function deleteSubscription(id, env) {
 async function manualRenewSubscription(id, env, options = {}) {
   try {
     const subscription = await subRepo.getById(env, id);
-    if (!subscription) return { success: false, message: '订阅不存在' };
+    if (!subscription) return { success: false, message: '找不到訂閱' };
 
     if (!subscription.periodValue || !subscription.periodUnit) {
       return { success: false, message: '订阅未設定續訂週期' };
@@ -534,7 +534,7 @@ async function manualRenewSubscription(id, env, options = {}) {
 }
 
 /**
- * 删除一条付款紀錄（删除时回退到期日）。
+ * 刪除一筆付款紀錄（刪除時回退到期日）。
  *
  * @param {string} subscriptionId
  * @param {string} paymentId
@@ -543,7 +543,7 @@ async function manualRenewSubscription(id, env, options = {}) {
 async function deletePaymentRecord(subscriptionId, paymentId, env) {
   try {
     const subscription = await subRepo.getById(env, subscriptionId);
-    if (!subscription) return { success: false, message: '订阅不存在' };
+    if (!subscription) return { success: false, message: '找不到訂閱' };
 
     const paymentHistory = subscription.paymentHistory || [];
     const paymentIndex = paymentHistory.findIndex((p) => p.id === paymentId);
@@ -590,7 +590,7 @@ async function deletePaymentRecord(subscriptionId, paymentId, env) {
     console.error('刪除付款紀錄失敗:', error);
     return {
       success: false,
-      message: '删除失敗: ' + (error && error.message ? error.message : error)
+      message: '刪除失敗: ' + (error && error.message ? error.message : error)
     };
   }
 }
@@ -606,7 +606,7 @@ async function deletePaymentRecord(subscriptionId, paymentId, env) {
 async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) {
   try {
     const subscription = await subRepo.getById(env, subscriptionId);
-    if (!subscription) return { success: false, message: '订阅不存在' };
+    if (!subscription) return { success: false, message: '找不到訂閱' };
     const config = await getConfig(env);
     const timezone = config.TIMEZONE || 'Asia/Taipei';
 
@@ -653,7 +653,7 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
 }
 
 /**
- * 启用/停用订阅。
+ * 啟用／停用訂閱。
  *
  * @param {string} id
  * @param {boolean} isActive
@@ -662,7 +662,7 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
 async function toggleSubscriptionStatus(id, isActive, env) {
   try {
     const existing = await subRepo.getById(env, id);
-    if (!existing) return { success: false, message: '订阅不存在' };
+    if (!existing) return { success: false, message: '找不到訂閱' };
 
     const updated = {
       ...existing,
