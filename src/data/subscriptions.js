@@ -218,7 +218,7 @@ async function createSubscription(subscription, env) {
         subscription.amount !== undefined && subscription.amount !== null
           ? subscription.amount
           : null,
-      currency: subscription.currency || 'CNY',
+      currency: subscription.currency || 'TWD',
       lastPaymentDate: initialPaymentDate,
       paymentHistory:
         subscription.amount !== undefined && subscription.amount !== null
@@ -344,7 +344,7 @@ async function updateSubscription(id, subscription, env) {
       paymentHistory[idx] = {
         ...paymentHistory[idx],
         amount: newAmount,
-        currency: subscription.currency || existing.currency || 'CNY'
+        currency: subscription.currency || existing.currency || 'TWD'
       };
     } else if (!hasInitialPayment && newAmount !== null && newAmount !== undefined && newAmount > 0) {
       const initialDate = existing.startDate || existing.createdAt || new Date().toISOString();
@@ -625,7 +625,7 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
         paymentData.currency ||
         paymentHistory[paymentIndex].currency ||
         subscription.currency ||
-        'CNY',
+        'TWD',
       note: paymentData.note !== undefined ? paymentData.note : paymentHistory[paymentIndex].note
     };
 
