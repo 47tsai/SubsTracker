@@ -73,7 +73,7 @@ export const barkChannel = {
 
   async test(config) {
     return barkChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 Bark 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 Bark 測試通知。' },
       config
     );
   }
