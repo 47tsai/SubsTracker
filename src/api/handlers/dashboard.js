@@ -1,9 +1,9 @@
 // 注：dashboard 业务逻辑较多，此处不启用 // @ts-check（依赖外部 currency 模块的复杂返回类型）
 /**
- * 仪表盘统计 handler
+ * 儀表板统计 handler
  *
  * 改动：
- * - 用户时区从 config.TIMEZONE 读取（不再硬编码 'UTC'）
+ * - 用户时区从 config.TIMEZONE 讀取（不再硬编码 'UTC'）
  * - schedulerStatus / schedulerStatusHistory 从新的 scheduler-logs.repo 取
  *   旧 'scheduler_status' / 'scheduler_status_history' 已废弃（迁移会清掉）
  *
@@ -24,9 +24,9 @@ import * as schedulerLogsRepo from '../../data/scheduler-logs.repo.js';
 async function handleDashboardStats(env, config) {
   try {
     const subscriptions = await getAllSubscriptions(env);
-    const timezone = (config && config.TIMEZONE) || 'UTC';
+    const timezone = (config && config.TIMEZONE) || 'Asia/Taipei';
 
-    /** 本次：从结构化日志库读最新调度状态 */
+    /** 本次：从结构化日志库读最新排程状态 */
     let schedulerStatus = null;
     let schedulerStatusHistory = [];
     try {
@@ -53,7 +53,7 @@ async function handleDashboardStats(env, config) {
         };
       }
     } catch (error) {
-      console.error('读取调度日志失败:', error);
+      console.error('讀取排程日志失敗:', error);
     }
 
     const rates = await getDynamicRates(env);
@@ -96,11 +96,11 @@ async function handleDashboardStats(env, config) {
       { headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('获取仪表盘统计失败:', error);
+    console.error('获取儀表板统计失敗:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        message: '获取统计数据失败: ' + (error && error.message ? error.message : error)
+        message: '获取统计数据失敗: ' + (error && error.message ? error.message : error)
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
