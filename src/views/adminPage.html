@@ -153,16 +153,16 @@
       justify-content: center;
       width: 100%; 
       height: auto;
-      aspect-ratio: 0.85; /* 保持適中的長寬比，紧凑布局 */
+      aspect-ratio: 0.85; /* 保持適中的長寬比，緊湊版面 */
       min-height: 45px;   /* 保證最小點擊區域 */
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.2s ease;
       position: relative;
-      padding: 2px; /* 减小內邊距 */
-      font-size: 13px; /* 稍微調小字體适應移動端 */
+      padding: 2px; /* 縮小內邊距 */
+      font-size: 13px; /* 稍微縮小字體以適應行動裝置 */
     }
-    /* 【新增】自訂下拉菜單樣式 (用於替代 datalist) */
+    /* 【新增】自訂下拉選單樣式 (用於替代 datalist) */
     .custom-dropdown-wrapper {
       position: relative;
       width: 100%;
@@ -241,7 +241,7 @@
       color: #6366f1;
     }
     
-    /* 月份和年份選擇器樣式 */
+    /* 月份與年份選擇器樣式 */
     .month-option, .year-option {
       transition: all 0.2s ease;
       border: 1px solid transparent;
@@ -365,7 +365,7 @@
     html.dark .toast.info { background-color: #2563eb; }
     html.dark .toast.warning { background-color: #d97706; }
 
-    /* 模態框動画 */
+    /* 對話框動畫 */
     #subscriptionModal { transition: opacity 0.2s ease; opacity: 0; }
     #subscriptionModal:not(.hidden) { opacity: 1; }
     #subscriptionModal > div { transition: transform 0.2s ease; transform: scale(0.95); }
@@ -405,7 +405,7 @@
         </div>
 
         <div class="flex items-center md:hidden ml-auto">
-          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="切換導航菜單" class="text-gray-600 hover:text-indigo-600 focus:outline-none p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors">
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="切換導覽選單" class="text-gray-600 hover:text-indigo-600 focus:outline-none p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors">
             <i class="fas fa-bars text-xl"></i>
           </button>
         </div>
@@ -1423,7 +1423,7 @@ const lunarBiz = {
 
     function getReminderSettings(subscription) {
       // 優先使用真實多規則（清單 API 已包含 reminderRules / reminderRulesSummary）
-      // 註意：整個函式統一用 var，避免 var/let 同名重複聲明導致整頁指令碼中断
+      // 注意：整個函式統一使用 var，避免 var／let 同名重複宣告導致整頁指令碼中斷
       var rules = Array.isArray(subscription.reminderRules) ? subscription.reminderRules : null;
       var summary = subscription.reminderRulesSummary || (rules ? formatReminderRulesSummary(rules) : '');
       var unit;
@@ -2727,7 +2727,7 @@ const lunarBiz = {
         
         // 綁定基本事件
         if (this.input) {
-          // 移除之前的事件监听器（如果存在）
+          // 移除先前的事件監聽器（若存在）
           this.input.removeEventListener('click', this._forceShowHandler);
           this._forceShowHandler = () => this.forceShow();
           this.input.addEventListener('click', this._forceShowHandler);
@@ -2836,7 +2836,7 @@ const lunarBiz = {
         };
         document.addEventListener('click', this._outsideClickHandler);
         
-        // 初始化顯示（静默，避免編輯弹窗初始化時誤報）
+        // 初始化顯示（靜默處理，避免編輯對話框初始化時誤報）
         this.syncFromInputValue({ silent: true });
         this.render();
         this.renderYearGrid();
@@ -2863,7 +2863,7 @@ const lunarBiz = {
         if (this.picker) {
           // 確保選擇器顯示
           this.picker.classList.remove('hidden');
-          // 重置到日歷视圖
+          // 重設為月曆檢視
           this.currentView = 'calendar';
           this.hideAllViews();
           this.render();
@@ -3051,7 +3051,7 @@ const lunarBiz = {
         this.renderYearGrid();
       }
       
-      // 顯示日歷视圖
+      // 顯示月曆檢視
       showCalendar() {
         this.currentView = 'calendar';
         this.hideAllViews();
@@ -3062,7 +3062,7 @@ const lunarBiz = {
       hideAllViews() {
         if (this.monthPicker) this.monthPicker.classList.add('hidden');
         if (this.yearPicker) this.yearPicker.classList.add('hidden');
-        // 註意：不隱藏日歷视圖，因為它是主视圖
+        // 注意：不隱藏月曆檢視，因為它是主檢視
       }
       
       // 選擇月份
@@ -3179,7 +3179,7 @@ const lunarBiz = {
       }
     }
     
-    // === 自訂下拉菜單逻輯 ===
+    // === 自訂下拉選單邏輯 ===
     const TYPE_OPTIONS = [
       "串流媒體", "影音平台", "音樂平台", "雲端服務", "軟體訂閱", 
       "網域", "伺服器", "會員服務", "學習平台", "健身／運動", 
@@ -3338,7 +3338,7 @@ const lunarBiz = {
       }
     }
 
-	// 在 script 標籤顶部定義全局變量
+	// 在 script 標籤頂部定義全域變數
   let isEditingLoading = false;
   const debugLog = (...args) => {
     if (window.DEBUG_LOGS === true) console.log(...args);
@@ -3734,7 +3734,7 @@ const lunarBiz = {
       }
     }
     showSystemTime();
-    // --- 新增：移動端菜單控制指令碼 ---
+    // --- 新增：行動裝置選單控制程式碼 ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
