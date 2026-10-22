@@ -1,9 +1,9 @@
 // 注：本文件暂不启用 // @ts-check，因 lunar 库返回类型分支较多，类型清理推迟到后续 Task。
 /**
- * 订阅业务层
+ * 訂閱業務層
  *
- * 本文件负责"订阅生命周期"相关的业务规则（创建时自动推算到期日、续订生成支付记录、
- * 删除支付记录回退周期、农历周期推算、初始支付记录等）。
+ * 本檔案負責"订阅生命周期"相关的业务规则（建立時自动推算到期日、續訂產生付款紀錄、
+ * 刪除付款紀錄回退週期、農曆週期推算、初始付款紀錄等）。
  *
  * 重构：
  * - 数据存储从单 Key 数组改为 sub:{id} 多 Key（见 subscriptions.repo.js）
@@ -72,7 +72,7 @@ function buildTimezoneDate(year, month, day, timezone) {
 }
 
 /**
- * 获取所有订阅（从新 repo 读取）。
+ * 取得所有訂閱（从新 repo 讀取）。
  * 会附带 reminderRules / reminderRulesSummary，供列表展示真实提醒策略。
  *
  * @param {any} env
@@ -96,7 +96,7 @@ async function getAllSubscriptions(env) {
       })
     );
   } catch (error) {
-    console.error('[subscriptions] 读取列表失败:', error);
+    console.error('[subscriptions] 讀取列表失敗:', error);
     return [];
   }
 }
@@ -123,7 +123,7 @@ async function syncLegacyReminderFields(env, subId, rules) {
       updatedAt: new Date().toISOString()
     });
   } catch (error) {
-    console.error('[subscriptions] 同步 legacy 提醒字段失败:', error);
+    console.error('[subscriptions] 同步 legacy 提醒字段失敗:', error);
   }
 }
 
@@ -138,7 +138,7 @@ async function getSubscription(id, env) {
 }
 
 /**
- * 创建订阅。
+ * 建立訂閱。
  *
  * @param {any} subscription 来自前端的字段集
  * @param {any} env
@@ -227,7 +227,7 @@ async function createSubscription(subscription, env) {
                 id: Date.now().toString(),
                 date: initialPaymentDate,
                 amount: subscription.amount,
-                currency: subscription.currency || 'CNY',
+                currency: subscription.currency || 'TWD',
                 type: 'initial',
                 note: '初始订阅',
                 periodStart: normalizedStartDate || initialPaymentDate,
@@ -246,13 +246,13 @@ async function createSubscription(subscription, env) {
 
     return { success: true, subscription: newSubscription };
   } catch (error) {
-    console.error('创建订阅异常：', error && error.stack ? error.stack : error);
-    return { success: false, message: error && error.message ? error.message : '创建订阅失败' };
+    console.error('建立訂閱异常：', error && error.stack ? error.stack : error);
+    return { success: false, message: error && error.message ? error.message : '建立訂閱失敗' };
   }
 }
 
 /**
- * 更新订阅。
+ * 更新訂閱。
  *
  * @param {string} id
  * @param {any} subscription
@@ -352,7 +352,7 @@ async function updateSubscription(id, subscription, env) {
         id: Date.now().toString(),
         date: initialDate,
         amount: newAmount,
-        currency: subscription.currency || existing.currency || 'CNY',
+        currency: subscription.currency || existing.currency || 'TWD',
         type: 'initial',
         note: '初始订阅',
         periodStart: existing.startDate || initialDate,
@@ -388,7 +388,7 @@ async function updateSubscription(id, subscription, env) {
       reminderHours: reminderSetting.unit === 'hour' ? reminderSetting.value : undefined,
       notes: subscription.notes || '',
       amount: newAmount,
-      currency: subscription.currency || existing.currency || 'CNY',
+      currency: subscription.currency || existing.currency || 'TWD',
       lastPaymentDate:
         existing.lastPaymentDate ||
         existing.startDate ||
@@ -406,13 +406,13 @@ async function updateSubscription(id, subscription, env) {
 
     return { success: true, subscription: merged };
   } catch (error) {
-    console.error('[subscriptions] 更新订阅失败:', error);
-    return { success: false, message: '更新订阅失败' };
+    console.error('[subscriptions] 更新訂閱失敗:', error);
+    return { success: false, message: '更新訂閱失敗' };
   }
 }
 
 /**
- * 删除订阅。
+ * 刪除訂閱。
  *
  * @param {string} id
  * @param {any} env
@@ -426,22 +426,22 @@ async function deleteSubscription(id, env) {
       const remindersRepo = await import('./reminders.repo.js');
       await remindersRepo.clearForSubscription(env, id);
     } catch (err) {
-      console.error('[subscriptions] 清理提醒规则失败（订阅已删除）:', err);
+      console.error('[subscriptions] 清理提醒规则失敗（订阅已刪除）:', err);
     }
     return { success: true };
   } catch (error) {
-    console.error('[subscriptions] 删除订阅失败:', error);
-    return { success: false, message: '删除订阅失败' };
+    console.error('[subscriptions] 刪除訂閱失敗:', error);
+    return { success: false, message: '刪除訂閱失敗' };
   }
 }
 
 /**
- * 手动续订订阅。
+ * 手動續訂订阅。
  *
  * 业务规则：
  * - reset 模式：以支付日期为新开始
  * - cycle 模式：现到期日 > 支付日 时接续，否则以支付日为新开始
- * - 农历模式按农历周期推算
+ * - 农历模式按農曆週期推算
  *
  * @param {string} id
  * @param {any} env
@@ -453,7 +453,7 @@ async function manualRenewSubscription(id, env, options = {}) {
     if (!subscription) return { success: false, message: '订阅不存在' };
 
     if (!subscription.periodValue || !subscription.periodUnit) {
-      return { success: false, message: '订阅未设置续订周期' };
+      return { success: false, message: '订阅未設定續訂週期' };
     }
 
     const config = await getConfig(env);
@@ -465,7 +465,7 @@ async function manualRenewSubscription(id, env, options = {}) {
       : now.utc;
     const amount = options.amount !== undefined ? options.amount : subscription.amount || 0;
     const periodMultiplier = options.periodMultiplier || 1;
-    const note = options.note || '手动续订';
+    const note = options.note || '手動續訂';
     const mode = subscription.subscriptionMode || 'cycle';
 
     let newStartDate;
@@ -505,7 +505,7 @@ async function manualRenewSubscription(id, env, options = {}) {
       id: Date.now().toString(),
       date: paymentDate.toISOString(),
       amount,
-      currency: subscription.currency || 'CNY',
+      currency: subscription.currency || 'TWD',
       type: 'manual',
       note,
       periodStart: newStartDate.toISOString(),
@@ -528,13 +528,13 @@ async function manualRenewSubscription(id, env, options = {}) {
 
     return { success: true, subscription: updated, message: '续订成功' };
   } catch (error) {
-    console.error('手动续订失败:', error);
-    return { success: false, message: '续订失败: ' + (error && error.message ? error.message : error) };
+    console.error('手動續訂失敗:', error);
+    return { success: false, message: '续订失敗: ' + (error && error.message ? error.message : error) };
   }
 }
 
 /**
- * 删除一条支付记录（删除时回退到期日）。
+ * 删除一条付款紀錄（删除时回退到期日）。
  *
  * @param {string} subscriptionId
  * @param {string} paymentId
@@ -547,7 +547,7 @@ async function deletePaymentRecord(subscriptionId, paymentId, env) {
 
     const paymentHistory = subscription.paymentHistory || [];
     const paymentIndex = paymentHistory.findIndex((p) => p.id === paymentId);
-    if (paymentIndex === -1) return { success: false, message: '支付记录不存在' };
+    if (paymentIndex === -1) return { success: false, message: '付款紀錄不存在' };
 
     const deletedPayment = paymentHistory[paymentIndex];
     paymentHistory.splice(paymentIndex, 1);
@@ -585,18 +585,18 @@ async function deletePaymentRecord(subscriptionId, paymentId, env) {
 
     await subRepo.save(env, updated);
 
-    return { success: true, subscription: updated, message: '支付记录已删除' };
+    return { success: true, subscription: updated, message: '付款紀錄已刪除' };
   } catch (error) {
-    console.error('删除支付记录失败:', error);
+    console.error('刪除付款紀錄失敗:', error);
     return {
       success: false,
-      message: '删除失败: ' + (error && error.message ? error.message : error)
+      message: '删除失敗: ' + (error && error.message ? error.message : error)
     };
   }
 }
 
 /**
- * 更新支付记录。
+ * 更新付款紀錄。
  *
  * @param {string} subscriptionId
  * @param {string} paymentId
@@ -612,7 +612,7 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
 
     const paymentHistory = subscription.paymentHistory || [];
     const paymentIndex = paymentHistory.findIndex((p) => p.id === paymentId);
-    if (paymentIndex === -1) return { success: false, message: '支付记录不存在' };
+    if (paymentIndex === -1) return { success: false, message: '付款紀錄不存在' };
 
     const normalizedPaymentDate = parseOptionalDateInTimezone(paymentData.date, timezone);
 
@@ -642,12 +642,12 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
 
     await subRepo.save(env, updated);
 
-    return { success: true, subscription: updated, message: '支付记录已更新' };
+    return { success: true, subscription: updated, message: '付款紀錄已更新' };
   } catch (error) {
-    console.error('更新支付记录失败:', error);
+    console.error('更新付款紀錄失敗:', error);
     return {
       success: false,
-      message: '更新失败: ' + (error && error.message ? error.message : error)
+      message: '更新失敗: ' + (error && error.message ? error.message : error)
     };
   }
 }
@@ -673,8 +673,8 @@ async function toggleSubscriptionStatus(id, isActive, env) {
 
     return { success: true, subscription: updated };
   } catch (error) {
-    console.error('[subscriptions] 切换状态失败:', error);
-    return { success: false, message: '更新订阅状态失败' };
+    console.error('[subscriptions] 切换状态失敗:', error);
+    return { success: false, message: '更新訂閱状态失敗' };
   }
 }
 
