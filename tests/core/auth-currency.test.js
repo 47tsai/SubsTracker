@@ -26,7 +26,7 @@ describe('convertToTWD', () => {
     expect(convertToTWD(10, 'TWD', rates)).toBe(10);
   });
 
-  it('USD 用 rate 换算 amount/rate', () => {
+  it('USD 按相對匯率換算為 TWD', () => {
     expect(convertToTWD(14, 'USD', rates)).toBe(450);
   });
 
@@ -51,19 +51,19 @@ describe('getDynamicRates', () => {
   it('API 成功时合并并缓存', async () => {
     vi.stubGlobal('fetch', async () => ({
       ok: true,
-      json: async () => ({ rates: { USD: 7.1, EUR: 8.2 } })
+      json: async () => ({ rates: { USD: 0.14, EUR: 0.12 } })
     }));
     const rates = await getDynamicRates(env);
-    expect(rates.USD).toBe(7.1);
+    expect(rates.USD).toBe(0.14);
     // 第二次应走缓存，不再 fetch
     let called = 0;
     vi.stubGlobal('fetch', async () => {
       called++;
-      return { ok: true, json: async () => ({ rates: { USD: 1 } }) };
+      return { ok: true, json: async () => ({ rates: { USD: 0.1 } }) };
     });
     const rates2 = await getDynamicRates(env);
     expect(called).toBe(0);
-    expect(rates2.USD).toBe(7.1);
+    expect(rates2.USD).toBe(0.14);
   });
 });
 
