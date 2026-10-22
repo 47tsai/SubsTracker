@@ -322,7 +322,7 @@
           <div class="mb-6">
             <label for="thirdPartyToken" class="block text-sm font-medium text-gray-700">第三方 API 存取權杖</label>
             <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-              <input type="text" id="thirdPartyToken" placeholder="留空表示不修改；輸入新值後將更新"
+              <input type="text" id="thirdPartyToken" placeholder="留空表示不修改；輸入新值後會更新"
                 class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <button type="button" id="generateThirdPartyToken" class="btn-info text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                 <i class="fas fa-magic mr-2"></i>產生令牌
@@ -348,7 +348,7 @@
             <input type="number" id="paymentHistoryLimit" min="10" max="1000" step="1"
               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="預設 100">
-            <p class="mt-1 text-sm text-gray-500">自動續订與手動續订後僅保留最近 N 條付款歷史（建議 50~200，預設 100）。</p>
+            <p class="mt-1 text-sm text-gray-500">自動續訂與手動續訂後僅保留最近 N 條付款歷史（建議 50~200，預設 100）。</p>
           </div>
           
           <div id="telegramConfig" class="config-section">
@@ -357,7 +357,7 @@
               <div>
                 <label for="tgBotToken" class="block text-sm font-medium text-gray-700">Bot Token</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="tgBotToken" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="tgBotToken" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearTgBotToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -386,7 +386,7 @@
             <div class="mb-4">
               <label for="notifyxApiKey" class="block text-sm font-medium text-gray-700">API Key</label>
               <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                <input type="text" id="notifyxApiKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="notifyxApiKey" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <button type="button" id="clearNotifyxApiKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                   <i class="fas fa-eraser mr-2"></i>清空
                 </button>
@@ -407,7 +407,7 @@
               <div>
                 <label for="webhookUrl" class="block text-sm font-medium text-gray-700">Webhook 通知 URL</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="url" id="webhookUrl" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="url" id="webhookUrl" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWebhookUrl" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -426,7 +426,7 @@
               <div>
                 <label for="webhookHeaders" class="block text-sm font-medium text-gray-700">自定義要求頭 (JSON格式，可選)</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-start gap-3">
-                  <textarea id="webhookHeaders" rows="3" placeholder='留空表示不修改；輸入新值後將更新' class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                  <textarea id="webhookHeaders" rows="3" placeholder='留空表示不修改；輸入新值後會更新' class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                   <button type="button" id="clearWebhookHeaders" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -453,7 +453,7 @@
               <div>
                 <label for="wechatbotWebhook" class="block text-sm font-medium text-gray-700">機器人 Webhook URL</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="url" id="wechatbotWebhook" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="url" id="wechatbotWebhook" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWechatbotWebhook" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -495,7 +495,7 @@
               <div>
                 <label for="resendApiKey" class="block text-sm font-medium text-gray-700">Resend API Key</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="resendApiKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="resendApiKey" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearResendApiKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -537,7 +537,7 @@
               <div>
                 <label for="barkDeviceKey" class="block text-sm font-medium text-gray-700">裝置金鑰</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="barkDeviceKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="barkDeviceKey" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearBarkDeviceKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -571,7 +571,7 @@
               </div>
               <label for="gotifyAppToken" class="block text-sm font-medium text-gray-700">Application Token</label>
               <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                <input type="text" id="gotifyAppToken" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="gotifyAppToken" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <button type="button" id="clearGotifyAppToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                   <i class="fas fa-eraser mr-2"></i>清空
                 </button>
@@ -622,7 +622,7 @@
               <div>
                 <label for="serverchanSendKey" class="block text-sm font-medium text-gray-700">SendKey</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="serverchanSendKey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="serverchanSendKey" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearServerchanSendKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -644,7 +644,7 @@
               <div>
                 <label for="pushplusToken" class="block text-sm font-medium text-gray-700">Token</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="pushplusToken" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="pushplusToken" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearPushplusToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -664,7 +664,7 @@
                   <option value="sms">短信</option>
                   <option value="webhook">Webhook</option>
                 </select>
-                <p class="mt-1 text-sm text-gray-500">具體可用管道以 PushPlus 平台支援情況為準</p>
+                <p class="mt-1 text-sm text-gray-500">可用的通知管道請以 PushPlus 平台支援情況為準</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -680,7 +680,7 @@
               <div>
                 <label for="wpushApikey" class="block text-sm font-medium text-gray-700">API Key</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <input type="text" id="wpushApikey" placeholder="留空表示不修改；輸入新值後將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input type="text" id="wpushApikey" placeholder="留空表示不修改；輸入新值後會更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWpushApikey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                     <i class="fas fa-eraser mr-2"></i>清空
                   </button>
@@ -703,7 +703,7 @@
                   <option value="clawbot">微信 ClawBot</option>
                   <option value="qqbot">QQ 機器人</option>
                 </select>
-                <p class="mt-1 text-sm text-gray-500">具體可用管道以 <a href="https://wpush.cn/docs" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 文件</a> 為準</p>
+                <p class="mt-1 text-sm text-gray-500">可用的通知管道請以 <a href="https://wpush.cn/docs" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 文件</a> 為準</p>
               </div>
               <div>
                 <label for="wpushTopicCode" class="block text-sm font-medium text-gray-700">Topic 編碼（可選）</label>
@@ -766,7 +766,7 @@
               </label>
             </div>
             <button type="button" id="importBackupBtn" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium">
-              <i class="fas fa-file-import mr-2"></i>從檔案還原
+              <i class="fas fa-file-import mr-2"></i>從檔案匯入
             </button>
           </div>
         </div>
