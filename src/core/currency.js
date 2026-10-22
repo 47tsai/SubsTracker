@@ -168,7 +168,7 @@ function getUpcomingRenewals(subscriptions, timezone) {
       return {
         name: sub.name,
         amount: sub.amount || 0,
-        currency: sub.currency || 'CNY',
+        currency: sub.currency || 'TWD',
         customType: sub.customType,
         renewalDate: sub.expiryDate,
         daysUntilRenewal
