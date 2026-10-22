@@ -53,7 +53,7 @@
       background-color: #f9fafb; 
       opacity: 0.7; 
     }
-    /* === Config Page 深色模式修複 === */
+    /* === Config Page 深色模式修復 === */
     html.dark .config-section {
       border-color: #374151;
     }
@@ -332,7 +332,7 @@
               </button>
             </div>
             <p id="THIRD_PARTY_API_TOKENStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-            <p class="mt-1 text-sm text-gray-500">調用 /api/notify/{token} 介面時需攜帶此令牌；留空表示禁用第三方 API 推送。</p>
+            <p class="mt-1 text-sm text-gray-500">調用 /api/notify/{token} 介面時需攜帶此令牌；留空表示停用第三方 API 推送。</p>
           </div>
 
           <div class="mb-6">
@@ -973,7 +973,7 @@
       } catch (error) {
         console.error('載入設定失敗:', error);
         showToast('載入設定失敗，請重新整理頁面重試', 'error');
-        // 禁用表單防止誤提交覆蓋資料
+        // 停用表單防止誤提交覆蓋資料
         const form = document.getElementById('configForm');
         Array.from(form.elements).forEach(el => { el.disabled = true; });
       }
