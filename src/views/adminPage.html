@@ -2603,7 +2603,7 @@ const lunarBiz = {
     });
 
     /**
-     * 複製訂閱：打開新建表單並预填字段（新 id 儲存時產生），同步複制提醒規則。
+     * 複製訂閱：打開新建表單並預填欄位（新 id 儲存時產生），同步複制提醒規則。
      */
     async function cloneSubscription(e) {
       const button = e.target.closest('button') || e.target;
@@ -3096,7 +3096,7 @@ const lunarBiz = {
         const startYear = this.yearDecade;
         const endYear = this.yearDecade + 9;
         
-        // 更新年份范围顯示
+        // 更新年份範圍顯示
         this.yearRangeElement.textContent = startYear + '-' + endYear;
         
         // 清空年份網格
@@ -3114,7 +3114,7 @@ const lunarBiz = {
             yearBtn.classList.add('bg-indigo-100', 'text-indigo-600');
           }
           
-          // 限制年份范围 1900-2100
+          // 限制年份範圍 1900-2100
           if (year < 1900 || year > 2100) {
             yearBtn.disabled = true;
             yearBtn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -3509,7 +3509,7 @@ const lunarBiz = {
       }
     });
     
-	    // 新增／修改，編輯訂閱時回顯 useLunar 字段
+	    // 新增／修改，編輯訂閱時回顯 useLunar 欄位
     async function editSubscription(e) {
       const button = e.target.closest('button');
       const id = button ? button.dataset.id : (e.target.dataset.id || e.target.parentElement.dataset.id);
@@ -3631,7 +3631,7 @@ const lunarBiz = {
     // 全局時區設定
     let globalTimezone = 'UTC';
     
-    // 检測時區更新
+    // 檢測時區更新
     function checkTimezoneUpdate() {
       const lastUpdate = localStorage.getItem('timezoneUpdated');
       if (lastUpdate) {
@@ -3784,7 +3784,7 @@ const lunarBiz = {
     //   - 資料形態：[{ id, type, value, unit, repeatInterval?, repeatUntil?, isEnabled }]
     //   - 新建訂閱時預設渲染 4 條預設（7/3/1/0 天）
     //   - 編輯訂閱時通過 /api/subscriptions/:id/reminders 拉取
-    //   - 表單提交時自動收集並附加在 reminderRules 字段
+    //   - 表單提交時自動收集並附加在 reminderRules 欄位
     // ───────────────────────────────────────────────────────
     (function () {
       const RULE_TYPES = [
@@ -3970,7 +3970,7 @@ const lunarBiz = {
     (function () {
       const originalEditSubscription = window.editSubscription;
       // editSubscription 是顶層 async 函數；通過點擊事件代理来钩入更稳。
-      // 這里改為：每次在 subscriptionId 字段被填值後异步 GET 規則。
+      // 這里改為：每次在 subscriptionId 欄位被填值後异步 GET 規則。
       const subIdField = document.getElementById('subscriptionId');
       if (!subIdField) return;
       const observer = new MutationObserver(() => {
