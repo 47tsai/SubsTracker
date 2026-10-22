@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 // @ts-ignore
 import { env } from 'cloudflare:test';
 import { generateJWT, verifyJWT } from '../../src/core/auth.js';
-import { convertToCNY, getDynamicRates } from '../../src/core/currency.js';
+import { convertToTWD, getDynamicRates } from '../../src/core/currency.js';
 
 async function clearKv() {
   const list = await env.SUBSCRIPTIONS_KV.list();
@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 describe('convertToCNY', () => {
-  const rates = { CNY: 1, USD: 7, EUR: 8 };
+  const rates = { CNY: 1, USD: 0.14, EUR: 0.125, TWD: 4.5 };
 
   it('CNY 原样', () => {
     expect(convertToCNY(10, 'CNY', rates)).toBe(10);
