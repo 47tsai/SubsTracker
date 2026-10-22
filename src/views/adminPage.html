@@ -2981,18 +2981,18 @@ const lunarBiz = {
           const dayElement = document.createElement('div');
           dayElement.className = 'calendar-day';
           
-          // 判断是否是目前月份
+          // 判斷是否為目前月份
           if (date.getMonth() !== month) {
             dayElement.classList.add('other-month');
           }
           
-          // 判断是否是今天
+          // 判斷是否為今天
           const today = new Date();
           if (date.toDateString() === today.toDateString()) {
             dayElement.classList.add('today');
           }
           
-          // 判断是否是選中日期
+          // 判斷是否為選取的日期
           if (this.selectedDate && date.toDateString() === this.selectedDate.toDateString()) {
             dayElement.classList.add('selected');
           }
@@ -3694,7 +3694,7 @@ const lunarBiz = {
               'Europe/Berlin': '柏林時間',
               'Europe/Moscow': '莫斯科時間',
               'Australia/Sydney': '悉尼時間',
-              'Australia/Melbourne': '墨尔本時間',
+              'Australia/Melbourne': '墨爾本時間',
               'Pacific/Auckland': '奥克兰時間'
             };
             const timezoneName = timezoneNames[tz] || tz;
