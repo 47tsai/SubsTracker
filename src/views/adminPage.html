@@ -914,7 +914,7 @@
 
         const lunarDay = offset + 1;
 
-        // 產生農曆字符串
+        // 產生農曆字串
         const ganIndex = (lunarYear - 4) % 10;
         const zhiIndex = (lunarYear - 4) % 12;
         const yearStr = this.gan[ganIndex] + this.zhi[zhiIndex] + '年';
@@ -1033,7 +1033,7 @@ const lunarBiz = {
         return;
       }
 
-      // 【修復】直接解析字符串 "YYYY-MM-DD"，避免 new Date() 帶来的時區偏移導致日期少一天
+      // 【修復】直接解析字串 "YYYY-MM-DD"，避免 new Date() 帶来的時區偏移導致日期少一天
       const parts = dateInput.value.split('-');
       const year = parseInt(parts[0], 10);
       const month = parseInt(parts[1], 10);
@@ -1638,7 +1638,7 @@ const lunarBiz = {
 
       filtered.sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate));
 
-      // 使用 DocumentFragment 進行批量插入，減少頁面重繪（移動端性能關键）
+      // 使用 DocumentFragment 進行批量插入，減少頁面重繪（移動端性能關鍵）
       const fragment = document.createDocumentFragment();
 
       filtered.forEach(subscription => {
@@ -1736,7 +1736,7 @@ const lunarBiz = {
           }
         }
 
-        // 構造HTML字符串 (減少了函數調用)
+        // 構造HTML字串 (減少了函數調用)
         const nameHtml = createHoverText(subscription.name, 20, 'text-sm font-medium text-gray-900');
         const typeHtml = createHoverText(subscription.customType || '其他', 15, 'text-sm text-gray-900');
         const periodHtml = periodText ? createHoverText('週期: ' + periodText, 20, 'text-xs text-gray-500 mt-1') : '';
@@ -3413,7 +3413,7 @@ const lunarBiz = {
       document.body.classList.remove('overflow-hidden');
     });
 
-    // ESC 键關閉模態框
+    // ESC 鍵關閉模態框
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         const modal = document.getElementById('subscriptionModal');
