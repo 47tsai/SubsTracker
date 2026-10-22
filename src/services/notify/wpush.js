@@ -62,7 +62,7 @@ export const wpushChannel = {
 
   async test(config) {
     return wpushChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 WPUSH 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 WPUSH 測試通知。' },
       config
     );
   }
