@@ -89,7 +89,7 @@ export const telegramChannel = {
     return telegramChannel.send(
       {
         title: '订阅管理 - 测试通知',
-        content: '这是一条来自订阅管理系统的测试消息。如果你收到此消息，说明 Telegram 配置正常。'
+        content: '這是一則來自訂閱管理系統的測試訊息。若收到此訊息，代表 Telegram 設定正常。'
       },
       config
     );
