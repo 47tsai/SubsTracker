@@ -1,17 +1,17 @@
 // @ts-check
 /**
- * 通知渠道统一适配器协议
+ * 通知管道統一介接協定
  *
- * 所有渠道实现均遵循此 shape：
+ * 所有管道實作皆遵循此結構：
  *
  *   export const xxxChannel = {
- *     name: 'xxx',                        // 渠道名（必须与 ENABLED_NOTIFIERS / 配置 key 保持一致）
+ *     name: 'xxx',                        // 管道名稱（必須與 ENABLED_NOTIFIERS／設定 key 一致）
  *     validateConfig(config) { ... },     // 返回 { ok: true } 或 { ok: false, error: '...' }
- *     async send(payload, config) { ... },// 实际发送
- *     async test(config) { ... }          // 用配置发送一条测试通知
+ *     async send(payload, config) { ... },// 實際傳送
+ *     async test(config) { ... }          // 使用設定傳送一則測試通知
  *   };
  *
- * 这样 dispatch / 通知日志 / 配置页测试按钮可以用同一份代码处理 9 种渠道。
+ * 这样 dispatch / 通知紀錄 / 設定頁的測試按鈕可以用同一份代码处理 9 种渠道。
  *
  */
 
@@ -48,7 +48,7 @@
  * Telegram MarkdownV2 转义。
  *
  * 修复 #81：订阅名包含 `_*[]()~`>#+-=|{}.!\\` 时 Telegram 会拒绝消息。
- * 注意：这个函数只用于发往 Telegram 的内容，不要污染其他渠道。
+ * 注意：这个函数只僅用於傳送至 Telegram 的內容，不要影響其他管道。
  *
  * @param {string} text
  * @returns {string}
@@ -58,7 +58,7 @@ export function escapeMarkdownV2(text = '') {
 }
 
 /**
- * 把 commonContent 中的 Markdown 标记移除（用于纯文本渠道）。
+ * 移除 commonContent 中的 Markdown 標記（用于纯文本渠道）。
  *
  * @param {string} text
  * @returns {string}
@@ -68,7 +68,7 @@ export function stripMarkdown(text = '') {
 }
 
 /**
- * 构造统一的成功结果。
+ * 建立統一的成功結果。
  *
  * @param {string} name
  * @param {any} [raw]
@@ -79,7 +79,7 @@ export function ok(name, raw) {
 }
 
 /**
- * 构造统一的失败结果。
+ * 建立統一的失敗結果。
  *
  * @param {string} name
  * @param {string} error
