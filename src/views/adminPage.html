@@ -480,7 +480,7 @@
           <span class="text-gray-700">顯示農曆</span>
         </label>
         <button id="addSubscriptionBtn" class="btn-primary text-white px-4 py-2 rounded-md text-sm font-medium flex items-center shrink-0">
-          <i class="fas fa-plus mr-2"></i>新增新訂閱
+          <i class="fas fa-plus mr-2"></i>新增訂閱
         </button>
       </div>
       </div>
@@ -525,7 +525,7 @@
     <div class="relative w-auto max-w-2xl mx-4 md:mx-auto my-12 bg-white rounded-lg shadow-xl">
       <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 rounded-t-lg">
         <div class="flex items-center justify-between">
-          <h3 id="modalTitle" class="text-lg font-medium text-gray-900">新增新訂閱</h3>
+          <h3 id="modalTitle" class="text-lg font-medium text-gray-900">新增訂閱</h3>
           <button id="closeModal" class="text-gray-400 hover:text-gray-600">
             <i class="fas fa-times text-xl"></i>
           </button>
@@ -1324,7 +1324,7 @@ const lunarBiz = {
       const reminderValueField = document.getElementById('reminderValue');
       // reminderValue 已隱藏，規則編輯器替代；保留兜底校驗防止不正確的資料
       if (reminderValueField && reminderValueField.value !== '' && Number(reminderValueField.value) < 0) {
-        showFieldError('reminderValue', '提醒值不能為负數');
+        showFieldError('reminderValue', '提醒值不能為負數');
         isValid = false;
       }
 
@@ -1941,7 +1941,7 @@ const lunarBiz = {
     async function testSubscriptionNotification(e) {
         const button = e.target.closest('button');
         if (!button) {
-          showToast('未找到測試按鈕，請重新整理頁面後重试', 'error');
+          showToast('未找到測試按鈕，請重新整理頁面後重試', 'error');
           return;
         }
 
@@ -1972,7 +1972,7 @@ const lunarBiz = {
             }
         } catch (error) {
             console.error('測試通知失敗:', error);
-            showToast('傳送測試通知時發生網路錯誤，請稍後重试', 'error');
+            showToast('傳送測試通知時發生網路錯誤，請稍後重試', 'error');
         } finally {
             button.innerHTML = originalContent;
             button.disabled = false;
@@ -2578,7 +2578,7 @@ const lunarBiz = {
     }
     
     document.getElementById('addSubscriptionBtn').addEventListener('click', () => {
-      document.getElementById('modalTitle').textContent = '新增新訂閱';
+      document.getElementById('modalTitle').textContent = '新增訂閱';
       document.getElementById('subscriptionModal').classList.remove('hidden');
       document.body.classList.add('overflow-hidden'); // 禁止背景捲動
 
@@ -3182,13 +3182,13 @@ const lunarBiz = {
     // === 自訂下拉菜單逻輯 ===
     const TYPE_OPTIONS = [
       "串流媒體", "影音平台", "音樂平台", "雲端服務", "軟體訂閱", 
-      "域名", "伺服器", "會員服務", "学习平台", "健身/運動", 
-      "游戏", "新闻/雜志", "生日", "纪念日", "其他"
+      "網域", "伺服器", "會員服務", "學習平台", "健身／運動", 
+      "遊戲", "新聞／雜誌", "生日", "紀念日", "其他"
     ];
     
     const CATEGORY_OPTIONS = [
-      "個人", "家庭", "工作", "公司", "娱乐", "学习", 
-      "開發", "生产力", "社交", "健康", "財務"
+      "個人", "家庭", "工作", "公司", "娛樂", "學習", 
+      "開發", "生產力", "社交", "健康", "財務"
     ];
 
     function initCustomDropdown(inputId, listId, options) {
@@ -3900,7 +3900,7 @@ const lunarBiz = {
         if (rules.length === 0) {
           const empty = document.createElement('div');
           empty.className = 'text-xs text-gray-500 italic px-2 py-3';
-          empty.textContent = '目前沒有提醒規則；訂閱到期時不會發出通知。點擊"新增規則"或"套用預設"。';
+          empty.textContent = '目前沒有提醒規則；訂閱到期時不會發出通知。點選「新增規則」或「套用預設」。';
           container.appendChild(empty);
           return;
         }
