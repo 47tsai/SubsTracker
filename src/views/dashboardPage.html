@@ -94,7 +94,7 @@
             <i class="fas fa-cog mr-1"></i>系統設定
           </a>
           <a href="/api/logout" class="text-gray-700 hover:text-red-600 border-b-2 border-transparent hover:border-red-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-sign-out-alt mr-1"></i>登出登入
+            <i class="fas fa-sign-out-alt mr-1"></i>登出
           </a>
         </div>
 
@@ -122,7 +122,7 @@
           <i class="fas fa-cog w-6 text-center mr-2"></i>系統設定
         </a>
         <a href="/api/logout" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 active:bg-red-100 transition-colors">
-          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出登入
+          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出
         </a>
       </div>
     </div>
@@ -131,7 +131,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
       <h2 class="text-2xl font-bold text-gray-800">📊 仪表板</h2>
-      <p class="text-sm text-gray-500 mt-1">订阅費用和活動概覽（統計金額已折合為 CNY）</p>
+      <p class="text-sm text-gray-500 mt-1">訂閱費用和活動概覽（統計金額已折合為 CNY）</p>
     </div>
 
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
@@ -247,7 +247,7 @@
       return currencySymbols[currency] || '¥';
     }
 
-    // 前端統一本地時區顯示
+    // 前端統一本機時區顯示
     async function showSystemTime() {
       try {
         const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
@@ -311,7 +311,7 @@
         if (schedulerStatusEl) {
           const status = data.schedulerStatus;
           if (!status) {
-            schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">暂無定時工作執行紀錄（等待下一次 Cron）</div></div>';
+            schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">目前沒有排程執行紀錄（等待下一次 Cron）</div></div>';
           } else {
             const sendResult = status.sendResult || {};
             const runAt = status.lastRunAt ? new Date(status.lastRunAt).toLocaleString('zh-CN') : '未知';
@@ -337,13 +337,13 @@
                   <div class="text-gray-900 font-medium mt-1">${status.currentHour || '--'} / ${configuredHours}</div>
                 </div>
                 <div class="bg-gray-50 rounded-md p-3">
-                  <div class="text-gray-500">检查與命中</div>
-                  <div class="text-gray-900 font-medium mt-1">检查 ${status.checkedSubscriptions || 0} 條，命中 ${status.expiringMatched || 0} 條</div>
+                  <div class="text-gray-500">檢查與符合條件的項目</div>
+                  <div class="text-gray-900 font-medium mt-1">檢查 ${status.checkedSubscriptions || 0} 條，命中 ${status.expiringMatched || 0} 條</div>
                 </div>
                 <div class="bg-gray-50 rounded-md p-3 md:col-span-2">
                   <div class="text-gray-500">傳送結果</div>
-                  <div class="text-gray-900 font-medium mt-1">尝试 ${sendResult.attempted || 0} 個渠道，成功 ${sendResult.successCount || 0}，失敗 ${sendResult.failedCount || 0}，去重跳過 ${status.dedupeSkipped || 0}</div>
-                  <div class="text-xs text-gray-500 mt-1">${status.reason || '暂無詳情'}</div>
+                  <div class="text-gray-900 font-medium mt-1">嘗試 ${sendResult.attempted || 0} 個管道，成功 ${sendResult.successCount || 0}，失敗 ${sendResult.failedCount || 0}，去重跳過 ${status.dedupeSkipped || 0}</div>
+                  <div class="text-xs text-gray-500 mt-1">${status.reason || '暫無詳情'}</div>
                 </div>
               </div>
             `;
@@ -354,7 +354,7 @@
         const schedulerHistoryEl = document.getElementById('schedulerStatusHistory');
         if (schedulerHistoryEl) {
           if (schedulerHistory.length === 0) {
-            schedulerHistoryEl.innerHTML = '<div class="text-sm text-gray-500">暂無歷史紀錄</div>';
+            schedulerHistoryEl.innerHTML = '<div class="text-sm text-gray-500">暫無歷史紀錄</div>';
           } else {
             schedulerHistoryEl.innerHTML = schedulerHistory.slice(0, 10).map(item => {
               const when = item.lastRunAt ? new Date(item.lastRunAt).toLocaleString('zh-CN') : '未知時間';
@@ -381,9 +381,9 @@
             <div class="stat-card-subtitle">月均支出: ¥${data.yearlyExpense.monthlyAverage.toFixed(2)}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-card-header">活跃订阅</div>
+            <div class="stat-card-header">啟用中的訂閱</div>
             <div class="stat-card-value">${data.activeSubscriptions.active}</div>
-            <div class="stat-card-subtitle">總订阅數: ${data.activeSubscriptions.total}</div>
+            <div class="stat-card-subtitle">總訂閱數: ${data.activeSubscriptions.total}</div>
             ${data.activeSubscriptions.expiringSoon>0?`<div class="stat-card-trend down"><i class="fas fa-exclamation-circle"></i>${data.activeSubscriptions.expiringSoon} 即將到期</div>`:''}
           </div>
         `;
@@ -404,7 +404,7 @@
         `).join('');
         
         const ur=document.getElementById('upcomingRenewals');
-        ur.innerHTML=data.upcomingRenewals.length===0?'<div class="empty-state"><div class="empty-state-icon">✅</div><div class="empty-state-text">未来7天內沒有即將續費的订阅</div></div>':
+        ur.innerHTML=data.upcomingRenewals.length===0?'<div class="empty-state"><div class="empty-state-icon">✅</div><div class="empty-state-text">未來 7 天內沒有即將續費的訂閱</div></div>':
         data.upcomingRenewals.map(s=>`
           <div class="list-item">
             <div class="list-item-content">
@@ -420,7 +420,7 @@
         `).join('');
         
         const et=document.getElementById('expenseByType');
-        et.innerHTML=data.expenseByType.length===0?'<div class="empty-state"><div class="empty-state-icon">📊</div><div class="empty-state-text">暂無支出資料</div></div>':
+        et.innerHTML=data.expenseByType.length===0?'<div class="empty-state"><div class="empty-state-icon">📊</div><div class="empty-state-text">暫無支出資料</div></div>':
         data.expenseByType.map((item,i)=>`
           <div class="ranking-item">
             <div class="ranking-item-header">
@@ -437,7 +437,7 @@
         `).join('');
         
         const ec=document.getElementById('expenseByCategory');
-        ec.innerHTML=data.expenseByCategory.length===0?'<div class="empty-state"><div class="empty-state-icon">📂</div><div class="empty-state-text">暂無支出資料</div></div>':
+        ec.innerHTML=data.expenseByCategory.length===0?'<div class="empty-state"><div class="empty-state-icon">📂</div><div class="empty-state-text">暫無支出資料</div></div>':
         data.expenseByCategory.map((item,i)=>`
           <div class="ranking-item">
             <div class="ranking-item-header">
@@ -485,7 +485,7 @@
       }
     });
 
-    // --- 移動端菜單控制脚本 ---
+    // --- 移動端菜單控制指令碼 ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
