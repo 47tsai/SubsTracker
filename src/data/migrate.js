@@ -1,19 +1,19 @@
 // @ts-check
 /**
- * 自动数据迁移
+ * 自動資料遷移
  *
- * ── 设计原则 ────────────────────────────────────────────────
- * 1. **幂等**：每个 step 多次执行结果一致，且 `migrate:{step.id}=done` 标记跳过。
- * 2. **可重入安全**：通过 `migration_lock` Key（60s TTL）防止 Cron 与请求并发触发。
+ * ── 設計原則 ────────────────────────────────────────────────
+ * 1. **冪等**：每個 step 多次執行的結果皆一致，且 `migrate:{step.id}=done` 標記為略過。
+ * 2. **可重複進入且安全**：透過 `migration_lock` Key（60s TTL）避免 Cron 與請求同時觸發。
  *    最坏情况是其中一方放弃迁移，另一方完成；不会双写。
- * 3. **可累加**：后续 Task 在 `MIGRATION_STEPS` 数组里追加 step，不影响已运行的步骤。
- * 4. **数据安全**：旧 `subscriptions` 单 Key 在迁移成功后改名为
- *    `subscriptions_v2_backup`（7 天 TTL）保留作回滚备份。
+ * 3. **可累加**：後續 Task 在 `MIGRATION_STEPS` 陣列中新增 step，不影響已執行的步驟。
+ * 4. **資料安全**：舊 `subscriptions` 单 Key 在迁移成功后重新命名為
+ *    `subscriptions_v2_backup`（7 天 TTL）保留作為回復備份。
  *
- * ── KV 标记一览 ─────────────────────────────────────────────
- *   schema_version           = 'v3'        ← 数据 schema 版本标识，置上后每次请求秒过
- *   migrate:subscriptions_v3 = 'done'      ← 每个 step 自己的标记
- *   migration_lock           = ISO 时间戳   ← TTL 60s 的悲观锁
+ * ── KV 標記一覽 ─────────────────────────────────────────────
+ *   schema_version           = 'v3'        ← 資料 schema 版本標記，設定後每次請求即可快速略過
+ *   migrate:subscriptions_v3 = 'done'      ← 每個 step 自己的標記
+ *   migration_lock           = ISO 時間戳記   ← TTL 60s 的悲观锁
  *
  */
 
@@ -31,7 +31,7 @@ const BACKUP_TTL_SEC = 7 * 24 * 3600;
 
 /**
  * @typedef {Object} MigrationStep
- * @property {string} id 唯一标识，用于幂等标记
+ * @property {string} id 唯一标识，用于冪等标记
  * @property {string} description 中文描述
  * @property {(env: any) => Promise<void>} run 执行体
  */
@@ -45,27 +45,27 @@ export const MIGRATION_STEPS = [
   },
   {
     id: 'reminder_rules_v3',
-    description: '把订阅自带的 reminderUnit/reminderValue 转成 reminder_rules:{subId}',
+    description: '將訂閱本身的 reminderUnit/reminderValue 轉換為 reminder_rules:{subId}',
     run: migrateReminderRules
   },
   {
     id: 'scheduler_logs_v3',
-    description: '把旧 scheduler_status_history 合并到 sched_log:{iso}',
+    description: '把舊 scheduler_status_history 合并到 sched_log:{iso}',
     run: migrateSchedulerLogs
   }
 ];
 
 /**
- * 已运行迁移的内存缓存（避免每次请求都查一次 KV）。
+ * 已執行遷移的記憶體快取（避免每次請求都查詢 KV）。
  * 同一 isolate 内只查一次。
  */
 let cachedSchemaVersion = /** @type {string|null} */ (null);
 
 /**
- * 入口：确保所有迁移步骤已运行完成。
+ * 入口：確保所有遷移步驟都已執行完成。
  *
- * 调用方式：在 Worker fetch / scheduled 入口处第一行调用一次。
- * 已迁移过的请求几乎零开销（命中内存缓存或 1 次 KV.get）。
+ * 呼叫方式：在 Worker fetch／scheduled 入口的第一行呼叫一次。
+ * 已完成遷移的請求幾乎沒有額外成本（命中記憶體快取或執行一次 KV.get）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @returns {Promise<{ migrated: boolean, reason?: string, ranSteps?: string[] }>}
@@ -81,7 +81,7 @@ export async function ensureMigrations(env) {
     return { migrated: false, reason: 'already_v3' };
   }
 
-  // 尝试加锁
+  // 嘗試加鎖
   const acquired = await tryAcquireLock(env);
   if (!acquired) {
     return { migrated: false, reason: 'locked_elsewhere' };
@@ -93,7 +93,7 @@ export async function ensureMigrations(env) {
       const doneFlag = await env.SUBSCRIPTIONS_KV.get(`migrate:${step.id}`);
       if (doneFlag === 'done') continue;
 
-      console.log(`[migrate] 开始执行: ${step.id} - ${step.description}`);
+      console.log(`[migrate] 開始執行：${step.id} - ${step.description}`);
       await step.run(env);
       await env.SUBSCRIPTIONS_KV.put(`migrate:${step.id}`, 'done');
       console.log(`[migrate] 完成: ${step.id}`);
@@ -103,7 +103,7 @@ export async function ensureMigrations(env) {
     cachedSchemaVersion = SCHEMA_VERSION;
     return { migrated: true, ranSteps };
   } catch (err) {
-    console.error('[migrate] 执行失败，本次不会标记完成，下次请求会重试:', err);
+    console.error('[migrate] 執行失敗，本次不會標記為完成，下次請求會重試：', err);
     throw err;
   } finally {
     await releaseLock(env);
@@ -111,14 +111,14 @@ export async function ensureMigrations(env) {
 }
 
 /**
- * 测试用：清除内存缓存，强制下次重新检查 schema_version。
+ * 測試用：清除記憶體快取，強制下次重新檢查 schema_version。
  */
 export function _resetMigrationCache() {
   cachedSchemaVersion = null;
 }
 
 /**
- * 测试用：检查内存缓存状态。
+ * 測試用：檢查記憶體快取狀態。
  */
 export function _getCachedSchemaVersion() {
   return cachedSchemaVersion;
@@ -130,7 +130,7 @@ export function _getCachedSchemaVersion() {
 
 /**
  * 试图获取迁移锁。
- * KV 没有 CAS，只能"先读后写"——存在小窗口竞态，足够大多数场景。
+ * KV 没有 CAS，只能「先讀後寫」——存在短暫的競態窗口，但足以應付大多數情境。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @returns {Promise<boolean>}
@@ -153,19 +153,19 @@ async function releaseLock(env) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// 各 step 实现
+// 各 step 的實作
 // ─────────────────────────────────────────────────────────────
 
 /**
- * 迁移：旧 `subscriptions`（JSON 数组）→ `sub:{id}` 多 Key + `sub_index`。
+ * 迁移：舊 `subscriptions`（JSON 数组）→ `sub:{id}` 多個 Key + `sub_index`。
  *
- * - 读 `subscriptions`，逐条写 `sub:{id}`，构建索引并写 `sub_index`
- * - 旧 `subscriptions` 改名为 `subscriptions_v2_backup`（7 天 TTL）后删除
- * - 旧数据为空或缺失：仅写一个空索引，schema_version 仍写入
+ * - 读 `subscriptions`，逐筆寫入 `sub:{id}`，建立索引並寫入 `sub_index`
+ * - 舊 `subscriptions` 重新命名為 `subscriptions_v2_backup`（7 天 TTL）后删除
+ * - 舊数据为空或缺失：仅写一个空索引，schema_version 仍會寫入
  *
- * 幂等性：
- *   - 若 sub_index 已写过且 sub:{id} 已存在，重复执行会覆盖（值相同，影响仅 KV 写次数）
- *   - 若旧 subscriptions 已被改名，第二次读到 null 视为已迁移，跳过
+ * 冪等性：
+ *   - 若 sub_index 已寫入且 sub:{id} 已存在，重複執行會覆寫（值相同，僅影響 KV 寫入次數）
+ *   - 若舊 subscriptions 已重新命名，第二次讀取到 null 就視為已遷移並略過
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  */
@@ -179,23 +179,23 @@ export async function migrateSubscriptions(env) {
       const parsed = JSON.parse(oldRaw);
       oldSubs = Array.isArray(parsed) ? parsed : [];
     } catch (err) {
-      console.error('[migrate:subscriptions_v3] 旧数据 JSON 解析失败，按空处理:', err);
+      console.error('[migrate:subscriptions_v3] 舊数据 JSON 解析失败，按空处理:', err);
       oldSubs = [];
     }
   }
 
-  // 写入新结构（即使 oldSubs 为空也要写 sub_index 占位）
+  // 寫入新結構（即使 oldSubs 為空，也要寫入 sub_index 作為佔位）
   if (oldSubs.length > 0) {
     await subRepo.replaceAll(env, oldSubs);
   } else {
-    // 现有索引可能已有值（来自第二次执行），不要覆盖
+    // 現有索引可能已有值（來自第二次執行），不要覆寫
     const existing = await subRepo.listIds(env);
     if (existing.length === 0) {
       await env.SUBSCRIPTIONS_KV.put('sub_index', '[]');
     }
   }
 
-  // 备份旧数据并删除原 Key
+  // 备份舊数据并删除原 Key
   if (oldRaw) {
     await env.SUBSCRIPTIONS_KV.put('subscriptions_v2_backup', oldRaw, {
       expirationTtl: BACKUP_TTL_SEC
@@ -203,7 +203,7 @@ export async function migrateSubscriptions(env) {
     await env.SUBSCRIPTIONS_KV.delete('subscriptions');
   }
 
-  console.log(`[migrate:subscriptions_v3] 已迁移 ${oldSubs.length} 条订阅`);
+  console.log(`[migrate:subscriptions_v3] 已遷移 ${oldSubs.length} 筆訂閱`);
 }
 
 /**
@@ -228,10 +228,10 @@ export async function migrateReminderRules(env) {
 }
 
 /**
- * 迁移：把旧 scheduler_status_history（早期版本最多保留 20 条调度状态）转写到 sched_log:{iso}。
+ * 迁移：把舊 scheduler_status_history（早期版本最多保留 20 条调度状态）转写到 sched_log:{iso}。
  *
  * 仅作历史记录的最佳努力迁移，结构差异较大，主要保留时间线索。
- * 旧 Key 迁移完保留作回滚备份（让 KV TTL 自然过期清理）。
+ * 舊 Key 迁移完保留作為回復備份（让 KV TTL 自然过期清理）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  */
