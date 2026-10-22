@@ -24,7 +24,7 @@ async function testSingleSubscriptionNotification(id, env) {
     }
     const config = await getConfig(env);
 
-    const title = `手動测试通知: ${subscription.name}`;
+    const title = `手動測試通知: ${subscription.name}`;
 
     const showLunar = config.SHOW_LUNAR === true;
     let lunarExpiryText = '';
@@ -33,14 +33,14 @@ async function testSingleSubscriptionNotification(id, env) {
       const timezoneForLunar = config?.TIMEZONE || 'UTC';
       const expiryParts = getTimezoneDateParts(subscription.expiryDate, timezoneForLunar);
       const lunarExpiry = lunarCalendar.solar2lunar(expiryParts.year, expiryParts.month, expiryParts.day);
-      lunarExpiryText = lunarExpiry ? ` (农历: ${lunarExpiry.fullStr})` : '';
+      lunarExpiryText = lunarExpiry ? ` (農曆: ${lunarExpiry.fullStr})` : '';
     }
 
     const timezone = config?.TIMEZONE || 'UTC';
     const formattedExpiryDate = formatTimeInTimezone(new Date(subscription.expiryDate), timezone, 'date');
     const currentTime = formatTimeInTimezone(new Date(), timezone, 'datetime');
 
-    const calendarType = subscription.useLunar ? '农历' : '公历';
+    const calendarType = subscription.useLunar ? '農曆' : '國曆';
     const autoRenewText = subscription.autoRenew ? '是' : '否';
     const formattedAmount = formatAmount(subscription.amount, subscription.currency || 'TWD');
     const amountText = formattedAmount ? `\n金额: ${formattedAmount}/周期` : '';
@@ -54,7 +54,7 @@ async function testSingleSubscriptionNotification(id, env) {
 到期日期: ${formattedExpiryDate}${lunarExpiryText}
 自动续期: ${autoRenewText}
 备注: ${subscription.notes || '无'}
-傳送时间: ${currentTime}
+傳送時間: ${currentTime}
 当前时区: ${formatTimezoneDisplay(timezone)}`;
 
     const tags = extractTagsFromSubscriptions([subscription]);
@@ -72,14 +72,14 @@ async function testSingleSubscriptionNotification(id, env) {
     }
 
     if (successCount === 0) {
-      return { success: false, message: `测试通知傳送失敗（已尝试 ${attempted} 个渠道）` };
+      return { success: false, message: `測試通知傳送失敗（已尝试 ${attempted} 个管道）` };
     }
 
     if (failedCount > 0) {
-      return { success: true, message: `测试通知已傳送：成功 ${successCount} 个，失敗 ${failedCount} 个渠道` };
+      return { success: true, message: `測試通知已傳送：成功 ${successCount} 個，失敗 ${failedCount} 個管道` };
     }
 
-    return { success: true, message: `测试通知傳送成功（共 ${successCount} 个渠道）` };
+    return { success: true, message: `測試通知傳送成功（共 ${successCount} 個管道）` };
   } catch (error) {
     console.error('[手動测试] 傳送失敗:', error);
     return { success: false, message: '傳送时发生错误: ' + error.message };
@@ -106,7 +106,7 @@ async function handleSubscriptions(request, env, path) {
         );
       }
       const result = await createSubscription(subscription, env);
-      // 创建成功后写入提醒规则，并同步 legacy 提醒字段（列表展示依赖）
+      // 建立成功後寫入提醒規則，並同步舊版 提醒字段（清單顯示所需）
       if (result.success && result.subscription) {
         try {
           const remindersRepo = await import('../../data/reminders.repo.js');
@@ -120,7 +120,7 @@ async function handleSubscriptions(request, env, path) {
           await remindersRepo.replaceForSubscription(env, result.subscription.id, rules);
           await syncLegacyReminderFields(env, result.subscription.id, rules);
         } catch (err) {
-          console.error('[subscriptions] 写入提醒规则失敗（訂閱本身已创建）:', err);
+          console.error('[subscriptions] 寫入提醒規則失敗（訂閱本身已建立）:', err);
         }
       }
       return new Response(JSON.stringify(result), {
@@ -203,7 +203,7 @@ async function handleSubscriptions(request, env, path) {
         );
       }
       const result = await updateSubscription(id, subscription, env);
-      // 与创建路径对称：若 body 带 reminderRules 则整体替换并同步 legacy
+      // 与建立路径对称：若 body 帶 reminderRules 則整批取代並同步舊版
       if (result.success && Array.isArray(subscription.reminderRules)) {
         try {
           const remindersRepo = await import('../../data/reminders.repo.js');
