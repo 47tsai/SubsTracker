@@ -1,4 +1,4 @@
-// 注：本文件暂不启用 // @ts-check，因 lunar 库返回类型分支较多，类型清理推迟到后续 Task。
+// 註：本檔案暫不啟用 // @ts-check，因 lunar 套件的回傳型別分支較多，型別整理延後處理。
 /**
  * 訂閱業務層
  *
@@ -6,7 +6,7 @@
  * 刪除付款紀錄回退週期、農曆週期推算、初始付款紀錄等）。
  *
  * 重构：
- * - 数据存储从单 Key 数组改为 sub:{id} 多 Key（见 subscriptions.repo.js）
+ * - 数据存储从单 Key 数组改为 sub:{id} 多個 Key（見 subscriptions.repo.js）
  * - 单条读写通过 repo.getById / repo.save，不再加载整个数组，降低并发风险
  * - 业务逻辑保持兼容，外部 API 签名不变
  *
@@ -102,7 +102,7 @@ async function getAllSubscriptions(env) {
 }
 
 /**
- * 將多條規則同步回訂閱的 legacy 提醒欄位，避免列表/舊路徑与規則脫節。
+ * 將多條規則同步回訂閱的 legacy 提醒欄位，避免清單／舊路徑與規則脫節。
  *
  * @param {any} env
  * @param {string} subId
@@ -147,7 +147,7 @@ async function getSubscription(id, env) {
 async function createSubscription(subscription, env) {
   try {
     if (!subscription.name || !subscription.expiryDate) {
-      return { success: false, message: '缺少必填字段' };
+      return { success: false, message: '缺少必填欄位' };
     }
 
     const config = await getConfig(env);
@@ -158,7 +158,7 @@ async function createSubscription(subscription, env) {
     const startDate = parseOptionalDateInTimezone(subscription.startDate, timezone);
     let expiryDate = parseOptionalDateInTimezone(subscription.expiryDate, timezone);
     if (!expiryDate) {
-      return { success: false, message: '到期日期格式无效' };
+      return { success: false, message: '到期日期格式無效' };
     }
 
     let useLunar = !!subscription.useLunar;
@@ -246,7 +246,7 @@ async function createSubscription(subscription, env) {
 
     return { success: true, subscription: newSubscription };
   } catch (error) {
-    console.error('建立訂閱异常：', error && error.stack ? error.stack : error);
+    console.error('建立訂閱時發生例外：', error && error.stack ? error.stack : error);
     return { success: false, message: error && error.message ? error.message : '建立訂閱失敗' };
   }
 }
@@ -266,7 +266,7 @@ async function updateSubscription(id, subscription, env) {
     }
 
     if (!subscription.name || !subscription.expiryDate) {
-      return { success: false, message: '缺少必填字段' };
+      return { success: false, message: '缺少必填欄位' };
     }
 
     const config = await getConfig(env);
@@ -281,7 +281,7 @@ async function updateSubscription(id, subscription, env) {
     const incomingStartDate = parseOptionalDateInTimezone(subscription.startDate, timezone);
     let expiryDate = parseOptionalDateInTimezone(subscription.expiryDate, timezone);
     if (!expiryDate) {
-      return { success: false, message: '到期日期格式无效' };
+      return { success: false, message: '到期日期格式無效' };
     }
 
     let useLunar = !!subscription.useLunar;
@@ -426,7 +426,7 @@ async function deleteSubscription(id, env) {
       const remindersRepo = await import('./reminders.repo.js');
       await remindersRepo.clearForSubscription(env, id);
     } catch (err) {
-      console.error('[subscriptions] 清理提醒规则失敗（訂閱已刪除）:', err);
+      console.error('[subscriptions] 清理提醒規則失敗（訂閱已刪除）:', err);
     }
     return { success: true };
   } catch (error) {
@@ -436,7 +436,7 @@ async function deleteSubscription(id, env) {
 }
 
 /**
- * 手動續訂订阅。
+ * 手動續訂訂閱。
  *
  * 業務規則：
  * - reset 模式：以付款日期作為新起點
