@@ -569,10 +569,10 @@
                   <option value="USD">USD ($)</option>   // 美元
                   <option value="HKD">HKD (HK$)</option> // 港幣
                   <option value="TWD">TWD (NT$)</option> // 新台幣
-                  <option value="JPY">JPY (¥)</option>   // 日元
-                  <option value="EUR">EUR (€)</option>   // 欧元
-                  <option value="GBP">GBP (£)</option>   // 英镑
-                  <option value="KRW">KRW (₩)</option>   // 韩元
+                  <option value="JPY">JPY (¥)</option>   // 日圓
+                  <option value="EUR">EUR (€)</option>   // 歐元
+                  <option value="GBP">GBP (£)</option>   // 英鎊
+                  <option value="KRW">KRW (₩)</option>   // 韓元
                   <option value="TRY">TRY (₺)</option>   // 土耳其里拉
                 </select>
               </div>
@@ -698,7 +698,7 @@
           </div>
         </div>
 
-        <!-- 提醒規則編輯器（多條規則）。隱藏的 reminderUnit/reminderValue 僅作為後端兜底字段保留。 -->
+        <!-- 提醒規則編輯器（多條規則）。隱藏的 reminderUnit/reminderValue 僅作為後端備援欄位保留。 -->
         <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
           <div class="flex items-center justify-between mb-3">
             <label class="block text-sm font-semibold text-gray-700">
@@ -708,7 +708,7 @@
             <div class="flex items-center space-x-2">
               <button type="button" id="reminderRulesPresetBtn"
                 class="text-xs px-2 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 text-gray-700">
-                <i class="fas fa-magic"></i> 應用預設(7/3/1/當天)
+                <i class="fas fa-magic"></i> 套用套用預設（7／3／1 天及到期當天）
               </button>
               <button type="button" id="reminderRulesAddBtn"
                 class="text-xs px-2 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">
@@ -720,12 +720,12 @@
             <!-- 規則行由 JS 註入 -->
           </div>
           <p class="mt-2 text-xs text-gray-500 leading-relaxed">
-            <strong class="text-gray-600">觸發語義（精確匹配）：</strong>
+            <strong class="text-gray-600">觸發規則（精確比對）：</strong>
             「到期前 N 天」僅在剩餘天數<strong>正好等於 N</strong> 時傳送一次，不會在第 N-1…1 天自動連發。
             若希望 7/3/1 天都提醒，請新增多條規則（可用上方預設）。
             類型：到期前 = 精確日/小時；到期當天；到期後 = 每 X 小時重複直到續費/手動確認。
           </p>
-          <!-- 兜底字段：舊排程器路徑需要這兩個值；當 reminderRules 為空時仍生效 -->
+          <!-- 備援欄位：舊版排程器路徑需要這兩個值；當 reminderRules 為空時仍生效 -->
           <input type="hidden" id="reminderUnit" value="day">
           <input type="hidden" id="reminderValue" value="7">
           <div class="error-message text-red-500" data-for="reminderValue"></div>
@@ -935,7 +935,7 @@
     };
 	
 
-// 新增修改，農曆轉國曆（簡化，適用1900-2100年）
+// 新增／修改，農曆轉國曆（簡化，適用1900-2100年）
 function lunar2solar(lunar) {
   for (let y = lunar.year - 1; y <= lunar.year + 1; y++) {
     for (let m = 1; m <= 12; m++) {
@@ -958,7 +958,7 @@ function lunar2solar(lunar) {
   return null;
 }
 
-// 新增修改，農曆加週期，前期版本
+// 新增／修改，農曆加週期，前期版本
 function addLunarPeriod(lunar, periodValue, periodUnit) {
   let { year, month, day, isLeap } = lunar;
   if (periodUnit === 'year') {
@@ -1229,7 +1229,7 @@ const lunarBiz = {
       const d = value instanceof Date ? value : new Date(value);
       if (isNaN(d.getTime())) return '';
       return d.toLocaleDateString(
-        'zh-CN',
+        'zh-TW',
         {
           timeZone: timezone,
           year: 'numeric',
@@ -1243,7 +1243,7 @@ const lunarBiz = {
     function formatDateTimeInTimezone(value, timezone = globalTimezone) {
       const d = value instanceof Date ? value : new Date(value);
       if (isNaN(d.getTime())) return '';
-      return d.toLocaleString('zh-CN', {
+      return d.toLocaleString('zh-TW', {
         timeZone: timezone,
         year: 'numeric',
         month: '2-digit',
@@ -1258,7 +1258,7 @@ const lunarBiz = {
     function formatClockTimeInTimezone(value, timezone = globalTimezone) {
       const d = value instanceof Date ? value : new Date(value);
       if (isNaN(d.getTime())) return '';
-      return d.toLocaleTimeString('zh-CN', {
+      return d.toLocaleTimeString('zh-TW', {
         timeZone: timezone,
         hour: '2-digit',
         minute: '2-digit',
@@ -1322,7 +1322,7 @@ const lunarBiz = {
       }
 
       const reminderValueField = document.getElementById('reminderValue');
-      // 本次：reminderValue 已隱藏，規則編輯器替代；保留兜底校驗防止不正確的資料
+      // reminderValue 已隱藏，規則編輯器替代；保留兜底校驗防止不正確的資料
       if (reminderValueField && reminderValueField.value !== '' && Number(reminderValueField.value) < 0) {
         showFieldError('reminderValue', '提醒值不能為负數');
         isValid = false;
@@ -1370,7 +1370,7 @@ const lunarBiz = {
         normalizeCategoryTokens(subscription.category).forEach(token => categories.add(token));
       });
 
-      const sorted = Array.from(categories).sort((a, b) => a.localeCompare(b, 'zh-CN'));
+      const sorted = Array.from(categories).sort((a, b) => a.localeCompare(b, 'zh-TW'));
       select.innerHTML = '';
 
       const defaultOption = document.createElement('option');
@@ -1422,7 +1422,7 @@ const lunarBiz = {
     }
 
     function getReminderSettings(subscription) {
-      // 優先使用真實多規則（清單 API 已附帶 reminderRules / reminderRulesSummary）
+      // 優先使用真實多規則（清單 API 已包含 reminderRules / reminderRulesSummary）
       // 註意：整個函式統一用 var，避免 var/let 同名重複聲明導致整頁指令碼中断
       var rules = Array.isArray(subscription.reminderRules) ? subscription.reminderRules : null;
       var summary = subscription.reminderRulesSummary || (rules ? formatReminderRulesSummary(rules) : '');
@@ -3343,7 +3343,7 @@ const lunarBiz = {
   const debugLog = (...args) => {
     if (window.DEBUG_LOGS === true) console.log(...args);
   };
-    // 3. 新增修改， calculateExpiryDate 函數，支援農曆週期推算     
+    // 3. 新增／修改， calculateExpiryDate 函數，支援農曆週期推算     
 	function calculateExpiryDate() {
     if (isEditingLoading) return;
 
@@ -3450,9 +3450,9 @@ const lunarBiz = {
         name: document.getElementById('name').value.trim(),
         customType: document.getElementById('customType').value.trim(),
         category: document.getElementById('category').value.trim(),
-        subscriptionMode: document.getElementById('subscriptionMode').value, // 新增修改，表單提交時帶上 subscriptionMode 字段
+        subscriptionMode: document.getElementById('subscriptionMode').value, // 新增／修改，表單提交時帶上 subscriptionMode 字段
         notes: document.getElementById('notes').value.trim() || '',
-        currency: document.getElementById('currency').value, // 新增修改，表單提交時帶上 currency 字段
+        currency: document.getElementById('currency').value, // 新增／修改，表單提交時帶上 currency 字段
         amount: document.getElementById('amount').value === '' ? null : parseFloat(document.getElementById('amount').value),
         isActive: document.getElementById('isActive').checked,
         autoRenew: document.getElementById('autoRenew').checked,
@@ -3509,7 +3509,7 @@ const lunarBiz = {
       }
     });
     
-	    // 新增修改，編輯訂閱時回顯 useLunar 字段
+	    // 新增／修改，編輯訂閱時回顯 useLunar 字段
     async function editSubscription(e) {
       const button = e.target.closest('button');
       const id = button ? button.dataset.id : (e.target.dataset.id || e.target.parentElement.dataset.id);
@@ -3707,7 +3707,7 @@ const lunarBiz = {
 
         function update() {
           const now = new Date();
-          const timeStr = now.toLocaleString('zh-CN', {
+          const timeStr = now.toLocaleString('zh-TW', {
             timeZone: globalTimezone,
             year: 'numeric', month: '2-digit', day: '2-digit',
             hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -3900,7 +3900,7 @@ const lunarBiz = {
         if (rules.length === 0) {
           const empty = document.createElement('div');
           empty.className = 'text-xs text-gray-500 italic px-2 py-3';
-          empty.textContent = '目前沒有提醒規則；訂閱到期時不會發出通知。點擊"新增規則"或"應用預設"。';
+          empty.textContent = '目前沒有提醒規則；訂閱到期時不會發出通知。點擊"新增規則"或"套用預設"。';
           container.appendChild(empty);
           return;
         }
