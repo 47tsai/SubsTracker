@@ -947,7 +947,7 @@
         document.getElementById('paymentHistoryLimit').value = Number(config.PAYMENT_HISTORY_LIMIT) || 100;
         const notificationHoursInput = document.getElementById('notificationHours');
         if (notificationHoursInput) {
-          // 將通知時段清單格式化為逗號分隔的字符串，便於管理員檢視與編輯
+          // 將通知時段清單格式化為以逗號分隔的字串，便於管理員檢視與編輯
           const hours = Array.isArray(config.NOTIFICATION_HOURS) ? config.NOTIFICATION_HOURS : [];
           notificationHoursInput.value = hours.join(', ');
         }
@@ -1335,7 +1335,7 @@
         try {
           result = await response.json();
         } catch (_) {
-          result = { success: false, message: '服務返回了無法解析的回應' };
+          result = { success: false, message: '服務回傳的內容無法解析' };
         }
 
         if (response.ok && result.success) {
@@ -1405,7 +1405,7 @@
 
     document.getElementById('generateThirdPartyToken').addEventListener('click', () => {
       try {
-        // 產生 32 位随机令牌，避免出現特殊字符，方便寫入 URL
+        // 產生 32 位隨機令牌，避免出現特殊字元，方便寫入 URL
         const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const buffer = new Uint8Array(32);
         window.crypto.getRandomValues(buffer);
