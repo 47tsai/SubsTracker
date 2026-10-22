@@ -723,7 +723,7 @@
             <strong class="text-gray-600">觸發規則（精確比對）：</strong>
             「到期前 N 天」僅在剩餘天數<strong>正好等於 N</strong> 時傳送一次，不會在第 N-1…1 天自動連發。
             若希望 7/3/1 天都提醒，請新增多條規則（可用上方預設）。
-            類型：到期前 = 精確日/小時；到期當天；到期後 = 每 X 小時重複直到續費/手動確認。
+            類型：到期前＝精確日期／小時；到期當天；到期後 = 每 X 小時重複直到續費/手動確認。
           </p>
           <!-- 備援欄位：舊版排程器路徑需要這兩個值；當 reminderRules 為空時仍生效 -->
           <input type="hidden" id="reminderUnit" value="day">
@@ -2580,7 +2580,7 @@ const lunarBiz = {
     document.getElementById('addSubscriptionBtn').addEventListener('click', () => {
       document.getElementById('modalTitle').textContent = '新增新訂閱';
       document.getElementById('subscriptionModal').classList.remove('hidden');
-      document.body.classList.add('overflow-hidden'); // 禁止背景滚動
+      document.body.classList.add('overflow-hidden'); // 禁止背景捲動
 
       document.getElementById('subscriptionForm').reset();
       document.getElementById('currency').value = 'CNY'; // 預設設定為CNY
@@ -3570,7 +3570,7 @@ const lunarBiz = {
           clearFieldErrors();
           loadLunarPreference();
           document.getElementById('subscriptionModal').classList.remove('hidden');
-          document.body.classList.add('overflow-hidden'); // 禁止背景滚動
+          document.body.classList.add('overflow-hidden'); // 禁止背景捲動
           
           // 重要：編輯訂閱時也需要重新設定事件监听器
           setupModalEventListeners();
