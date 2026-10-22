@@ -130,8 +130,8 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">📊 仪表板</h2>
-      <p class="text-sm text-gray-500 mt-1">訂閱費用和活動概覽（統計金額已換算為 CNY）</p>
+      <h2 class="text-2xl font-bold text-gray-800">📊 儀表板</h2>
+      <p class="text-sm text-gray-500 mt-1">訂閱費用與活動概覽（統計金額已換算為 CNY）</p>
     </div>
 
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
@@ -140,7 +140,7 @@
           <i class="fas fa-history text-indigo-500"></i>
           <h3 class="text-lg font-medium text-gray-900">自動提醒工作狀態</h3>
         </div>
-        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">Cron 可观測性</span>
+        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">Cron 可觀測性</span>
       </div>
       <div class="p-6" id="schedulerStatus">
         <div class="loading-skeleton"></div>
@@ -205,7 +205,7 @@
             <i class="fas fa-chart-bar text-purple-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按類型支出排行</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (換算為 CNY)</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計 (換算為 CNY)</span>
         </div>
         <div class="p-6" id="expenseByType">
           <div class="loading-skeleton"></div>
@@ -218,7 +218,7 @@
             <i class="fas fa-folder text-green-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按分類支出統計</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (換算為 CNY)</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計 (換算為 CNY)</span>
         </div>
         <div class="p-6" id="expenseByCategory">
           <div class="loading-skeleton"></div>
@@ -276,7 +276,7 @@
 
         function update() {
           const now = new Date();
-          const timeStr = now.toLocaleString('zh-CN', {
+          const timeStr = now.toLocaleString('zh-TW', {
             timeZone: localTimezone,
             year: 'numeric', month: '2-digit', day: '2-digit',
             hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -314,7 +314,7 @@
             schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">目前沒有排程執行紀錄（等待下一次 Cron 執行）</div></div>';
           } else {
             const sendResult = status.sendResult || {};
-            const runAt = status.lastRunAt ? new Date(status.lastRunAt).toLocaleString('zh-CN') : '未知';
+            const runAt = status.lastRunAt ? new Date(status.lastRunAt).toLocaleString('zh-TW') : '未知';
             const configuredHours = Array.isArray(status.configuredHours) && status.configuredHours.length > 0
               ? status.configuredHours.join(', ')
               : '全部時段';
@@ -357,7 +357,7 @@
             schedulerHistoryEl.innerHTML = '<div class="text-sm text-gray-500">暫無歷史紀錄</div>';
           } else {
             schedulerHistoryEl.innerHTML = schedulerHistory.slice(0, 10).map(item => {
-              const when = item.lastRunAt ? new Date(item.lastRunAt).toLocaleString('zh-CN') : '未知時間';
+              const when = item.lastRunAt ? new Date(item.lastRunAt).toLocaleString('zh-TW') : '未知時間';
               const sent = item.sent ? '已傳送' : '未傳送';
               const reason = item.reason || '-';
               return `<div class="py-2 border-b border-gray-100 last:border-b-0 text-sm"><div class="font-medium text-gray-800">${when} · ${sent}</div><div class="text-xs text-gray-500 mt-1">${reason}</div></div>`;
@@ -395,7 +395,7 @@
             <div class="list-item-content">
               <div class="list-item-name">${s.name}</div>
               <div class="list-item-meta">
-                <span><i class="fas fa-calendar"></i> ${new Date(s.paymentDate).toLocaleDateString('zh-CN')}</span>
+                <span><i class="fas fa-calendar"></i> ${new Date(s.paymentDate).toLocaleDateString('zh-TW')}</span>
                 ${s.customType?`<span class="list-item-badge">${s.customType}</span>`:''}
               </div>
             </div>
@@ -410,7 +410,7 @@
             <div class="list-item-content">
               <div class="list-item-name">${s.name}</div>
               <div class="list-item-meta">
-                <span><i class="fas fa-clock"></i> ${new Date(s.renewalDate).toLocaleDateString('zh-CN')}</span>
+                <span><i class="fas fa-clock"></i> ${new Date(s.renewalDate).toLocaleDateString('zh-TW')}</span>
                 <span style="color:#f59e0b;font-weight:600">${s.daysUntilRenewal} 天後</span>
                 ${s.customType?`<span class="list-item-badge">${s.customType}</span>`:''}
               </div>
