@@ -1,10 +1,10 @@
 // @ts-check
 /**
- * 通知调度器：將一則通知並行傳送至所有已啟用的管道，並將結果寫入通知紀錄。
+ * 通知調度器：將一則通知並行傳送至所有已啟用的管道，並將結果寫入通知紀錄。
  *
- * 调用方：
- * - services/scheduler.js（定时到期检查）
- * - api/handlers/test-notification.js（手动测试单个渠道）
+ * 呼叫端：
+ * - services/scheduler.js（定時檢查到期狀態）
+ * - api/handlers/test-notification.js（手動測試單一管道）
  * - api/handlers/notify.js（第三方 /api/notify/{token}）
  *
  */
@@ -22,7 +22,7 @@ import { ntfyChannel } from './ntfy.js';
 import { wpushChannel } from './wpush.js';
 import { writeLog } from '../../data/notification-logs.repo.js';
 
-/** 名字到渠道实例的映射；新增渠道在此注册即可 */
+/** 名稱到管道實例的對應表；新增管道時在此註冊即可 */
 export const ALL_CHANNELS = {
   telegram: telegramChannel,
   notifyx: notifyxChannel,
@@ -39,18 +39,18 @@ export const ALL_CHANNELS = {
 
 /**
  * @typedef {Object} DispatchOptions
- * @property {any} [env] 若提供，会同时把每条结果写入 notify_log
- * @property {string} [subId] 关联的订阅 ID（写日志用）
- * @property {string} [ruleId] 触发的提醒规则 ID（写日志用）
+ * @property {any} [env] 若有提供，也會將每筆結果寫入 notify_log
+ * @property {string} [subId] 關聯的訂閱 ID（用於紀錄）
+ * @property {string} [ruleId] 觸發的提醒規則 ID（用於紀錄）
  * @property {Object} [metadata] 附加给 channel.send 的 metadata
- * @property {string} [logPrefix] console 日志前缀
+ * @property {string} [logPrefix] console 紀錄前綴
  */
 
 /**
- * 把一条通知发到所有启用渠道。
+ * 將一則通知傳送至所有已啟用的管道。
  *
  * @param {{ title: string, content: string }} payload
- * @param {any} config 系统配置（含 ENABLED_NOTIFIERS 与各渠道字段）
+ * @param {any} config 系統設定（包含 ENABLED_NOTIFIERS 與各管道欄位）
  * @param {DispatchOptions} [options]
  * @returns {Promise<{
  *   attempted: number,
@@ -109,7 +109,7 @@ export async function dispatch(payload, config, options = {}) {
       console.log(`${prefix} ${r.channel} 傳送失敗：${r.error}`);
     }
 
-    // 写通知日志（带 env 时）
+    // 寫入通知紀錄（有提供 env 時）
     if (options.env && options.subId) {
       try {
         await writeLog(options.env, {
@@ -138,7 +138,7 @@ export async function dispatch(payload, config, options = {}) {
 }
 
 /**
- * 測試某個管道（用于配置页"测试发送"按钮）。
+ * 測試某個管道（用於設定頁的「測試傳送」按鈕）。
  *
  * @param {string} channelName
  * @param {any} config
