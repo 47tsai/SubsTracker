@@ -1001,7 +1001,7 @@ function addLunarPeriod(lunar, periodValue, periodUnit) {
 
 // 前端版本的 lunarBiz 物件
 const lunarBiz = {
-  // 農曆加週期，返回新的農曆日期物件
+  // 農曆加上週期，回傳新的農曆日期物件
   addLunarPeriod(lunar, periodValue, periodUnit) {
     return addLunarPeriod(lunar, periodValue, periodUnit);
   },
@@ -3960,7 +3960,7 @@ const lunarBiz = {
       const addSubBtn = document.getElementById('addSubscriptionBtn');
       if (addSubBtn) {
         addSubBtn.addEventListener('click', () => {
-          // 延遲一個影格，讓原有 reset 流程先執行完畢
+          // 稍後再套用預設規則，讓原有 reset 流程先完成
           setTimeout(() => setRules(defaultPresets()), 0);
         });
       }
