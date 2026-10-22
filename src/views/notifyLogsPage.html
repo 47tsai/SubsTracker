@@ -8,7 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   ${themeResources}
   <style>
-    /* 與其他 admin 頁保持一致的小屏隱藏時钟规則 */
+    /* 與其他 admin 頁保持一致的小屏隱藏時钟規則 */
     @media (max-width: 767px) {
       #systemTimeDisplay { display: none !important; }
     }
@@ -53,7 +53,7 @@
             <i class="fas fa-cog mr-1"></i>系統設定
           </a>
           <a href="/api/logout" class="text-gray-700 hover:text-red-600 border-b-2 border-transparent hover:border-red-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-sign-out-alt mr-1"></i>登出登入
+            <i class="fas fa-sign-out-alt mr-1"></i>登出
           </a>
         </div>
 
@@ -82,7 +82,7 @@
           <i class="fas fa-cog w-6 text-center mr-2"></i>系統設定
         </a>
         <a href="/api/logout" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 active:bg-red-100 transition-colors">
-          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出登入
+          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出
         </a>
       </div>
     </div>
@@ -96,7 +96,7 @@
           <i class="fas fa-history text-indigo-600 mr-2"></i>通知紀錄
         </h2>
         <p class="text-sm text-gray-500 mt-1">
-          每條通知（成功/失敗）都有紀錄，30 天 TTL；用於自助排查"為什么沒收到通知"
+          每條通知（成功/失敗）都有紀錄，30 天 TTL；方便自行排查"為什么沒收到通知"
         </p>
       </div>
       <button id="reloadBtn" class="btn-primary text-white px-4 py-2 rounded-md text-sm font-medium self-start md:self-auto">
@@ -107,7 +107,7 @@
     <!-- 概覽卡片 -->
     <div id="summary" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
       <div class="stat-card text-center">
-        <div class="text-xs text-gray-500 uppercase font-medium tracking-wide">總紀錄</div>
+        <div class="text-xs text-gray-500 uppercase font-medium tracking-wide">紀錄總數</div>
         <div id="metricTotal" class="text-3xl font-bold text-gray-800 mt-1">-</div>
       </div>
       <div class="stat-card text-center">
@@ -128,13 +128,13 @@
     <div class="bg-white rounded-lg shadow-md p-4 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-3">
         <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">订阅</label>
+          <label class="block text-xs font-medium text-gray-600 mb-1">訂閱</label>
           <select id="filterSubId" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-            <option value="">全部订阅</option>
+            <option value="">全部訂閱</option>
           </select>
         </div>
         <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">渠道</label>
+          <label class="block text-xs font-medium text-gray-600 mb-1">管道</label>
           <select id="filterChannel" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
             <option value="">全部</option>
             <option value="telegram">Telegram</option>
@@ -157,7 +157,7 @@
           </select>
         </div>
         <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">時間范围</label>
+          <label class="block text-xs font-medium text-gray-600 mb-1">時間範圍</label>
           <select id="filterSince" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
             <option value="24">最近 24 小時</option>
             <option value="72" selected>最近 3 天</option>
@@ -178,11 +178,11 @@
       </div>
     </div>
 
-    <!-- 調度日志快速预覽（與訂閱清單"批量操作"區一致的折叠風格） -->
+    <!-- 排程日誌快速预覽（與訂閱清單"批量操作"區一致的折叠風格） -->
     <details class="bg-white rounded-lg shadow-md mb-6">
       <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
-        <i class="fas fa-clock text-indigo-600 mr-2"></i>最近 10 次定時工作執行
-        <span class="text-xs text-gray-500 ml-2">點擊展開查看链路明细</span>
+        <i class="fas fa-clock text-indigo-600 mr-2"></i>最近 10 次排程執行紀錄
+        <span class="text-xs text-gray-500 ml-2">點擊展開查看链路明細</span>
       </summary>
       <div id="schedLogs" class="px-4 pb-4 mt-2 space-y-2 text-xs"></div>
     </details>
@@ -194,9 +194,9 @@
           <thead class="bg-gray-50">
             <tr>
               <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">時間</th>
-              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">订阅</th>
-              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">规則</th>
-              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">渠道</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">訂閱</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">規則</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">管道</th>
               <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">狀態</th>
               <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">詳情</th>
             </tr>
@@ -212,13 +212,13 @@
   <script src="/js/lib/api-client.js"></script>
   <script>
     /**
-     * 通知紀錄頁脚本
+     * 通知紀錄頁指令碼
      *
      * 資料源：
      *   GET /api/notification-logs?subId=&channel=&status=&since=&limit=
      *   GET /api/scheduler-logs?limit=10
-     *   GET /api/config （取 TIMEZONE 用於本地時間顯示）
-     *   GET /api/subscriptions （映射 subId → 订阅名）
+     *   GET /api/config （取 TIMEZONE 用於本機時間顯示）
+     *   GET /api/subscriptions （映射 subId → 訂閱名稱）
      */
     let userTz = 'UTC';
     let subNameMap = {};
@@ -297,7 +297,7 @@
         const data = await ApiClient.get('/api/scheduler-logs', { limit: 10 });
         const logs = (data && data.logs) || [];
         if (logs.length === 0) {
-          target.innerHTML = '<div class="text-gray-400 px-2 py-4">暂無調度紀錄</div>';
+          target.innerHTML = '<div class="text-gray-400 px-2 py-4">暫無排程紀錄</div>';
           return;
         }
         target.innerHTML = logs.map(l => {
@@ -306,7 +306,7 @@
           return '<div class="flex flex-wrap items-center gap-3 border-b border-gray-100 py-1.5 last:border-0">'
             + '<span class="text-gray-500 font-mono">' + escapeHtml(fmtTime(l.startedAt)) + '</span>'
             + '<span class="' + color + ' font-medium">' + statusLabel + '</span>'
-            + '<span class="text-gray-700">' + escapeHtml(l.timezone) + ' · 本地小時 <b>' + escapeHtml(l.currentHour) + '</b> · 在窗口=' + (l.inWindow ? '是' : '否') + '</span>'
+            + '<span class="text-gray-700">' + escapeHtml(l.timezone) + ' · 本機小時 <b>' + escapeHtml(l.currentHour) + '</b> · 在窗口=' + (l.inWindow ? '是' : '否') + '</span>'
             + '<span class="text-gray-700">命中 <b>' + l.matchedCount + '</b> / 去重 <b>' + l.dedupedCount + '</b> / 傳送 <b>' + l.sentCount + '</b> / 續订 <b>' + l.autoRenewedCount + '</b></span>'
             + (l.reason ? '<span class="text-gray-500 italic">' + escapeHtml(l.reason) + '</span>' : '')
             + '</div>';
@@ -362,7 +362,7 @@
       }
     }
 
-    // ─── 事件绑定 ───
+    // ─── 事件綁定 ───
     document.getElementById('reloadBtn').addEventListener('click', () => {
       loadLogs();
       loadSchedLogs();
