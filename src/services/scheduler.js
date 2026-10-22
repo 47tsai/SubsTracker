@@ -155,7 +155,7 @@ export async function checkExpiringSubscriptions(env) {
         }
       }
 
-      // 載入規則；老订阅没有规则时，用稳定 id 的 legacy 规则（避免每 tick 新 UUID 打穿 dedupe）
+      // 載入規則；舊訂閱沒有規則時，使用穩定 ID 的 legacy 規則（避免每次 tick 產生新 UUID 而破壞去重）
       let rules = await remindersRepo.listForSubscription(env, subscription.id);
       if (rules.length === 0) {
         const legacy = remindersRepo.legacyFieldToRule(subscription);
@@ -180,13 +180,13 @@ export async function checkExpiringSubscriptions(env) {
       }
     }
 
-    // 持久化自動續訂结果
+    // 持久化自動續訂結果
     if (updatedSubsToSave.length > 0) {
       await subRepo.saveMany(env, updatedSubsToSave);
       console.log(`[定时任务] 已自動續訂 ${updatedSubsToSave.length} 筆訂閱`);
     }
 
-    // 不在通知时段 → 写日志后返回
+    // 不在通知時段 → 寫入紀錄後返回
     if (!inWindow) {
       const entry = await schedulerLogsRepo.writeLog(env, {
         startedAt: startedAtIso,
@@ -206,7 +206,7 @@ export async function checkExpiringSubscriptions(env) {
       return entry;
     }
 
-    // 在时段：先查重（不预占），发送成功后再写 dedupe / lastFire
+    // 在允許時段內：先檢查是否重複（不預先佔用），傳送成功後再寫入 dedupe／lastFire
     /** @type {Array<{ sub: any, rule: any, daysDiff: number, hoursDiff: number, dedupeKey: string }>} */
     const ready = [];
     const nowParts = {
@@ -242,7 +242,7 @@ export async function checkExpiringSubscriptions(env) {
         status: matchedCount > 0 ? 'skipped' : 'ok',
         reason:
           matchedCount > 0
-            ? `命中 ${matchedCount} 条规则但全部在去重窗口内（跳过 ${dedupedCount}）`
+            ? `符合 ${matchedCount} 條規則，但全部位於去重時間窗內（略過 ${dedupedCount} 條）`
             : '本次未符合任何提醒規則'
       });
       return entry;
@@ -251,7 +251,7 @@ export async function checkExpiringSubscriptions(env) {
     // 排序：按剩余天数升序，更紧迫的在前
     ready.sort((a, b) => a.daysDiff - b.daysDiff);
 
-    // 一次性聚合所有订阅成一条通知（与既有渠道契约一致）
+    // 將所有訂閱彙整成一則通知（符合既有管道的介接規範）
     // notify_log 按 (subId, ruleId, channel) 维度落，仍可细粒度查询
     const enrichedSubs = ready.map((c) => ({
       ...c.sub,
@@ -260,7 +260,7 @@ export async function checkExpiringSubscriptions(env) {
       matchedReminderRule: c.rule
     }));
     const content = formatNotificationContent(enrichedSubs, config);
-    const title = '订阅到期/续费提醒';
+    const title = '訂閱到期／續訂提醒';
 
     // 给 dispatch 提供主 subId+ruleId（聚合通知用第一条做归属）
     const primary = ready[0];
@@ -282,7 +282,7 @@ export async function checkExpiringSubscriptions(env) {
     );
     sentCount = dispatchResult.successCount;
 
-    // 仅在至少一渠道成功时写入去重与 lastFire，失败可在后续 tick 重试
+    // 至少有一個管道傳送成功時，才寫入去重資料與 lastFire；失敗時可在後續 tick 重試
     if (dispatchResult.successCount > 0) {
       const firedAt = now.utc.toISOString();
       await Promise.all(
@@ -326,7 +326,7 @@ export async function checkExpiringSubscriptions(env) {
     });
     return entry;
   } catch (error) {
-    console.error('[定时任务] 执行失败:', error);
+    console.error('[排程任務] 執行失敗：', error);
     return schedulerLogsRepo.writeLog(env, {
       startedAt: startedAtIso,
       finishedAt: new Date().toISOString(),
