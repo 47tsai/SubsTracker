@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>订阅管理系统</title>
+  <title>訂閱管理系統</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   ${themeResources}  <style>
@@ -40,14 +40,14 @@
 <body class="login-container flex items-center justify-center">
   <div class="login-box p-8 rounded-xl w-full max-w-md">
     <div class="text-center mb-8">
-      <h1 class="text-2xl font-bold text-gray-800"><i class="fas fa-calendar-check mr-2"></i>订阅管理系统</h1>
-      <p class="text-gray-600 mt-2">登录管理您的订阅提醒</p>
+      <h1 class="text-2xl font-bold text-gray-800"><i class="fas fa-calendar-check mr-2"></i>訂閱管理系統</h1>
+      <p class="text-gray-600 mt-2">登入以管理訂閱提醒</p>
     </div>
     
     <form id="loginForm" class="space-y-6">
       <div>
         <label for="username" class="block text-sm font-medium text-gray-700 mb-1">
-          <i class="fas fa-user mr-2"></i>用户名
+          <i class="fas fa-user mr-2"></i>使用者名稱
         </label>
         <input type="text" id="username" name="username" required
           class="input-field w-full px-4 py-3 rounded-lg text-gray-700 focus:outline-none">
@@ -55,7 +55,7 @@
       
       <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
-          <i class="fas fa-lock mr-2"></i>密码
+          <i class="fas fa-lock mr-2"></i>密碼
         </label>
         <input type="password" id="password" name="password" required
           class="input-field w-full px-4 py-3 rounded-lg text-gray-700 focus:outline-none">
@@ -63,12 +63,12 @@
       
       <button type="submit" 
         class="btn-primary w-full py-3 rounded-lg text-white font-medium focus:outline-none">
-        <i class="fas fa-sign-in-alt mr-2"></i>登录
+        <i class="fas fa-sign-in-alt mr-2"></i>登入
       </button>
       
       <div id="errorMsg" class="text-red-500 text-center" role="alert"></div>
       <p class="text-xs text-amber-700 text-center mt-3 leading-relaxed">
-        若仍使用默认账号 <code>admin</code> / <code>password</code>，登录后请立即在「系统配置」修改密码。
+        如果仍使用預設帳號 <code>admin</code> / <code>password</code>，登入後請立即在「系統設定」修改密碼。
       </p>
     </form>
   </div>
@@ -81,7 +81,7 @@
       
       const button = e.target.querySelector('button');
       const originalContent = button.innerHTML;
-      button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>登录中...';
+      button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>登入中...';
       button.disabled = true;
       
       try {
@@ -96,12 +96,12 @@
         if (result.success) {
           window.location.href = '/admin';
         } else {
-          document.getElementById('errorMsg').textContent = result.message || '用户名或密码错误';
+          document.getElementById('errorMsg').textContent = result.message || '使用者名稱或密碼錯誤';
           button.innerHTML = originalContent;
           button.disabled = false;
         }
       } catch (error) {
-        document.getElementById('errorMsg').textContent = '发生错误，请稍后再试';
+        document.getElementById('errorMsg').textContent = '發生錯誤，請稍後再試';
         button.innerHTML = originalContent;
         button.disabled = false;
       }
