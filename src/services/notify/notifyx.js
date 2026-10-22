@@ -41,7 +41,7 @@ export const notifyxChannel = {
 
   async test(config) {
     return notifyxChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 NotifyX 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 NotifyX 測試通知。' },
       config
     );
   }
