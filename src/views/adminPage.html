@@ -779,7 +779,7 @@
     async function apiFetch(url, options) {
       const response = await fetch(url, options);
       if (response.status === 401) {
-        showToast('登入已過期，正在跳轉至登入頁...', 'warning');
+        showToast('登入已過期，正在轉往登入頁...', 'warning');
         setTimeout(() => { window.location.href = '/'; }, 1000);
         throw new Error('AUTH_EXPIRED');
       }
