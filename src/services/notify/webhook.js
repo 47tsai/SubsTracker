@@ -2,7 +2,7 @@
 /**
  * Webhook 通知渠道
  *
- * 支持自定义请求方法、Header、消息模板（{{title}} / {{content}} / {{tags}} 等）。
+ * 支援自訂請求方法、Header、訊息範本（{{title}} / {{content}} / {{tags}} 等）。
  */
 import { ok, fail, errorMessage } from './channel.js';
 import { formatLocalDate } from '../../core/time.js';
@@ -65,7 +65,7 @@ function buildTemplateData(payload, config) {
     timestamp,
     formattedMessage,
     message: formattedMessage,
-    // 扩展字段，便于规则化模板
+    // 擴充欄位，方便規則化範本
     daysRemaining: payload.metadata?.daysRemaining ?? '',
     ruleType: payload.metadata?.ruleType ?? '',
     ruleValue: payload.metadata?.ruleValue ?? ''
@@ -91,7 +91,7 @@ export const webhookChannel = {
         const customHeaders = JSON.parse(config.WEBHOOK_HEADERS);
         headers = { ...headers, ...customHeaders };
       } catch {
-        console.warn('[Webhook] 自定义请求头格式错误，使用默认请求头');
+        console.warn('[Webhook] 自訂要求標頭格式錯誤，改用預設要求標頭');
       }
     }
 
@@ -102,7 +102,7 @@ export const webhookChannel = {
         const template = JSON.parse(config.WEBHOOK_TEMPLATE);
         requestBody = applyTemplate(template, data);
       } catch {
-        console.warn('[Webhook] 消息模板格式错误，使用默认格式');
+        console.warn('[Webhook] 訊息範本格式錯誤，改用預設格式');
         requestBody = { ...data };
       }
     } else {
@@ -124,7 +124,7 @@ export const webhookChannel = {
 
   async test(config) {
     return webhookChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 Webhook 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 Webhook 測試通知。' },
       config
     );
   }
