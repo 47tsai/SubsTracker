@@ -218,7 +218,7 @@ async function createSubscription(subscription, env) {
         subscription.amount !== undefined && subscription.amount !== null
           ? subscription.amount
           : null,
-      currency: subscription.currency || 'CNY',
+      currency: subscription.currency || 'TWD',
       lastPaymentDate: initialPaymentDate,
       paymentHistory:
         subscription.amount !== undefined && subscription.amount !== null
@@ -227,7 +227,7 @@ async function createSubscription(subscription, env) {
                 id: Date.now().toString(),
                 date: initialPaymentDate,
                 amount: subscription.amount,
-                currency: subscription.currency || 'CNY',
+                currency: subscription.currency || 'TWD',
                 type: 'initial',
                 note: '初始订阅',
                 periodStart: normalizedStartDate || initialPaymentDate,
@@ -344,7 +344,7 @@ async function updateSubscription(id, subscription, env) {
       paymentHistory[idx] = {
         ...paymentHistory[idx],
         amount: newAmount,
-        currency: subscription.currency || existing.currency || 'CNY'
+        currency: subscription.currency || existing.currency || 'TWD'
       };
     } else if (!hasInitialPayment && newAmount !== null && newAmount !== undefined && newAmount > 0) {
       const initialDate = existing.startDate || existing.createdAt || new Date().toISOString();
@@ -352,7 +352,7 @@ async function updateSubscription(id, subscription, env) {
         id: Date.now().toString(),
         date: initialDate,
         amount: newAmount,
-        currency: subscription.currency || existing.currency || 'CNY',
+        currency: subscription.currency || existing.currency || 'TWD',
         type: 'initial',
         note: '初始订阅',
         periodStart: existing.startDate || initialDate,
@@ -388,7 +388,7 @@ async function updateSubscription(id, subscription, env) {
       reminderHours: reminderSetting.unit === 'hour' ? reminderSetting.value : undefined,
       notes: subscription.notes || '',
       amount: newAmount,
-      currency: subscription.currency || existing.currency || 'CNY',
+      currency: subscription.currency || existing.currency || 'TWD',
       lastPaymentDate:
         existing.lastPaymentDate ||
         existing.startDate ||
@@ -505,7 +505,7 @@ async function manualRenewSubscription(id, env, options = {}) {
       id: Date.now().toString(),
       date: paymentDate.toISOString(),
       amount,
-      currency: subscription.currency || 'CNY',
+      currency: subscription.currency || 'TWD',
       type: 'manual',
       note,
       periodStart: newStartDate.toISOString(),
@@ -625,7 +625,7 @@ async function updatePaymentRecord(subscriptionId, paymentId, paymentData, env) 
         paymentData.currency ||
         paymentHistory[paymentIndex].currency ||
         subscription.currency ||
-        'CNY',
+        'TWD',
       note: paymentData.note !== undefined ? paymentData.note : paymentHistory[paymentIndex].note
     };
 

@@ -565,7 +565,7 @@
             <div class="flex space-x-2">
               <div class="w-24 shrink-0"> 
                 <select id="currency" class="h-10 w-full px-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white text-sm">
-                  <option value="CNY" selected>CNY (¥)</option>
+                  <option value="TWD" selected>TWD (NT$)</option>
                   <option value="USD">USD ($)</option>   // 美元
                   <option value="HKD">HKD (HK$)</option> // 港幣
                   <option value="TWD">TWD (NT$)</option> // 新台幣
@@ -2024,7 +2024,7 @@ const lunarBiz = {
           'CNY': '¥', 'USD': '$', 'HKD': 'HK$', 'TWD': 'NT$', 
           'JPY': '¥', 'EUR': '€', 'GBP': '£', 'KRW': '₩', 'TRY': '₺'
         };
-        const currency = subscription.currency || 'CNY';
+        const currency = subscription.currency || 'TWD';
         const symbol = currencySymbols[currency] || '¥';
         const currencyLabel = "(" + currency + " " + symbol + ")";
         
@@ -2486,7 +2486,7 @@ const lunarBiz = {
         const paymentData = {
             date: document.getElementById('editPaymentDate').value,
             amount: parseFloat(document.getElementById('editPaymentAmount').value) || 0,
-            currency: currentSubscription?.currency || 'CNY',
+            currency: currentSubscription?.currency || 'TWD',
             note: document.getElementById('editPaymentNote').value
         };
 
@@ -2583,7 +2583,7 @@ const lunarBiz = {
       document.body.classList.add('overflow-hidden'); // 禁止背景捲動
 
       document.getElementById('subscriptionForm').reset();
-      document.getElementById('currency').value = 'CNY'; // 預設設定為CNY
+      document.getElementById('currency').value = 'TWD'; // 預設使用新臺幣
       document.getElementById('subscriptionId').value = '';
       clearFieldErrors();
 

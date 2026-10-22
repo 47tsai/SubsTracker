@@ -131,7 +131,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
       <h2 class="text-2xl font-bold text-gray-800">📊 儀表板</h2>
-      <p class="text-sm text-gray-500 mt-1">訂閱費用與活動概覽（統計金額已換算為 CNY）</p>
+      <p class="text-sm text-gray-500 mt-1">訂閱費用與活動概覽（統計金額已換算為 TWD）</p>
     </div>
 
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
@@ -205,7 +205,7 @@
             <i class="fas fa-chart-bar text-purple-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按類型支出排行</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計（換算為 CNY）</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計（換算為 TWD）</span>
         </div>
         <div class="p-6" id="expenseByType">
           <div class="loading-skeleton"></div>
@@ -218,7 +218,7 @@
             <i class="fas fa-folder text-green-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按分類支出統計</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計（換算為 CNY）</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">年度統計（換算為 TWD）</span>
         </div>
         <div class="p-6" id="expenseByCategory">
           <div class="loading-skeleton"></div>
@@ -367,8 +367,8 @@
 
         document.getElementById('statsGrid').innerHTML=`
           <div class="stat-card">
-            <div class="stat-card-header">每月支出（CNY）</div>
-            <div class="stat-card-value">¥${data.monthlyExpense.amount.toFixed(2)}</div>
+            <div class="stat-card-header">每月支出（TWD）</div>
+            <div class="stat-card-value">NT${data.monthlyExpense.amount.toFixed(0)}</div>
             <div class="stat-card-subtitle">本月換算後支出</div>
             <div class="stat-card-trend ${data.monthlyExpense.trendDirection}">
               <i class="fas fa-arrow-${data.monthlyExpense.trendDirection==='up'?'up':data.monthlyExpense.trendDirection==='down'?'down':'right'}"></i>
@@ -376,9 +376,9 @@
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-card-header">每年支出（CNY）</div>
-            <div class="stat-card-value">¥${data.yearlyExpense.amount.toFixed(2)}</div>
-            <div class="stat-card-subtitle">每月平均支出: ¥${data.yearlyExpense.monthlyAverage.toFixed(2)}</div>
+            <div class="stat-card-header">每年支出（TWD）</div>
+            <div class="stat-card-value">NT${data.yearlyExpense.amount.toFixed(0)}</div>
+            <div class="stat-card-subtitle">每月平均支出: NT${data.yearlyExpense.monthlyAverage.toFixed(0)}</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-header">啟用中的訂閱</div>
@@ -426,7 +426,7 @@
             <div class="ranking-item-header">
               <div class="ranking-item-name">${item.type}</div>
               <div class="ranking-item-value">
-                <span class="ranking-item-amount">¥${item.amount.toFixed(2)}</span>
+                <span class="ranking-item-amount">NT${item.amount.toFixed(0)}</span>
                 <span class="ranking-item-percentage">${item.percentage}%</span>
               </div>
             </div>
@@ -443,7 +443,7 @@
             <div class="ranking-item-header">
               <div class="ranking-item-name">${item.category}</div>
               <div class="ranking-item-value">
-                <span class="ranking-item-amount">¥${item.amount.toFixed(2)}</span>
+                <span class="ranking-item-amount">NT${item.amount.toFixed(0)}</span>
                 <span class="ranking-item-percentage">${item.percentage}%</span>
               </div>
             </div>

@@ -42,7 +42,7 @@ async function testSingleSubscriptionNotification(id, env) {
 
     const calendarType = subscription.useLunar ? '农历' : '公历';
     const autoRenewText = subscription.autoRenew ? '是' : '否';
-    const formattedAmount = formatAmount(subscription.amount, subscription.currency || 'CNY');
+    const formattedAmount = formatAmount(subscription.amount, subscription.currency || 'TWD');
     const amountText = formattedAmount ? `\n金额: ${formattedAmount}/周期` : '';
 
     const categoryText = subscription.category ? subscription.category : '未分类';

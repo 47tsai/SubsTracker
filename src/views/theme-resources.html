@@ -116,6 +116,63 @@
         color: #f3f4f6;
     }
   }
+
+  /* Chi Design System: warm yellow accent, quiet neutrals, consistent controls */
+  :root {
+    color-scheme: light;
+    --chi-accent: #eab308;
+    --chi-accent-hover: #ca8a04;
+    --chi-accent-soft: #fef9c3;
+    --chi-ink: #18181b;
+    --chi-muted: #71717a;
+    --chi-border: #e4e4e7;
+    --chi-surface: #ffffff;
+    --chi-canvas: #fafafa;
+    --chi-radius: 0.75rem;
+    --chi-focus: rgba(234, 179, 8, .28);
+  }
+  body { background: var(--chi-canvas); color: var(--chi-ink); }
+  button, input, select, textarea { border-radius: .625rem; }
+  button, a, input, select, textarea { transition: color .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--chi-accent);
+    outline-offset: 2px;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--chi-accent) !important;
+    box-shadow: 0 0 0 3px var(--chi-focus) !important;
+  }
+  .bg-indigo-600, .bg-blue-600 { background-color: var(--chi-accent) !important; color: #18181b !important; }
+  .hover\\:bg-indigo-700:hover, .hover\\:bg-blue-700:hover { background-color: var(--chi-accent-hover) !important; color: #18181b !important; }
+  .text-indigo-600, .text-blue-600 { color: #a16207 !important; }
+  .hover\\:text-indigo-800:hover, .hover\\:text-blue-800:hover { color: #854d0e !important; }
+  .bg-indigo-50, .bg-blue-50 { background-color: #fefce8 !important; }
+  .bg-indigo-100, .bg-blue-100 { background-color: #fef3c7 !important; }
+  .text-indigo-800, .text-blue-800 { color: #854d0e !important; }
+  .border-indigo-200, .border-blue-200 { border-color: #fde68a !important; }
+  .ring-indigo-500, .focus\\:ring-indigo-500:focus { --tw-ring-color: var(--chi-accent) !important; }
+  html.dark {
+    color-scheme: dark;
+    --chi-accent: #facc15;
+    --chi-accent-hover: #eab308;
+    --chi-accent-soft: #422006;
+    --chi-ink: #f4f4f5;
+    --chi-muted: #a1a1aa;
+    --chi-border: #3f3f46;
+    --chi-surface: #27272a;
+    --chi-canvas: #18181b;
+  }
+  html.dark body { background: var(--chi-canvas); color: var(--chi-ink); }
+  html.dark .bg-indigo-600, html.dark .bg-blue-600 { background-color: var(--chi-accent) !important; color: #18181b !important; }
+  html.dark .text-indigo-600, html.dark .text-blue-600 { color: #fde047 !important; }
+  html.dark .bg-indigo-50, html.dark .bg-blue-50 { background-color: #422006 !important; }
+  html.dark .bg-indigo-100, html.dark .bg-blue-100 { background-color: #713f12 !important; }
+  html.dark .text-indigo-800, html.dark .text-blue-800 { color: #fef08a !important; }
+  html.dark .border-indigo-200, html.dark .border-blue-200 { border-color: #854d0e !important; }
+  html.dark input:focus, html.dark select:focus, html.dark textarea:focus {
+    border-color: var(--chi-accent) !important;
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, .2) !important;
+  }
 </style>
 <script>
   (function() {
