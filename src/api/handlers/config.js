@@ -58,7 +58,7 @@ function mergeSecretField(existingConfig, newConfig, key, clearSecretFields = []
   // 兼容旧前端：曾用 "********" 作为占位符，表示不修改
   if (trimmed === '********') return existingConfig?.[key] || '';
 
-  // 安全默认：空字符串不再代表清空（避免前端未回显导致误清空）
+  // 安全預設：空字串不代表清空，避免前端未回填時誤清除設定
   if (!trimmed) return existingConfig?.[key] || '';
 
   return trimmed;
@@ -158,7 +158,7 @@ async function handleUpdateConfig(request, env) {
   } catch (error) {
     console.error('配置保存错误:', error);
     return new Response(
-      JSON.stringify({ success: false, message: '更新配置失败: ' + error.message }),
+      JSON.stringify({ success: false, message: '更新設定失敗：' + error.message }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
     );
   }
