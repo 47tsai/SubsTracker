@@ -14,7 +14,7 @@
 
 /**
  * 幣別 → 符號（前綴）對照表。
- * JPY 故意使用 'JP¥' 前缀以避免与 CNY 的 ¥ 混淆。
+ * JPY 刻意使用 'JP¥' 前綴，避免與 CNY 的 ¥ 混淆。
  */
 export const CURRENCY_SYMBOLS = {
   CNY: '¥',
