@@ -34,8 +34,8 @@ export const CURRENCY_SYMBOLS = {
  * @param {string} [currency='CNY']
  * @returns {string}
  */
-export function getCurrencySymbol(currency = 'CNY') {
-  const code = String(currency || 'CNY').toUpperCase();
+export function getCurrencySymbol(currency = 'TWD') {
+  const code = String(currency || 'TWD').toUpperCase();
   return CURRENCY_SYMBOLS[code] || code + ' ';
 }
 
