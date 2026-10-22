@@ -1,4 +1,4 @@
-// 注：本文件暂不启用 // @ts-check，因 lunar 库返回类型分支较多，类型清理推迟到后续 Task。
+// 註：本檔案暫不啟用 // @ts-check，因 lunar 套件的回傳型別分支較多，型別整理延後處理。
 /**
  * 定时任务调度器
  *
@@ -9,7 +9,7 @@
  * 修复：
  * 1. 统一时区基准：通过 getNowInTimezone(config.TIMEZONE) 取用户 TZ 下的 hourString
  *    与 NOTIFICATION_HOURS（按用户 TZ 解释）比对，语义清晰。
- * 2. 多提醒规则：从 reminders.repo 加载每个订阅的规则数组，逐条调
+ * 2. 多提醒规则：从 reminders.repo 加载每筆訂閱的规则数组，逐条调
  *    reminder-engine.shouldFire 判断（不再单点 reminderUnit/reminderValue）。
  * 3. 去重粒度细化：dedup key 改为 (subId × ruleId × ymdh-local)，避免一条订阅
  *    多规则相互打架。
@@ -22,7 +22,7 @@
  *     check window →
  *     for each (sub, rule):
  *       - daysDiff/hoursDiff 用 getDaysBetween（按用户 TZ）算
- *       - 自动续订（针对 sub 整体，仅算一次）
+ *       - 自動續訂（针对 sub 整体，仅算一次）
  *       - shouldFire? → dedupe → dispatch.send → notify_log
  *     → sched_log
  *
@@ -121,7 +121,7 @@ export async function checkExpiringSubscriptions(env) {
     let sentCount = 0;
     let autoRenewedCount = 0;
 
-    // 不在通知时段：不发送但仍跑自动续订（业务上希望续订总能发生）
+    // 不在通知时段：不发送但仍跑自動續訂（业务上希望续订总能发生）
     /** @type {Array<{ sub: any, rule: any, daysDiff: number, hoursDiff: number }>} */
     const candidates = [];
 
@@ -132,12 +132,12 @@ export async function checkExpiringSubscriptions(env) {
       if (!subscription.isActive) continue;
       activeCount++;
 
-      // 计算到期天数（按用户 TZ）
+      // 計算到期天數（按用户 TZ）
       let expiryDate = new Date(subscription.expiryDate);
       let daysDiff = getDaysBetween(now.utc, expiryDate, timezone);
       let hoursDiff = (expiryDate.getTime() - now.utc.getTime()) / MS_PER_HOUR;
 
-      // 自动续订：已过期 + autoRenew=true → 推进到期日并写支付记录
+      // 自動續訂：已过期 + autoRenew=true → 推进到期日并写支付记录
       if (subscription.autoRenew && daysDiff < 0) {
         const renewed = autoRenew(subscription, now.utc, timezone, config);
         if (renewed) {
@@ -155,7 +155,7 @@ export async function checkExpiringSubscriptions(env) {
         }
       }
 
-      // 加载规则；老订阅没有规则时，用稳定 id 的 legacy 规则（避免每 tick 新 UUID 打穿 dedupe）
+      // 載入規則；老订阅没有规则时，用稳定 id 的 legacy 规则（避免每 tick 新 UUID 打穿 dedupe）
       let rules = await remindersRepo.listForSubscription(env, subscription.id);
       if (rules.length === 0) {
         const legacy = remindersRepo.legacyFieldToRule(subscription);
@@ -180,10 +180,10 @@ export async function checkExpiringSubscriptions(env) {
       }
     }
 
-    // 持久化自动续订结果
+    // 持久化自動續訂结果
     if (updatedSubsToSave.length > 0) {
       await subRepo.saveMany(env, updatedSubsToSave);
-      console.log(`[定时任务] 已自动续订 ${updatedSubsToSave.length} 个订阅`);
+      console.log(`[定时任务] 已自動續訂 ${updatedSubsToSave.length} 筆訂閱`);
     }
 
     // 不在通知时段 → 写日志后返回
@@ -201,7 +201,7 @@ export async function checkExpiringSubscriptions(env) {
         sentCount: 0,
         autoRenewedCount,
         status: 'skipped',
-        reason: `当前${timezone} ${now.hourString}点不在允许发送的小时 [${normalizedHours.join(',') || '未限制=每小时'}] 内（正常跳过，不会发通知）`
+        reason: `目前 ${timezone} ${now.hourString} 點不在允許傳送的時段 [${normalizedHours.join(',') || '未限制=每小时'}] 内（正常跳过，不会发通知）`
       });
       return entry;
     }
@@ -243,7 +243,7 @@ export async function checkExpiringSubscriptions(env) {
         reason:
           matchedCount > 0
             ? `命中 ${matchedCount} 条规则但全部在去重窗口内（跳过 ${dedupedCount}）`
-            : '本次未命中任何提醒规则'
+            : '本次未符合任何提醒規則'
       });
       return entry;
     }
@@ -310,8 +310,8 @@ export async function checkExpiringSubscriptions(env) {
       status: dispatchResult.failedCount > 0 && sentCount === 0 ? 'error' : 'ok',
       reason:
         dispatchResult.attempted > 0
-          ? `发送到 ${dispatchResult.attempted} 个渠道，成功 ${dispatchResult.successCount} / 失败 ${dispatchResult.failedCount}`
-          : '未启用任何通知渠道',
+          ? `傳送至 ${dispatchResult.attempted} 個管道，成功 ${dispatchResult.successCount}／失敗 ${dispatchResult.failedCount}`
+          : '尚未啟用任何通知管道',
       extra: {
         candidates: ready.map((c) => ({
           subId: c.sub.id,
@@ -340,14 +340,14 @@ export async function checkExpiringSubscriptions(env) {
       sentCount: 0,
       autoRenewedCount: 0,
       status: 'error',
-      reason: '执行异常: ' + (error && error.message ? error.message : String(error)),
+      reason: '執行時發生例外：' + (error && error.message ? error.message : String(error)),
       extra: { stack: error && error.stack }
     });
   }
 }
 
 /**
- * 自动续订：把已过期的订阅按周期推进，生成 auto 类型支付记录。
+ * 自動續訂：依週期推進已到期的訂閱，並建立 auto 類型的付款紀錄。
  *
  * 按"cycle / reset 模式 + 公历 / 农历分支。
  *
@@ -418,7 +418,7 @@ function autoRenew(sub, now, timezone, config) {
     date: now.toISOString(),
     amount: sub.amount || 0,
     type: 'auto',
-    note: `自动续订 (${mode === 'reset' ? '重置模式' : '接续模式'}${
+    note: `自動續訂 (${mode === 'reset' ? '重置模式' : '接续模式'}${
       periodsAdded > 1 ? ', 补齐' + periodsAdded + '周期' : ''
     })`,
     periodStart: newStartDate.toISOString(),
