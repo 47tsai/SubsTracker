@@ -956,7 +956,7 @@
         document.getElementById('showLunarGlobal').checked = config.SHOW_LUNAR === true;
 
         // 動態產生時區選項，並設定儲存的值
-        generateTimezoneOptions(config.TIMEZONE || 'Asia/Shanghai');
+        generateTimezoneOptions(config.TIMEZONE || 'Asia/Taipei');
 
         // 處理多選通知管道
         const enabledNotifiers = config.ENABLED_NOTIFIERS || ['notifyx'];
@@ -980,9 +980,9 @@
     }
     
     // 動態產生時區選項（保持與靜態 HTML 一致：預設時區分組在最前）
-    function generateTimezoneOptions(selectedTimezone = 'Asia/Shanghai') {
+    function generateTimezoneOptions(selectedTimezone = 'Asia/Taipei') {
       const timezoneSelect = document.getElementById('timezone');
-      const fallbackTimezone = 'Asia/Shanghai';
+      const fallbackTimezone = 'Asia/Taipei';
 
       const recommended = [
         { value: 'Asia/Shanghai', name: '中國標準時間', offset: '+8' }
