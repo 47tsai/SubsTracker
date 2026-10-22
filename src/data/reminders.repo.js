@@ -14,7 +14,7 @@
  *   createdAt: string                           // ISO
  * }
  *
- * 智能预设（新订阅默认 4 条）：到期前 7/3/1 天 + 到期当天。
+ * 智慧預設（新订阅默认 4 条）：到期前 7/3/1 天 + 到期当天。
  *
  */
 
@@ -33,7 +33,7 @@ const KEY_PREFIX = 'reminder_rules:';
  */
 
 /**
- * 生成新 rule 的默认 id（UUID）。
+ * 產生新 rule 的預設 ID（UUID）。
  *
  * @returns {string}
  */
@@ -42,7 +42,7 @@ export function makeRuleId() {
 }
 
 /**
- * 智能预设：4 条 — 到期前 7/3/1 天 + 当天。
+ * 智慧預設：4 条 — 到期前 7/3/1 天 + 当天。
  *
  * @returns {ReminderRule[]}
  */
@@ -57,7 +57,7 @@ export function defaultPresetRules() {
 }
 
 /**
- * 把旧的 reminderUnit/reminderValue 单点提醒转换为 1 条等价规则。
+ * 把旧的 reminderUnit/reminderValue 單一提醒转换为 1 条等价规则。
  *
  * @param {{ reminderUnit?: string, reminderValue?: number, reminderDays?: number, reminderHours?: number }} sub
  * @returns {ReminderRule}
@@ -84,7 +84,7 @@ export function legacyFieldToRule(sub) {
 }
 
 /**
- * 校验并归一化一条规则（修正非法字段，回退默认值）。
+ * 驗證並正規化單條規則（修正無效欄位，回退至預設值）。
  *
  * @param {any} raw
  * @returns {ReminderRule}
@@ -135,7 +135,7 @@ export async function listForSubscription(env, subId) {
 }
 
 /**
- * 整体替换某订阅的提醒规则（CRUD 都基于此）。
+ * 整份取代某筆訂閱的提醒規則（CRUD 都基于此）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -147,7 +147,7 @@ export async function replaceForSubscription(env, subId, rules) {
 }
 
 /**
- * 添加单条规则。
+ * 新增單條規則。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -163,7 +163,7 @@ export async function addRule(env, subId, rule) {
 }
 
 /**
- * 更新单条规则。
+ * 更新單條規則。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -181,7 +181,7 @@ export async function updateRule(env, subId, ruleId, patch) {
 }
 
 /**
- * 删除单条规则。
+ * 刪除單條規則。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -197,7 +197,7 @@ export async function deleteRule(env, subId, ruleId) {
 }
 
 /**
- * 删除某订阅的所有规则（订阅被删除时联动清理）。
+ * 刪除某筆訂閱的所有規則（刪除訂閱時一併清理）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -207,8 +207,8 @@ export async function clearForSubscription(env, subId) {
 }
 
 /**
- * 从多规则推导列表展示用的 legacy 单点字段（兼容旧 UI / 通知正文）。
- * 优先取已启用的 before_expiry 中 value 最大的一条；否则 on_expiry；否则首条启用规则。
+ * 從多條規則推導清單顯示用的 legacy 單一提醒欄位（兼容旧 UI / 通知正文）。
+ * 優先取已啟用的 before_expiry 中 value 最大的一条；否則 on_expiry；否則首条启用规则。
  *
  * @param {ReminderRule[]} rules
  * @returns {{ unit: 'day'|'hour', value: number }}
@@ -234,7 +234,7 @@ export function deriveLegacyFromRules(rules) {
 }
 
 /**
- * 生成列表「提醒」列摘要文案（多规则）。
+ * 產生清單「提醒」欄位的摘要文字（多规则）。
  *
  * @param {ReminderRule[]} rules
  * @returns {string}
