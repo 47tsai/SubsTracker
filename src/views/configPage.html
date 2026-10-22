@@ -192,7 +192,7 @@
               <option value="Asia/Shanghai">中國標準時間（UTC+8）</option>
             </optgroup>
             <optgroup label="其他常用時區">
-              <option value="Asia/Taipei">台北時間（UTC+8）</option>
+              <option value="Asia/Taipei" selected>台灣時間（UTC+8）</option>
               <option value="Asia/Hong_Kong">香港時間（UTC+8）</option>
               <option value="Asia/Singapore">新加坡時間（UTC+8）</option>
               <option value="Asia/Tokyo">日本時間（UTC+9）</option>
@@ -988,7 +988,7 @@
         { value: 'Asia/Shanghai', name: '中國標準時間', offset: '+8' }
       ];
       const others = [
-        { value: 'Asia/Taipei', name: '台北時間', offset: '+8' },
+        { value: 'Asia/Taipei', name: '台灣時間', offset: '+8' },
         { value: 'Asia/Hong_Kong', name: '香港時間', offset: '+8' },
         { value: 'Asia/Singapore', name: '新加坡時間', offset: '+8' },
         { value: 'Asia/Tokyo', name: '日本時間', offset: '+9' },
@@ -1037,7 +1037,7 @@
       timezoneSelect.value = timezoneExists ? selectedTimezone : fallbackTimezone;
 
       if (!timezoneExists) {
-        showToast('偵測到未知時區設定，已回退為 Asia/Shanghai，請重新確認後儲存', 'warning', 4500);
+        showToast('偵測到未知時區設定，已改用 Asia/Taipei，請重新確認後儲存', 'warning', 4500);
       }
     }
     
@@ -1524,7 +1524,7 @@
               'UTC': '世界標準時間',
               'Asia/Shanghai': '中國標準時間',
               'Asia/Hong_Kong': '香港時間',
-              'Asia/Taipei': '台北時間',
+              'Asia/Taipei': '台灣時間',
               'Asia/Singapore': '新加坡時間',
               'Asia/Tokyo': '日本時間',
               'Asia/Seoul': '韓國時間',
@@ -1655,7 +1655,7 @@
       const TZ_LABELS = {
         'Asia/Shanghai': '中國標準時間',
         'Asia/Hong_Kong': '香港時間',
-        'Asia/Taipei': '台北時間',
+        'Asia/Taipei': '台灣時間',
         'Asia/Tokyo': '東京時間',
         'Asia/Singapore': '新加坡時間',
         'UTC': '世界協調時(UTC)',
