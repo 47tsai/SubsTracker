@@ -1,8 +1,8 @@
 # SubsTracker — 訂閱管理與提醒系統
 
-基於 **Cloudflare Workers + KV** 的輕量級訂閱到期提醒。在網頁中管理訂閱，到期時透過 Telegram / Bark / 企業微信 / ntfy 等 **11 種管道** 推送，並自带傳送與調度日誌方便除錯。
+基於 **Cloudflare Workers + KV** 的輕量級訂閱到期提醒。在網頁中管理訂閱，到期時透過 Telegram / Bark / 企業微信 / ntfy 等 **11 種管道** 推送，並內建傳送與調度日誌方便除錯。
 
-**適合**：個人自行架設、網域名稱/會員/账單到期提醒。  
+**適合**：個人自行架設、網網域名稱稱/會員/账單到期提醒。  
 **不適合**：多用戶協作、複雜企業簽核流程。
 
 ---
@@ -12,7 +12,7 @@
 1. [5 分鐘上手](#-5-分鐘上手)
 2. [部署](#-部署)
 3. [第一次必做設定](#-第一次必做設定)
-4. [日常怎么用](#-日常怎么用)
+4. [日常怎麼用](#-日常怎麼用)
 5. [通知的運作方式](#-通知的運作方式重點必讀)
 6. [功能一覽](#-功能一覽)
 7. [常見問題 FAQ](#-常見問題-faq)
@@ -27,7 +27,7 @@
 部署 Worker
   → 用 admin / password 登入（立刻改密碼）
   → 系統設定：選時區（中國選 Asia/Shanghai）
-  → 系統設定：允许傳送的小時（例如只想早上 8 點發就填 08）
+  → 系統設定：允许傳送的小時（例如只想在早上 8 點發就填 08）
   → 勾選至少一種通知管道並填妥 Token，點「測試」直到測試成功
   → 訂閱清單：新增訂閱（可用預設提醒预設 7/3/1 天 + 當天）
   → 到期時後到「通知紀錄」看是否傳送 / 為何跳過
@@ -140,7 +140,7 @@ Cloudflare Dashboard → **Workers & Pages → KV** → 打開 `SUBSCRIPTIONS_KV
 
 ---
 
-## 📋 日常怎么用
+## 📋 日常怎麼用
 
 ### 訂閱清單
 
@@ -295,11 +295,11 @@ Telegram · NotifyX · Webhook · 企業微信 · Resend 電子郵件 · Bark ·
 系統設定 → Telegram → 填寫可選 **Topic ID**（对應 `message_thread_id`）。  
 普通私聊/普通群可留空。
 
-### 9. ntfy 怎么配？
+### 9. ntfy 怎麼配？
 
 啟用 ntfy → Server 預設 `https://ntfy.sh` → 填自己的 Topic → 手机 ntfy App 訂閱同一 Topic → 點測試。
 
-### 10. WPUSH 怎么配？
+### 10. WPUSH 怎麼配？
 
 啟用 WPUSH → 在 [設定頁](https://wpush.cn/settings) 獲取 API Key → 可選填寫管道 / Topic 編碼 → 點測試。成功條件為介面返回 `code === 0`。
 
@@ -316,7 +316,7 @@ Token 權限不足或 Wrangler 緩存問題：檢查 API Token 權限，必要�
 在系統設定產生 **第三方 API 令牌** 後：
 
 ```bash
-curl -X POST "https://你的網域名稱.workers.dev/api/notify/你的令牌" \
+curl -X POST "https://你的網網域名稱稱.workers.dev/api/notify/你的令牌" \
   -H "Content-Type: application/json" \
   -d '{"title":"標題","content":"內文"}'
 ```
