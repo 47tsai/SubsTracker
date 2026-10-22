@@ -1,14 +1,14 @@
 // @ts-check
 /**
- * 配置与数据备份 / 恢复
+ * 設定與資料備份／還原
  *
  * GET  /api/backup?includeSecrets=0|1
  * POST /api/restore  body: { backup, mode: 'merge'|'replace', includeSecrets?: boolean }
  *
  * 设计约束：
- * - 默认导出不含密钥/密码，避免备份文件泄露
- * - JWT_SECRET 永不导出、导入时也不覆盖（避免会话被意外作废；换环境请重新登录）
- * - 订阅 + reminder_rules 一并导出，保证多规则提醒可无损迁移
+ * - 預設匯出不包含金鑰／密碼，避免備份檔案外洩
+ * - JWT_SECRET 永不匯出，匯入時也不會覆寫（避免工作階段意外失效；更換環境後請重新登入）
+ * - 訂閱與 reminder_rules 會一併匯出，確保多條提醒規則可完整遷移
  */
 import { getConfig, setConfig } from '../../data/config.js';
 import * as subRepo from '../../data/subscriptions.repo.js';
@@ -21,7 +21,7 @@ import { VERSION } from './extras.js';
 const BACKUP_FORMAT = 'substracker-backup';
 const BACKUP_VERSION = 1;
 
-/** 永不导出/覆盖的字段 */
+/** 永不匯出／覆寫的欄位 */
 const NEVER_EXPORT_FIELDS = ['JWT_SECRET', 'ADMIN_PASSWORD'];
 
 /**
@@ -50,7 +50,7 @@ function buildExportConfig(config, includeSecrets) {
       if (key in out) out[key] = '';
     }
   } else {
-    // 即使含密钥，也不导出 JWT_SECRET
+    // 即使包含金鑰，也不匯出 JWT_SECRET
     delete out.JWT_SECRET;
   }
 
@@ -85,7 +85,7 @@ export async function handleExportBackup(request, env) {
       reminderRules[sub.id] = rules;
     }
 
-    // 导出体不附带运行时附加字段
+    // 匯出資料不會附帶執行階段的額外欄位
     const cleanSubs = subscriptions.map((sub) => {
       const { reminderRules: _rr, reminderRulesSummary: _rs, ...rest } = sub || {};
       return rest;
@@ -113,9 +113,9 @@ export async function handleExportBackup(request, env) {
       }
     });
   } catch (error) {
-    console.error('[backup] 导出失败:', error);
+    console.error('[backup] 匯出失敗：', error);
     return json(
-      { success: false, message: '导出失败: ' + (error && error.message ? error.message : String(error)) },
+      { success: false, message: '匯出失敗：' + (error && error.message ? error.message : String(error)) },
       500
     );
   }
@@ -129,36 +129,36 @@ export async function handleExportBackup(request, env) {
 /**
  * @param {any} sub
  * @param {number} index
- * @returns {string|null} 错误信息
+ * @returns {string|null} 錯誤訊息
  */
 function validateSubscriptionEntry(sub, index) {
   if (!sub || typeof sub !== 'object') {
-    return `subscriptions[${index}] 不是对象`;
+    return `subscriptions[${index}] 不是物件`;
   }
   if (typeof sub.id !== 'string' || !sub.id.trim()) {
-    return `subscriptions[${index}] 缺少有效 id`;
+    return `subscriptions[${index}] 缺少有效的 id`;
   }
   if (typeof sub.name !== 'string' || !sub.name.trim()) {
     return `subscriptions[${index}] 缺少 name`;
   }
   if (!sub.expiryDate || Number.isNaN(new Date(sub.expiryDate).getTime())) {
-    return `subscriptions[${index}] 缺少有效 expiryDate`;
+    return `subscriptions[${index}] 缺少有效的 expiryDate`;
   }
   return null;
 }
 
 function validateBackup(raw) {
   if (!raw || typeof raw !== 'object') {
-    return { ok: false, message: '备份内容不是有效 JSON 对象' };
+    return { ok: false, message: '備份內容不是有效的 JSON 物件' };
   }
   if (raw.format && raw.format !== BACKUP_FORMAT) {
     return { ok: false, message: `不支持的备份格式: ${raw.format}` };
   }
   if (raw.version != null && Number(raw.version) > BACKUP_VERSION) {
-    return { ok: false, message: `备份版本过高 (${raw.version})，请升级应用后再导入` };
+    return { ok: false, message: `備份版本過新（${raw.version}），請先升級應用程式再匯入` };
   }
   if (!Array.isArray(raw.subscriptions)) {
-    return { ok: false, message: '备份缺少 subscriptions 数组' };
+    return { ok: false, message: '備份缺少 subscriptions 陣列' };
   }
   for (let i = 0; i < raw.subscriptions.length; i++) {
     const err = validateSubscriptionEntry(raw.subscriptions[i], i);
@@ -171,7 +171,7 @@ function validateBackup(raw) {
 }
 
 /**
- * 合并配置：默认不覆盖密钥空值；includeSecrets 时才写入非空密钥
+ * 合併設定：預設不會以空值覆寫金鑰；只有 includeSecrets 啟用時才會寫入非空金鑰
  *
  * @param {any} current
  * @param {any} incoming
@@ -216,7 +216,7 @@ export async function handleImportBackup(request, env) {
     try {
       body = await request.json();
     } catch {
-      return json({ success: false, message: '请求体不是合法 JSON' }, 400);
+      return json({ success: false, message: '請求本文不是有效的 JSON' }, 400);
     }
 
     // 兼容：body 直接是备份，或 { backup, mode, includeSecrets }
@@ -230,11 +230,11 @@ export async function handleImportBackup(request, env) {
     }
     const backup = /** @type {any} */ (validated).backup;
 
-    // 先写订阅/规则，再写配置：避免配置已改但数据半残
+    // 先寫入訂閱與規則，再寫入設定，避免設定已更新但資料不完整
     const incomingSubs = backup.subscriptions.filter((s) => s && typeof s.id === 'string' && s.id);
     if (mode === 'replace' && incomingSubs.length === 0) {
       return json(
-        { success: false, message: '覆盖模式拒绝空订阅列表（请确认备份完整或改用合并模式）' },
+        { success: false, message: '覆寫模式不接受空的訂閱清單（請確認備份完整，或改用合併模式）' },
         400
       );
     }
@@ -277,7 +277,7 @@ export async function handleImportBackup(request, env) {
       }
     }
 
-    // 分类
+    // 分類
     if (Array.isArray(backup.categories)) {
       const cats = backup.categories
         .filter((c) => typeof c === 'string' && c.trim())
@@ -291,7 +291,7 @@ export async function handleImportBackup(request, env) {
       }
     }
 
-    // 配置放最后
+    // 設定最後寫入
     const currentConfig = await getConfig(env);
     if (backup.config && typeof backup.config === 'object') {
       const merged = mergeConfig(currentConfig, backup.config, includeSecrets);
@@ -300,7 +300,7 @@ export async function handleImportBackup(request, env) {
 
     return json({
       success: true,
-      message: `恢复完成（模式: ${mode === 'replace' ? '覆盖' : '合并'}）`,
+      message: `還原完成（模式：${mode === 'replace' ? '覆寫' : '合併'}）`,
       stats: {
         subscriptions: importedSubs,
         reminderRules: importedRules,
@@ -310,9 +310,9 @@ export async function handleImportBackup(request, env) {
       }
     });
   } catch (error) {
-    console.error('[backup] 导入失败:', error);
+    console.error('[backup] 匯入失敗：', error);
     return json(
-      { success: false, message: '导入失败: ' + (error && error.message ? error.message : String(error)) },
+      { success: false, message: '匯入失敗：' + (error && error.message ? error.message : String(error)) },
       500
     );
   }
