@@ -19,8 +19,8 @@ export const serverChanChannel = {
 
     const endpoint = `https://sctapi.ftqq.com/${config.SERVERCHAN_SENDKEY}.send`;
     const body = new URLSearchParams({
-      title: payload.title || '订阅提醒',
-      desp: `## ${payload.title || '订阅提醒'}\n\n${payload.content || ''}`
+      title: payload.title || '訂閱提醒',
+      desp: `## ${payload.title || '訂閱提醒'}\n\n${payload.content || ''}`
     });
 
     try {
@@ -40,7 +40,7 @@ export const serverChanChannel = {
 
   async test(config) {
     return serverChanChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 Server酱 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 Server 酱測試通知。' },
       config
     );
   }
