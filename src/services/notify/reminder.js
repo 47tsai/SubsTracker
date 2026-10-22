@@ -3,7 +3,7 @@ import { lunarCalendar } from '../../core/lunar.js';
 import { formatAmount } from '../../core/currency-format.js';
 
 /**
- * 按用户时区把到期日转成农历展示文案，避免用 Date 本地分量导致差一天。
+ * 依使用者時區將到期日轉換為農曆顯示文字，避免因 Date 的本地日期欄位造成日期差一天。
  *
  * @param {Date | string | number} expiry
  * @param {string} timezone
@@ -78,7 +78,7 @@ function formatNotificationContent(subscriptions, config) {
   for (const sub of subscriptions) {
     const typeText = sub.customType || '其他';
     const periodText = (sub.periodValue && sub.periodUnit) ? `(周期: ${sub.periodValue} ${ { day: '天', month: '月', year: '年' }[sub.periodUnit] || sub.periodUnit})` : '';
-    const categoryText = sub.category ? sub.category : '未分类';
+    const categoryText = sub.category ? sub.category : '未分類';
     const reminderSetting = sub.matchedReminderRule ? null : resolveReminderSetting(sub);
 
     const expiryDateObj = new Date(sub.expiryDate);
@@ -106,8 +106,8 @@ function formatNotificationContent(subscriptions, config) {
       ? '（仅到期时提醒）'
       : (reminderSetting?.unit === 'hour' ? '（小时级提醒）' : '');
     const reminderText = sub.matchedReminderRule
-      ? `提醒策略: ${formatMatchedReminderRule(sub.matchedReminderRule)}`
-      : `提醒策略: 提前 ${reminderSetting.value} ${reminderSetting.unit === 'hour' ? '小时' : '天'}${reminderSuffix}`;
+      ? `提醒策略：${formatMatchedReminderRule(sub.matchedReminderRule)}`
+      : `提醒策略：提前 ${reminderSetting.value} ${reminderSetting.unit === 'hour' ? '小时' : '天'}${reminderSuffix}`;
 
     const calendarType = sub.useLunar ? '农历' : '公历';
     const autoRenewText = sub.autoRenew ? '是' : '否';
@@ -115,16 +115,16 @@ function formatNotificationContent(subscriptions, config) {
     const amountText = formattedAmount ? `\n金额: ${formattedAmount}/周期` : '';
 
     const subscriptionContent = `${statusEmoji} **${sub.name}**
-类型: ${typeText} ${periodText}
-分类: ${categoryText}${amountText}
-日历类型: ${calendarType}
+類型：${typeText} ${periodText}
+分類：${categoryText}${amountText}
+曆法類型：${calendarType}
 到期日期: ${formattedExpiryDate}${lunarExpiryText}
 自动续期: ${autoRenewText}
 ${reminderText}
 到期状态: ${statusText}`;
 
     let finalContent = sub.notes ? 
-      subscriptionContent + `\n备注: ${sub.notes}` : 
+      subscriptionContent + `\n備註：${sub.notes}` : 
       subscriptionContent;
 
     content += finalContent + '\n\n';
