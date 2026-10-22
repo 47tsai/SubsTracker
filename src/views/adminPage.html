@@ -3134,7 +3134,7 @@ const lunarBiz = {
       destroy() {
         this.hide();       
         
-        if (this.input && this._forceShowHandler) {  // 清理事件监听器
+        if (this.input && this._forceShowHandler) {  // 清理事件監聽器
           this.input.removeEventListener('click', this._forceShowHandler);
         }
         if (this.input && this._manualInputHandler) {
@@ -3572,7 +3572,7 @@ const lunarBiz = {
           document.getElementById('subscriptionModal').classList.remove('hidden');
           document.body.classList.add('overflow-hidden'); // 禁止背景捲動
           
-          // 重要：編輯訂閱時也需要重新設定事件监听器
+          // 重要：編輯訂閱時也需要重新設定事件監聽器
           setupModalEventListeners();
 
           // 更新農曆顯示
