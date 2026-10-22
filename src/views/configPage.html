@@ -66,7 +66,7 @@
       opacity: 0.5;
     }
     html.dark .bg-indigo-50 {
-        background-color: rgba(55, 65, 81, 0.5) !important; /* 深灰色带透明 */
+        background-color: rgba(55, 65, 81, 0.5) !important; /* 深灰色帶透明 */
         border-color: #4b5563 !important;
     }
     html.dark .text-indigo-700 {
@@ -102,7 +102,7 @@
             <i class="fas fa-cog mr-1"></i>系統設定
           </a>
           <a href="/api/logout" class="text-gray-700 hover:text-red-600 border-b-2 border-transparent hover:border-red-300 px-3 py-2 rounded-md text-sm font-medium transition">
-            <i class="fas fa-sign-out-alt mr-1"></i>登出登入
+            <i class="fas fa-sign-out-alt mr-1"></i>登出
           </a>
         </div>
 
@@ -130,7 +130,7 @@
           <i class="fas fa-cog w-6 text-center mr-2"></i>系統設定
         </a>
         <a href="/api/logout" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 active:bg-red-100 transition-colors">
-          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出登入
+          <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i>登出
         </a>
       </div>
     </div>
@@ -146,7 +146,7 @@
       
       <form id="configForm" class="space-y-8">
         <div class="border-b border-gray-200 pb-6">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">管理員账戶</h3>
+          <h3 class="text-lg font-medium text-gray-900 mb-4">管理員帳戶</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label for="adminUsername" class="block text-sm font-medium text-gray-700">使用者名稱</label>
@@ -154,7 +154,7 @@
             </div>
             <div>
               <label for="adminPassword" class="block text-sm font-medium text-gray-700">密碼</label>
-              <input type="password" id="adminPassword" placeholder="如不修改密碼，請留空" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              <input type="password" id="adminPassword" placeholder="如不修變更密碼，請留空" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <p class="mt-1 text-sm text-gray-500">留空表示不修改目前密碼</p>
             </div>
           </div>
@@ -191,7 +191,7 @@
             <optgroup label="🇨🇳 推荐">
               <option value="Asia/Shanghai">中國標準時間（UTC+8）</option>
             </optgroup>
-            <optgroup label="其它常用時區">
+            <optgroup label="其他常用時區">
               <option value="Asia/Hong_Kong">香港時間（UTC+8）</option>
               <option value="Asia/Taipei">台北時間（UTC+8）</option>
               <option value="Asia/Singapore">新加坡時間（UTC+8）</option>
@@ -211,7 +211,7 @@
               <option value="Pacific/Auckland">奥克兰時間（UTC+12）</option>
             </optgroup>
           </select>
-            <p class="mt-1 text-sm text-gray-500">所有時間相關的判断（通知時段、剩余天數、日期顯示）都按此時區計算。中國使用者保持預設 <code>Asia/Shanghai</code> 即可。</p>
+            <p class="mt-1 text-sm text-gray-500">所有時間相關的判断（通知時段、剩餘天數、日期顯示）都按此時區計算。若使用中國標準時間，可保留預設值 <code>Asia/Shanghai</code> 即可。</p>
           </div>
         </div>
 
@@ -227,17 +227,17 @@
               <input type="text" id="notificationHours" placeholder="例如：8 或 08, 12, 20；留空或 * = 每小時都可發"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <p class="mt-1 text-sm text-gray-500">
-                填 0–23 的整點（可多個，逗號分隔）。系統每小時检查一次：只有「目前整點」落在清單里才會發提醒。
+                填入 0–23 的整點（可多個，逗號分隔）。系統每小時檢查一次：只有「目前這個整點」落在清單里才會發提醒。
                 <strong>留空或填 *</strong> 表示每個整點都可以發。
-                多個小時只是允許傳送的時間窗口；同一订阅的同一日級规則當天成功傳送後不會再次傳送。
+                多個小時只是允許傳送的時間窗口；同一訂閱的同一日級規則當天成功傳送後不會再次傳送。
               </p>
               <div id="tzWindowPreview" class="mt-2 p-3 rounded-md border border-gray-200 bg-gray-50 text-sm leading-relaxed"></div>
             </div>
             <div class="bg-blue-50 border border-blue-200 rounded-md p-3 text-sm text-blue-900">
               <p class="font-semibold mb-1"><i class="fas fa-lightbulb mr-1"></i>怎么理解？</p>
               <ul class="list-disc pl-5 space-y-1">
-                <li>上面選的<strong>時區</strong>决定「現在几點」——中國使用者一般選 <b>Asia/Shanghai（北京時間）</b>。</li>
-                <li>填 <code>08</code> = 只在<strong>北京時間早上 8 點那一小時</strong>發（约 8:00–8:59）。</li>
+                <li>上面選的<strong>時區</strong>決定「現在幾點」——使用中國標準時間時，請選 <b>Asia/Shanghai（中國標準時間）</b>。</li>
+                <li>填 <code>08</code> = 只在<strong>中國標準時間早上 8 點那一小時</strong>發（約 8:00–8:59）。</li>
                 <li>現在若是 19 點，填了 08，則<strong>不會發</strong>，工作歷史會寫「不在允許傳送的小時」——這是正常的。</li>
                 <li>改完後請點「儲存設定」才會生效；下方预覽會按輸入框內容實時判断。</li>
               </ul>
@@ -260,7 +260,7 @@
               </label>
               <label class="inline-flex items-center">
                 <input type="checkbox" name="enabledNotifiers" value="wechatbot" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                <span class="ml-2 text-sm text-gray-700">企業微信机器人</span>
+                <span class="ml-2 text-sm text-gray-700">企業微信機器人</span>
               </label>
               <label class="inline-flex items-center">
                 <input type="checkbox" name="enabledNotifiers" value="email" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
@@ -299,7 +299,7 @@
                 <i class="fas fa-external-link-alt ml-1"></i> Webhook 調试工具
               </a>
               <a href="https://developer.work.weixin.qq.com/document/path/91770" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
-                <i class="fas fa-external-link-alt ml-1"></i> 企業微信机器人文檔
+                <i class="fas fa-external-link-alt ml-1"></i> 企業微信機器人文檔
               </a>
               <a href="https://developers.cloudflare.com/workers/tutorials/send-emails-with-resend/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">
                 <i class="fas fa-external-link-alt ml-1"></i> 獲取 Resend API Key
@@ -325,21 +325,21 @@
               <input type="text" id="thirdPartyToken" placeholder="留空表示不修改；輸入新值將更新"
                 class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <button type="button" id="generateThirdPartyToken" class="btn-info text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
-                <i class="fas fa-magic mr-2"></i>生成令牌
+                <i class="fas fa-magic mr-2"></i>產生令牌
               </button>
               <button type="button" id="clearThirdPartyToken" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
                 <i class="fas fa-eraser mr-2"></i>清空
               </button>
             </div>
             <p id="THIRD_PARTY_API_TOKENStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-            <p class="mt-1 text-sm text-gray-500">調用 /api/notify/{token} 介面時需携带此令牌；留空表示禁用第三方 API 推送。</p>
+            <p class="mt-1 text-sm text-gray-500">調用 /api/notify/{token} 介面時需攜帶此令牌；留空表示禁用第三方 API 推送。</p>
           </div>
 
           <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-3">調试設定</label>
             <label class="inline-flex items-center cursor-pointer select-none">
               <input type="checkbox" id="debugLogs" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-              <span class="ml-2 text-sm text-gray-700">開啟調试日志（影响控制台輸出）</span>
+              <span class="ml-2 text-sm text-gray-700">開啟調试日誌（影響主控台輸出）</span>
             </label>
           </div>
 
@@ -348,7 +348,7 @@
             <input type="number" id="paymentHistoryLimit" min="10" max="1000" step="1"
               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="預設 100">
-            <p class="mt-1 text-sm text-gray-500">自動續订與手動續订後僅保留最近 N 條付款歷史（建议 50~200，預設 100）。</p>
+            <p class="mt-1 text-sm text-gray-500">自動續订與手動續订後僅保留最近 N 條付款歷史（建議 50~200，預設 100）。</p>
           </div>
           
           <div id="telegramConfig" class="config-section">
@@ -370,8 +370,8 @@
               </div>
               <div>
                 <label for="tgTopicId" class="block text-sm font-medium text-gray-700">Topic ID（可選）</label>
-                <input type="text" id="tgTopicId" placeholder="Forum 群组话題 ID，对應 message_thread_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <p class="mt-1 text-xs text-gray-500">僅在開啟 Topics 的群组中填寫；留空則傳送到普通會话/群组。</p>
+                <input type="text" id="tgTopicId" placeholder="Forum 群組話題 ID，对應 message_thread_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <p class="mt-1 text-xs text-gray-500">僅在開啟 Topics 的群組中填寫；留空則傳送到普通會话/群組。</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -437,7 +437,7 @@
               <div>
                 <label for="webhookTemplate" class="block text-sm font-medium text-gray-700">訊息模板 (JSON格式，可選)</label>
                 <textarea id="webhookTemplate" rows="4" placeholder='{"title": "{{title}}", "content": "{{content}}", "timestamp": "{{timestamp}}"}' class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-                <p class="mt-1 text-sm text-gray-500">支持變量: {{title}}, {{content}}, {{timestamp}}。留空使用預設格式</p>
+                <p class="mt-1 text-sm text-gray-500">支援變量: {{title}}, {{content}}, {{timestamp}}。留空使用預設格式</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -448,10 +448,10 @@
           </div>
 
           <div id="wechatbotConfig" class="config-section">
-            <h4 class="text-md font-medium text-gray-900 mb-3">企業微信机器人 設定</h4>
+            <h4 class="text-md font-medium text-gray-900 mb-3">企業微信機器人 設定</h4>
             <div class="grid grid-cols-1 gap-4 mb-4">
               <div>
-                <label for="wechatbotWebhook" class="block text-sm font-medium text-gray-700">机器人 Webhook URL</label>
+                <label for="wechatbotWebhook" class="block text-sm font-medium text-gray-700">機器人 Webhook URL</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
                   <input type="url" id="wechatbotWebhook" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearWechatbotWebhook" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
@@ -459,7 +459,7 @@
                   </button>
                 </div>
                 <p id="WECHATBOT_WEBHOOKStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從企業微信群聊中新增机器人獲取的 Webhook URL</p>
+                <p class="mt-1 text-sm text-gray-500">從企業微信群聊中新增機器人獲取的 Webhook URL</p>
               </div>
               <div>
                 <label for="wechatbotMsgType" class="block text-sm font-medium text-gray-700">訊息類型</label>
@@ -470,9 +470,9 @@
                 <p class="mt-1 text-sm text-gray-500">選擇傳送的訊息格式類型</p>
               </div>
               <div>
-                <label for="wechatbotAtMobiles" class="block text-sm font-medium text-gray-700">@手机號 (可選)</label>
+                <label for="wechatbotAtMobiles" class="block text-sm font-medium text-gray-700">@手機號碼 (可選)</label>
                 <input type="text" id="wechatbotAtMobiles" placeholder="13800138000,13900139000" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <p class="mt-1 text-sm text-gray-500">需要@的手机號，多個用逗號分隔，留空則不@任何人</p>
+                <p class="mt-1 text-sm text-gray-500">需要@的手機號碼，多個用逗號分隔，留空則不@任何人</p>
               </div>
               <div>
                 <label for="wechatbotAtAll" class="block text-sm font-medium text-gray-700 mb-2">@所有人</label>
@@ -484,7 +484,7 @@
             </div>
             <div class="flex justify-end">
               <button type="button" id="testWechatBotBtn" class="btn-secondary text-white px-4 py-2 rounded-md text-sm font-medium">
-                <i class="fas fa-paper-plane mr-2"></i>測試 企業微信机器人
+                <i class="fas fa-paper-plane mr-2"></i>測試 企業微信機器人
               </button>
             </div>
           </div>
@@ -510,7 +510,7 @@
               </div>
               <div>
                 <label for="emailFromName" class="block text-sm font-medium text-gray-700">發件人名稱</label>
-                <input type="text" id="emailFromName" placeholder="订阅提醒系統" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="emailFromName" placeholder="訂閱提醒系統" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <p class="mt-1 text-sm text-gray-500">顯示在電子郵件中的發件人名稱</p>
               </div>
               <div>
@@ -535,7 +535,7 @@
                 <p class="mt-1 text-sm text-gray-500">Bark 伺服器地址，預設為官方伺服器，也可以使用自建伺服器</p>
               </div>
               <div>
-                <label for="barkDeviceKey" class="block text-sm font-medium text-gray-700">設備Key</label>
+                <label for="barkDeviceKey" class="block text-sm font-medium text-gray-700">裝置金鑰</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
                   <input type="text" id="barkDeviceKey" placeholder="留空表示不修改；輸入新值將更新" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <button type="button" id="clearBarkDeviceKey" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
@@ -543,13 +543,13 @@
                   </button>
                 </div>
                 <p id="BARK_DEVICE_KEYStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從 <a href="https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865" target="_blank" class="text-indigo-600 hover:text-indigo-800">Bark iOS 應用</a> 中獲取的設備Key</p>
+                <p class="mt-1 text-sm text-gray-500">從 <a href="https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865" target="_blank" class="text-indigo-600 hover:text-indigo-800">Bark iOS 應用</a> 中獲取的裝置金鑰</p>
               </div>
               <div>
                 <label for="barkIsArchive" class="block text-sm font-medium text-gray-700 mb-2">儲存推送</label>
                 <label class="inline-flex items-center">
                   <input type="checkbox" id="barkIsArchive" class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                  <span class="ml-2 text-sm text-gray-700">儲存推送到歷史紀錄</span>
+                  <span class="ml-2 text-sm text-gray-700">將推播內容儲存至歷史紀錄</span>
                 </label>
                 <p class="mt-1 text-sm text-gray-500">勾選後推送訊息會儲存到 Bark 的歷史紀錄中</p>
               </div>
@@ -567,7 +567,7 @@
               <div>
                 <label for="gotifyServerUrl" class="block text-sm font-medium text-gray-700">Server URL</label>
                 <input type="url" id="gotifyServerUrl" placeholder="https://gotify.example.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <p class="mt-1 text-sm text-gray-500">你的 Gotify 服務地址（不需要带 /message）。</p>
+                <p class="mt-1 text-sm text-gray-500">你的 Gotify 服務地址（不需要帶 /message）。</p>
               </div>
               <label for="gotifyAppToken" class="block text-sm font-medium text-gray-700">Application Token</label>
               <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
@@ -652,11 +652,11 @@
                 <p id="PUSHPLUS_TOKENStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
               </div>
               <div>
-                <label for="pushplusTopic" class="block text-sm font-medium text-gray-700">群组編碼 Topic（可選）</label>
-                <input type="text" id="pushplusTopic" placeholder="留空則傳送到個人渠道" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <label for="pushplusTopic" class="block text-sm font-medium text-gray-700">群組編碼 Topic（可選）</label>
+                <input type="text" id="pushplusTopic" placeholder="留空則傳送到個人管道" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               </div>
               <div>
-                <label for="pushplusChannel" class="block text-sm font-medium text-gray-700">渠道（可選）</label>
+                <label for="pushplusChannel" class="block text-sm font-medium text-gray-700">管道（可選）</label>
                 <select id="pushplusChannel" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <option value="">預設</option>
                   <option value="wechat">微信公众號</option>
@@ -664,7 +664,7 @@
                   <option value="sms">短信</option>
                   <option value="webhook">Webhook</option>
                 </select>
-                <p class="mt-1 text-sm text-gray-500">具體可用渠道以 PushPlus 平台支持情況為準</p>
+                <p class="mt-1 text-sm text-gray-500">具體可用管道以 PushPlus 平台支援情況為準</p>
               </div>
             </div>
             <div class="flex justify-end">
@@ -689,7 +689,7 @@
                 <p class="mt-1 text-sm text-gray-500">從 <a href="https://wpush.cn/settings" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 設定頁</a> 獲取 API Key</p>
               </div>
               <div>
-                <label for="wpushChannel" class="block text-sm font-medium text-gray-700">渠道（可選）</label>
+                <label for="wpushChannel" class="block text-sm font-medium text-gray-700">管道（可選）</label>
                 <select id="wpushChannel" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <option value="">預設</option>
                   <option value="wechat">微信公众號</option>
@@ -701,13 +701,13 @@
                   <option value="feishu">飞书</option>
                   <option value="wechat_work">企業微信</option>
                   <option value="clawbot">微信 ClawBot</option>
-                  <option value="qqbot">QQ 机器人</option>
+                  <option value="qqbot">QQ 機器人</option>
                 </select>
-                <p class="mt-1 text-sm text-gray-500">具體可用渠道以 <a href="https://wpush.cn/docs" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 文檔</a> 為準</p>
+                <p class="mt-1 text-sm text-gray-500">具體可用管道以 <a href="https://wpush.cn/docs" target="_blank" class="text-indigo-600 hover:text-indigo-800">WPUSH 文檔</a> 為準</p>
               </div>
               <div>
                 <label for="wpushTopicCode" class="block text-sm font-medium text-gray-700">Topic 編碼（可選）</label>
-                <input type="text" id="wpushTopicCode" placeholder="留空則按個人渠道推送" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input type="text" id="wpushTopicCode" placeholder="留空則按個人管道推送" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               </div>
             </div>
             <div class="flex justify-end">
@@ -731,34 +731,34 @@
           <i class="fas fa-file-export text-indigo-500 mr-2"></i>資料備份與恢複
         </h3>
         <p class="text-sm text-gray-500 mb-4">
-          導出系統設定、訂閱清單與提醒規則，便於換账號部署或升級遷移。
-          預設導出<strong>不含</strong> Bot Token / API Key 等金鑰；需要時可勾選「包含敏感設定」。
+          匯出系統設定、訂閱清單與提醒規則，便於換帳號部署或升級遷移。
+          預設匯出<strong>不含</strong> Bot Token / API Key 等金鑰；需要時可勾選「包含敏感設定」。
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white border border-gray-200 rounded-lg p-4">
-            <h4 class="text-sm font-semibold text-gray-700 mb-3"><i class="fas fa-download mr-1"></i>導出備份</h4>
+            <h4 class="text-sm font-semibold text-gray-700 mb-3"><i class="fas fa-download mr-1"></i>匯出備份</h4>
             <label class="inline-flex items-center text-sm text-gray-700 mb-3 cursor-pointer">
               <input type="checkbox" id="exportIncludeSecrets" class="form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300">
               <span class="ml-2">包含敏感設定（Token / 密碼等）</span>
             </label>
             <p class="text-xs text-amber-600 mb-3">勾選後請妥善保管 JSON 檔案，勿上传公開仓庫。</p>
             <button type="button" id="exportBackupBtn" class="btn-secondary text-white px-4 py-2 rounded-md text-sm font-medium">
-              <i class="fas fa-file-download mr-2"></i>下載備份 JSON
+              <i class="fas fa-file-download mr-2"></i>下載 JSON 備份
             </button>
           </div>
 
           <div class="bg-white border border-gray-200 rounded-lg p-4">
-            <h4 class="text-sm font-semibold text-gray-700 mb-3"><i class="fas fa-upload mr-1"></i>導入恢複</h4>
+            <h4 class="text-sm font-semibold text-gray-700 mb-3"><i class="fas fa-upload mr-1"></i>匯入恢複</h4>
             <input type="file" id="importBackupFile" accept="application/json,.json" class="block w-full text-sm text-gray-600 mb-3">
             <div class="flex flex-col gap-2 mb-3">
               <label class="inline-flex items-center text-sm text-gray-700 cursor-pointer">
                 <input type="radio" name="importMode" value="merge" class="form-radio h-4 w-4 text-indigo-600" checked>
-                <span class="ml-2">合並（按 ID 覆盖同名订阅，保留其余）</span>
+                <span class="ml-2">合並（依 ID 覆蓋同名訂閱，並保留其他資料）</span>
               </label>
               <label class="inline-flex items-center text-sm text-gray-700 cursor-pointer">
                 <input type="radio" name="importMode" value="replace" class="form-radio h-4 w-4 text-indigo-600">
-                <span class="ml-2">覆盖（刪除現有订阅後整包導入）</span>
+                <span class="ml-2">覆蓋（先刪除現有訂閱，再匯入整份備份）</span>
               </label>
               <label class="inline-flex items-center text-sm text-gray-700 cursor-pointer">
                 <input type="checkbox" id="importIncludeSecrets" class="form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300">
@@ -880,7 +880,7 @@
         // === 安全策略 ===
         // 1) 所有 token/金鑰類字段，後端不會下發真實值；這里只顯示“已設定(隱藏)”狀態。
         // 2) 不填寫 token/金鑰字段並儲存時，後端會保持原值不變。
-        // 3) 如需清空，請點对應的“清空”按钮（會在儲存時生效）。
+        // 3) 如需清空，請點对應的“清空”按鈕（會在儲存時生效）。
 
         document.getElementById('adminUsername').value = config.ADMIN_USERNAME || '';
         const _banner = document.getElementById('defaultPasswordBanner');
@@ -900,7 +900,7 @@
         document.getElementById('wechatbotAtMobiles').value = config.WECHATBOT_AT_MOBILES || '';
         document.getElementById('wechatbotAtAll').checked = config.WECHATBOT_AT_ALL === 'true';
         document.getElementById('emailFrom').value = config.EMAIL_FROM || '';
-        document.getElementById('emailFromName').value = config.EMAIL_FROM_NAME || '订阅提醒系統';
+        document.getElementById('emailFromName').value = config.EMAIL_FROM_NAME || '訂閱提醒系統';
         document.getElementById('emailTo').value = config.EMAIL_TO || '';
         document.getElementById('barkServer').value = config.BARK_SERVER || 'https://api.day.app';
         document.getElementById('barkIsArchive').checked = config.BARK_IS_ARCHIVE === 'true';
@@ -955,7 +955,7 @@
         // 載入農曆顯示設定
         document.getElementById('showLunarGlobal').checked = config.SHOW_LUNAR === true;
 
-        // 動態生成時區選項，並設定儲存的值
+        // 動態產生時區選項，並設定儲存的值
         generateTimezoneOptions(config.TIMEZONE || 'Asia/Shanghai');
 
         // 處理多選通知管道
@@ -973,13 +973,13 @@
       } catch (error) {
         console.error('載入設定失敗:', error);
         showToast('載入設定失敗，請重新整理頁面重试', 'error');
-        // 禁用表單防止誤提交覆盖資料
+        // 禁用表單防止誤提交覆蓋資料
         const form = document.getElementById('configForm');
         Array.from(form.elements).forEach(el => { el.disabled = true; });
       }
     }
     
-    // 動態生成時區選項（保持與静態 HTML 一致：推荐分组在最前）
+    // 動態產生時區選項（保持與静態 HTML 一致：推荐分组在最前）
     function generateTimezoneOptions(selectedTimezone = 'Asia/Shanghai') {
       const timezoneSelect = document.getElementById('timezone');
       const fallbackTimezone = 'Asia/Shanghai';
@@ -1022,9 +1022,9 @@
       });
       timezoneSelect.appendChild(recGroup);
 
-      // 其它常用時區分组
+      // 其他常用時區分组
       const otherGroup = document.createElement('optgroup');
-      otherGroup.label = '其它常用時區';
+      otherGroup.label = '其他常用時區';
       others.forEach(tz => {
         const o = document.createElement('option');
         o.value = tz.value;
@@ -1209,7 +1209,7 @@
           }
           passwordField.value = '';
           
-          // 前端始終顯示浏覽器本地時區
+          // 前端始終顯示瀏覽器本機時區
           globalTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
           showSystemTime();
           
@@ -1245,13 +1245,13 @@
                       type === 'wpush' ? 'testWpushBtn' : 'testWebhookBtn';
       const button = document.getElementById(buttonId);
       if (!button) {
-        showToast('測試按钮不存在，請重新整理頁面後重试', 'error');
+        showToast('測試按鈕不存在，請重新整理頁面後重试', 'error');
         return;
       }
       const originalContent = button.innerHTML;
       const serviceName = type === 'telegram' ? 'Telegram' :
                           type === 'notifyx' ? 'NotifyX' :
-                          type === 'wechatbot' ? '企業微信机器人' :
+                          type === 'wechatbot' ? '企業微信機器人' :
                           type === 'email' ? '電子郵件通知' :
                           type === 'bark' ? 'Bark' :
                           type === 'gotify' ? 'Gotify' :
@@ -1335,7 +1335,7 @@
         try {
           result = await response.json();
         } catch (_) {
-          result = { success: false, message: '服務返回了無法解析的响應' };
+          result = { success: false, message: '服務返回了無法解析的回應' };
         }
 
         if (response.ok && result.success) {
@@ -1346,7 +1346,7 @@
         }
       } catch (error) {
         console.error('測試通知失敗:', error);
-        showToast(serviceName + ' 測試失敗，請检查網路後重试', 'error');
+        showToast(serviceName + ' 測試失敗，請檢查網路後重试', 'error');
       } finally {
         button.innerHTML = originalContent;
         button.disabled = false;
@@ -1405,7 +1405,7 @@
 
     document.getElementById('generateThirdPartyToken').addEventListener('click', () => {
       try {
-        // 生成 32 位随机令牌，避免出現特殊字符，方便寫入 URL
+        // 產生 32 位随机令牌，避免出現特殊字符，方便寫入 URL
         const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const buffer = new Uint8Array(32);
         window.crypto.getRandomValues(buffer);
@@ -1413,15 +1413,15 @@
         const input = document.getElementById('thirdPartyToken');
         input.value = token;
         input.dispatchEvent(new Event('input'));
-        showToast('已生成新的第三方 API 令牌，請儲存設定後生效', 'info');
+        showToast('已產生新的第三方 API 令牌，請儲存設定後生效', 'info');
       } catch (error) {
-        console.error('生成令牌失敗:', error);
-        showToast('生成令牌失敗，請手動輸入', 'error');
+        console.error('產生令牌失敗:', error);
+        showToast('產生令牌失敗，請手動輸入', 'error');
       }
     });
 
     window.addEventListener('load', () => {
-      // 绑定敏感字段輸入/清空按钮
+      // 綁定敏感字段輸入/清空按鈕
       wireSecretInput('tgBotToken', 'TG_BOT_TOKEN');
       wireSecretInput('notifyxApiKey', 'NOTIFYX_API_KEY');
       wireSecretInput('webhookUrl', 'WEBHOOK_URL');
@@ -1486,7 +1486,7 @@
       });
     });
     
-    // 前端展示時區（固定使用浏覽器本地時區）
+    // 前端展示時區（固定使用瀏覽器本機時區）
     let globalTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
     let systemTimeTimer = null;
     let timezoneCheckTimer = null;
@@ -1584,11 +1584,11 @@
               update();
             }
           } catch (error) {
-            console.error('检查時區更新失敗:', error);
+            console.error('檢查時區更新失敗:', error);
           }
         }, 30000);
       } catch (e) {
-        // 出錯時顯示本地時間
+        // 出錯時顯示本機時間
         const el = document.getElementById('systemTimeDisplay');
         if (el) {
           el.textContent = new Date().toLocaleString();
@@ -1596,7 +1596,7 @@
       }
     }
     showSystemTime();
-    // --- 新增：移動端菜單控制脚本 ---
+    // --- 新增：移動端菜單控制指令碼 ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
@@ -1642,7 +1642,7 @@
     }
 
     // ───────────────────────────────────────────────────────
-    // 通知小時實時预覽（與調度器同一套规則）
+    // 通知小時實時预覽（與調度器同一套規則）
     // 註意：必須在 loadConfig 寫入輸入框之後再重新整理，否則會誤顯示「空=全天」
     // ───────────────────────────────────────────────────────
     (function () {
@@ -1653,13 +1653,13 @@
       if (!tzSelect || !hoursInput || !preview || !labelInline) return;
 
       const TZ_LABELS = {
-        'Asia/Shanghai': '北京時間',
+        'Asia/Shanghai': '中國標準時間',
         'Asia/Hong_Kong': '香港時間',
         'Asia/Taipei': '台北時間',
         'Asia/Tokyo': '東京時間',
         'Asia/Singapore': '新加坡時間',
         'UTC': '世界协調時(UTC)',
-        'America/New_York': '纽约時間',
+        'America/New_York': '纽約時間',
         'America/Los_Angeles': '洛杉矶時間',
         'Europe/London': '伦敦時間'
       };
@@ -1705,9 +1705,9 @@
         let statusHtml;
         if (allowAll) {
           statusHtml = '<span class="text-green-700 font-medium">✓ 目前會允許傳送</span>'
-            + '<div class="text-xs text-gray-600 mt-1">未限制小時（留空或 *）= 每個整點检查時都可以發。</div>';
+            + '<div class="text-xs text-gray-600 mt-1">未限制小時（留空或 *）= 每個整點檢查時都可以發。</div>';
         } else if (inWindow) {
-          statusHtml = '<span class="text-green-700 font-medium">✓ 目前整點在允許清單內，會傳送</span>'
+          statusHtml = '<span class="text-green-700 font-medium">✓ 目前這個整點在允許清單內，會傳送</span>'
             + '<div class="text-xs text-gray-600 mt-1">允許的小時：<b>' + hours.join('、') + '</b>；現在是 <b>' + hh + ':' + mm + '</b>（' + tzName + '）。</div>';
         } else {
           statusHtml = '<span class="text-amber-700 font-medium">✗ 目前不會傳送</span>'
@@ -1730,7 +1730,7 @@
     })();
 
     // ───────────────────────────────────────────────────────
-    // 備份導出 / 導入恢複
+    // 備份匯出 / 匯入恢複
     // ───────────────────────────────────────────────────────
     (function () {
       const exportBtn = document.getElementById('exportBackupBtn');
@@ -1739,12 +1739,12 @@
 
       exportBtn.addEventListener('click', async () => {
         const includeSecrets = document.getElementById('exportIncludeSecrets').checked;
-        if (includeSecrets && !confirm('將導出包含 Token / 金鑰的完整備份，請確認檔案會安全儲存。继續？')) {
+        if (includeSecrets && !confirm('將匯出包含 Token / 金鑰的完整備份，請確認檔案會安全儲存。继續？')) {
           return;
         }
         const original = exportBtn.innerHTML;
         exportBtn.disabled = true;
-        exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>導出中...';
+        exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>匯出中...';
         try {
           const url = '/api/backup?includeSecrets=' + (includeSecrets ? '1' : '0');
           const res = await apiFetch(url);
@@ -1765,7 +1765,7 @@
         } catch (e) {
           if (e && e.message === 'AUTH_EXPIRED') return;
           console.error(e);
-          showToast('導出失敗: ' + (e.message || e), 'error');
+          showToast('匯出失敗: ' + (e.message || e), 'error');
         } finally {
           exportBtn.disabled = false;
           exportBtn.innerHTML = original;
@@ -1783,10 +1783,10 @@
         const mode = modeEl ? modeEl.value : 'merge';
         const includeSecrets = document.getElementById('importIncludeSecrets').checked;
 
-        if (mode === 'replace' && !confirm('覆盖模式會刪除目前全部订阅後再導入，且不可撤销。确定继續？')) {
+        if (mode === 'replace' && !confirm('覆蓋模式會刪除目前全部訂閱後再匯入，且不可撤销。确定继續？')) {
           return;
         }
-        if (!confirm('確認從備份恢複？建议先導出一份目前資料作為回滚。')) {
+        if (!confirm('確認從備份恢複？建議先匯出一份目前資料作為回滚。')) {
           return;
         }
 
@@ -1812,8 +1812,8 @@
           }
           const stats = result.stats || {};
           showToast(
-            '恢複成功：订阅 ' + (stats.subscriptions || 0) +
-            ' 條，规則 ' + (stats.reminderRules || 0) + ' 條',
+            '恢複成功：訂閱 ' + (stats.subscriptions || 0) +
+            ' 條，規則 ' + (stats.reminderRules || 0) + ' 條',
             'success',
             5000
           );
