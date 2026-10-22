@@ -14,7 +14,7 @@
     .error-message { font-size: 0.875rem; margin-top: 0.25rem; display: none; }
     .error-message.show { display: block; }
 
-    /* 通用悬浮提示優化 */
+    /* 通用浮動提示優化 */
     .hover-container {
       position: relative;
       width: 100%;
@@ -153,7 +153,7 @@
       justify-content: center;
       width: 100%; 
       height: auto;
-      aspect-ratio: 0.85; /* 保持适中的长宽比，紧凑布局 */
+      aspect-ratio: 0.85; /* 保持適中的長寬比，紧凑布局 */
       min-height: 45px;   /* 保證最小點擊區域 */
       border-radius: 6px;
       cursor: pointer;
@@ -162,7 +162,7 @@
       padding: 2px; /* 减小內邊距 */
       font-size: 13px; /* 稍微調小字體适應移動端 */
     }
-    /* 【新增】自定義下拉菜單樣式 (用於替代 datalist) */
+    /* 【新增】自訂下拉菜單樣式 (用於替代 datalist) */
     .custom-dropdown-wrapper {
       position: relative;
       width: 100%;
@@ -178,7 +178,7 @@
       margin-top: 4px;
       max-height: 200px;
       overflow-y: auto;
-      z-index: 60; /* 确保在其他元素之上 */
+      z-index: 60; /* 確保在其他元素之上 */
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       display: none; /* 預設隱藏 */
     }
@@ -296,7 +296,7 @@
     .responsive-table { table-layout: auto; width: 100%; }
     .td-content-wrapper { word-wrap: break-word; white-space: normal; text-align: left; width: 100%; }
     .td-content-wrapper > * { text-align: left; } /* Align content left within the wrapper */
-    /* 操作列按鈕始終可換行，避免複製等按鈕被裁切看不见 */
+    /* 操作列按鈕始終可換行，避免複製等按鈕被裁切看不見 */
     .action-buttons-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -535,7 +535,7 @@
       <form id="subscriptionForm" class="p-6 space-y-5">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">訂閱名稱稱 *</label>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">訂閱名稱 *</label>
             <input type="text" id="name" required
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
             <div class="error-message text-red-500" data-for="name"></div>
@@ -543,14 +543,14 @@
           
           <div class="custom-dropdown-wrapper">
             <label for="customType" class="block text-sm font-medium text-gray-700 mb-1">訂閱類型</label>
-            <input type="text" id="customType" placeholder="選擇或輸入自定義類型" autocomplete="off"
+            <input type="text" id="customType" placeholder="選擇或輸入自訂類型" autocomplete="off"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
             <div id="customTypeDropdown" class="custom-dropdown-list"></div>
           </div>
 
           <div class="custom-dropdown-wrapper">
             <label for="category" class="block text-sm font-medium text-gray-700 mb-1">分類標籤</label>
-            <input type="text" id="category" placeholder="選擇或輸入自定義標籤" autocomplete="off"
+            <input type="text" id="category" placeholder="選擇或輸入自訂標籤" autocomplete="off"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white">
             <div id="categoryDropdown" class="custom-dropdown-list"></div>
             <p class="mt-1 text-xs text-gray-500">可輸入多個標籤並使用"/"分隔</p>
@@ -593,7 +593,7 @@
               <option value="reset">⏳ 到期重置</option>
             </select>
             <p class="mt-1 text-xs text-gray-500 leading-relaxed">
-              <strong>循環</strong>：未過期續订時從目前到期日接續（如會員續費）；
+              <strong>循環</strong>：未過期續訂時從目前到期日接續（如會員續費）；
               <strong>重置</strong>：從付款日重新起算週期（如保號卡按充值日算）。
             </p>
 
@@ -606,7 +606,7 @@
                   <input type="checkbox" id="useLunar" class="form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
                   <span class="ml-2 text-sm text-gray-600">農曆週期</span>
                 </label>
-                <label class="inline-flex items-center cursor-pointer select-none" title="僅國曆；續订/推算時落到目標月最後一天">
+                <label class="inline-flex items-center cursor-pointer select-none" title="僅國曆；續訂/推算時落到目標月最後一天">
                   <input type="checkbox" id="endOfMonth" class="form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
                   <span class="ml-2 text-sm text-gray-600">每月最後一天</span>
                 </label>
@@ -720,12 +720,12 @@
             <!-- 規則行由 JS 註入 -->
           </div>
           <p class="mt-2 text-xs text-gray-500 leading-relaxed">
-            <strong class="text-gray-600">触發語義（精確匹配）：</strong>
+            <strong class="text-gray-600">觸發語義（精確匹配）：</strong>
             「到期前 N 天」僅在剩餘天數<strong>正好等於 N</strong> 時傳送一次，不會在第 N-1…1 天自動連發。
             若希望 7/3/1 天都提醒，請新增多條規則（可用上方預設）。
             類型：到期前 = 精確日/小時；到期當天；到期後 = 每 X 小時重複直到續費/手動確認。
           </p>
-          <!-- 兜底字段：旧調度器路径需要這兩個值；當 reminderRules 為空時仍生效 -->
+          <!-- 兜底字段：舊排程器路徑需要這兩個值；當 reminderRules 為空時仍生效 -->
           <input type="hidden" id="reminderUnit" value="day">
           <input type="hidden" id="reminderValue" value="7">
           <div class="error-message text-red-500" data-for="reminderValue"></div>
@@ -745,7 +745,7 @@
                   <label class="inline-flex items-center cursor-pointer select-none group">
                     <input type="checkbox" id="autoRenew" checked 
                       class="form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 transition duration-150 ease-in-out">
-                    <span class="ml-2 text-sm text-gray-700 font-medium group-hover:text-indigo-700">自動續订</span>
+                    <span class="ml-2 text-sm text-gray-700 font-medium group-hover:text-indigo-700">自動續訂</span>
                   </label>
                </div>
             </div>
@@ -775,11 +775,11 @@
   </div>
 
   <script>
-    // 統一 API 要求封装：401 自動跳轉登入頁
+    // 統一 API 要求封裝：401 自動跳轉至登入頁
     async function apiFetch(url, options) {
       const response = await fetch(url, options);
       if (response.status === 401) {
-        showToast('登入已過期，正在跳轉登入頁...', 'warning');
+        showToast('登入已過期，正在跳轉至登入頁...', 'warning');
         setTimeout(() => { window.location.href = '/'; }, 1000);
         throw new Error('AUTH_EXPIRED');
       }
@@ -999,9 +999,9 @@ function addLunarPeriod(lunar, periodValue, periodUnit) {
   return { year, month, day, isLeap };
 }
 
-// 前端版本的 lunarBiz 对象
+// 前端版本的 lunarBiz 物件
 const lunarBiz = {
-  // 農曆加週期，返回新的農曆日期对象
+  // 農曆加週期，返回新的農曆日期物件
   addLunarPeriod(lunar, periodValue, periodUnit) {
     return addLunarPeriod(lunar, periodValue, periodUnit);
   },
@@ -1009,7 +1009,7 @@ const lunarBiz = {
   lunar2solar(lunar) {
     return lunar2solar(lunar);
   },
-  // 距离農曆日期還有多少天
+  // 距離農曆日期還有多少天
   daysToLunar(lunar) {
     const solar = lunarBiz.lunar2solar(lunar);
     const date = createLocalCalendarDate({ year: solar.year, month: solar.month, day: solar.day });
@@ -1033,7 +1033,7 @@ const lunarBiz = {
         return;
       }
 
-      // 【修複】直接解析字符串 "YYYY-MM-DD"，避免 new Date() 帶来的時區偏移導致日期少一天
+      // 【修復】直接解析字符串 "YYYY-MM-DD"，避免 new Date() 帶来的時區偏移導致日期少一天
       const parts = dateInput.value.split('-');
       const year = parseInt(parts[0], 10);
       const month = parseInt(parts[1], 10);
@@ -1290,7 +1290,7 @@ const lunarBiz = {
 
       const name = document.getElementById('name').value.trim();
       if (!name) {
-        showFieldError('name', '請輸入訂閱名稱稱');
+        showFieldError('name', '請輸入訂閱名稱');
         isValid = false;
       }
 
@@ -1322,7 +1322,7 @@ const lunarBiz = {
       }
 
       const reminderValueField = document.getElementById('reminderValue');
-      // 本次：reminderValue 已隱藏，規則編輯器替代；保留兜底校驗防止脏資料
+      // 本次：reminderValue 已隱藏，規則編輯器替代；保留兜底校驗防止不正確的資料
       if (reminderValueField && reminderValueField.value !== '' && Number(reminderValueField.value) < 0) {
         showFieldError('reminderValue', '提醒值不能為负數');
         isValid = false;
@@ -1331,7 +1331,7 @@ const lunarBiz = {
       return isValid;
     }
 
-    // 建立帶悬浮提示的文本元素
+    // 建立帶浮動提示的文本元素
     function createHoverText(text, maxLength = 30, className = 'text-sm text-gray-900') {
       if (!text || text.length <= maxLength) {
         return '<div class="' + className + '">' + escapeHtml(text) + '</div>';
@@ -1423,7 +1423,7 @@ const lunarBiz = {
 
     function getReminderSettings(subscription) {
       // 優先使用真實多規則（清單 API 已附帶 reminderRules / reminderRulesSummary）
-      // 註意：整函數統一用 var，避免 var/let 同名重複聲明導致整頁指令碼中断
+      // 註意：整個函式統一用 var，避免 var/let 同名重複聲明導致整頁指令碼中断
       var rules = Array.isArray(subscription.reminderRules) ? subscription.reminderRules : null;
       var summary = subscription.reminderRulesSummary || (rules ? formatReminderRulesSummary(rules) : '');
       var unit;
@@ -1638,7 +1638,7 @@ const lunarBiz = {
 
       filtered.sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate));
 
-      // 使用 DocumentFragment 進行批量插入，减少頁面重绘（移動端性能關键）
+      // 使用 DocumentFragment 進行批量插入，減少頁面重繪（移動端性能關键）
       const fragment = document.createDocumentFragment();
 
       filtered.forEach(subscription => {
@@ -1685,8 +1685,8 @@ const lunarBiz = {
         }
 
         const autoRenewIcon = subscription.autoRenew !== false
-          ? '<i class="fas fa-sync-alt text-blue-500 mr-1" title="自動續订"></i>'
-          : '<i class="fas fa-ban text-gray-400 mr-1" title="不自動續订"></i>';
+          ? '<i class="fas fa-sync-alt text-blue-500 mr-1" title="自動續訂"></i>'
+          : '<i class="fas fa-ban text-gray-400 mr-1" title="不自動續訂"></i>';
 
         let lunarExpiryText = '';
         let startLunarText = '';
@@ -1736,7 +1736,7 @@ const lunarBiz = {
           }
         }
 
-        // 構造HTML字符串 (减少了函數調用)
+        // 構造HTML字符串 (減少了函數調用)
         const nameHtml = createHoverText(subscription.name, 20, 'text-sm font-medium text-gray-900');
         const typeHtml = createHoverText(subscription.customType || '其他', 15, 'text-sm text-gray-900');
         const periodHtml = periodText ? createHoverText('週期: ' + periodText, 20, 'text-xs text-gray-500 mt-1') : '';
@@ -1752,7 +1752,7 @@ const lunarBiz = {
             ).join('') + '</div>'
           : '';
 
-        // 複用外部的 format 对象
+        // 複用外部的 format 物件
         const expiryDateText = formatDateInTimezone(subscription.expiryDate, globalTimezone);
         const lunarHtml = lunarExpiryText ? createHoverText('農曆: ' + lunarExpiryText, 25, 'text-xs text-blue-600 mt-1') : '';
 
@@ -1779,7 +1779,7 @@ const lunarBiz = {
 
         const reminderHtml = '<div class="text-sm text-gray-900"><i class="fas fa-bell mr-1 text-indigo-500"></i>' +
           reminder.displayText + '</div>' +
-          '<div class="text-xs text-gray-400 mt-1">精確日触發</div>';
+          '<div class="text-xs text-gray-400 mt-1">精確日觸發</div>';
 
         const currencySymbols = {
           'CNY': '¥', 'USD': '$', 'HKD': 'HK$', 'TWD': 'NT$', 
@@ -1829,7 +1829,7 @@ const lunarBiz = {
               '<button class="clone btn-clone text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '" title="複製為新訂閱"><i class="fas fa-copy mr-1"></i>複製</button>' +
               '<button class="view-history btn-history text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '" title="查看付款歷史"><i class="fas fa-history mr-1"></i>歷史</button>' +
               '<button class="test-notify btn-info text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '"><i class="fas fa-paper-plane mr-1"></i>測試</button>' +
-              '<button class="renew-now btn-success text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '" title="立即續订一個週期"><i class="fas fa-sync-alt mr-1"></i>續订</button>' +
+              '<button class="renew-now btn-success text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '" title="立即續訂一個週期"><i class="fas fa-sync-alt mr-1"></i>續訂</button>' +
               '<button class="delete btn-danger text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '"><i class="fas fa-trash-alt mr-1"></i>刪除</button>' +
               (subscription.isActive
                 ? '<button class="toggle-status btn-warning text-white px-2 py-1 rounded text-xs whitespace-nowrap" data-id="' + subscription.id + '" data-action="deactivate"><i class="fas fa-pause-circle mr-1"></i>停用</button>'
@@ -2037,7 +2037,7 @@ const lunarBiz = {
             '    <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white" onclick="event.stopPropagation()">' +
             '        <div class="flex justify-between items-center pb-3 border-b">' +
             '            <h3 class="text-xl font-semibold text-gray-900">' +
-            '                <i class="fas fa-sync-alt mr-2"></i>手動續订 - ' + escapeHtml(subscription.name) +
+            '                <i class="fas fa-sync-alt mr-2"></i>手動續訂 - ' + escapeHtml(subscription.name) +
             '            </h3>' +
             '            <button onclick="closeRenewFormModal()" class="text-gray-400 hover:text-gray-500">' +
             '                <i class="fas fa-times text-2xl"></i>' +
@@ -2059,7 +2059,7 @@ const lunarBiz = {
             '' +
             '            <div>' +
             '                <div class="flex justify-between items-center mb-1">' +
-            '                    <label class="block text-sm font-medium text-gray-700">續订週期數</label>' +
+            '                    <label class="block text-sm font-medium text-gray-700">續訂週期數</label>' +
             '                    ' + lunarBadge + 
             '                </div>' +
             '                <div class="flex items-center space-x-2">' +
@@ -2068,7 +2068,7 @@ const lunarBiz = {
             '                           oninput="updateNewExpiryPreview()">' +
             '                    <span class="text-gray-600">個</span>' + 
             '                </div>' +
-            '                <p class="mt-1 text-xs text-gray-500">一次性續订多個週期（如12個月）</p>' +
+            '                <p class="mt-1 text-xs text-gray-500">一次性續訂多個週期（如12個月）</p>' +
             '            </div>' +
             '' +
             '            <div class="bg-blue-50 rounded-lg p-4 mb-4">' +
@@ -2095,7 +2095,7 @@ const lunarBiz = {
             '                </button>' +
             '                <button type="submit" id="confirmRenewBtn"' +
             '                        class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">' +
-            '                    <i class="fas fa-check mr-1"></i>確認續订' +
+            '                    <i class="fas fa-check mr-1"></i>確認續訂' +
             '                </button>' +
             '            </div>' +
             '        </form>' +
@@ -2123,7 +2123,7 @@ const lunarBiz = {
         
         if (subscription.useLunar) {
             try {
-                // 1. 轉為農曆对象
+                // 1. 轉為農曆物件
                 let lunar = lunarCalendar.solar2lunar(parts.year, parts.month, parts.day);
                 
                 if (lunar) {
@@ -2136,7 +2136,7 @@ const lunarBiz = {
                     // 3. 轉回國曆
                     const solar = lunarBiz.lunar2solar(nextLunar);
                     
-                    // 重點：用計算出的國曆日期重新獲取完整的農曆对象，确保有 fullStr 屬性
+                    // 重點：用計算出的國曆日期重新獲取完整的農曆物件，確保有 fullStr 屬性
                     const fullNextLunar = lunarCalendar.solar2lunar(solar.year, solar.month, solar.day);
                     
                     // 格式化輸出 YYYY-MM-DD
@@ -2174,11 +2174,11 @@ const lunarBiz = {
             paymentDate: document.getElementById('renewPaymentDate').value,
             amount: parseFloat(document.getElementById('renewAmount').value) || 0,
             periodMultiplier: parseInt(document.getElementById('renewPeriodMultiplier').value) || 1,
-            note: document.getElementById('renewNote').value || '手動續订'
+            note: document.getElementById('renewNote').value || '手動續訂'
         };
 
         const originalBtnContent = confirmBtn.innerHTML;
-        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>續订中...';
+        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>續訂中...';
         confirmBtn.disabled = true;
 
         try {
@@ -2190,17 +2190,17 @@ const lunarBiz = {
             const result = await response.json();
 
             if (result.success) {
-                showToast(result.message || '續订成功', 'success');
+                showToast(result.message || '續訂成功', 'success');
                 closeRenewFormModal();
                 await loadSubscriptions(false);
             } else {
-                showToast(result.message || '續订失敗', 'error');
+                showToast(result.message || '續訂失敗', 'error');
                 confirmBtn.innerHTML = originalBtnContent;
                 confirmBtn.disabled = false;
             }
         } catch (error) {
-            console.error('續订失敗:', error);
-            showToast('續订時發生錯誤', 'error');
+            console.error('續訂失敗:', error);
+            showToast('續訂時發生錯誤', 'error');
             confirmBtn.innerHTML = originalBtnContent;
             confirmBtn.disabled = false;
         }
@@ -2252,8 +2252,8 @@ const lunarBiz = {
         } else {
             paymentsHtml = payments.reverse().map(payment => {
                 const typeLabel = payment.type === 'initial' ? '初始訂閱' :
-                                payment.type === 'manual' ? '手動續订' :
-                                payment.type === 'auto' ? '自動續订' : '未知';
+                                payment.type === 'manual' ? '手動續訂' :
+                                payment.type === 'auto' ? '自動續訂' : '未知';
                 const typeClass = payment.type === 'initial' ? 'bg-blue-100 text-blue-800' :
                                 payment.type === 'manual' ? 'bg-green-100 text-green-800' :
                                 payment.type === 'auto' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-800';
@@ -2425,7 +2425,7 @@ const lunarBiz = {
 
                     <form id="editPaymentForm" class="mt-4 space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">訂閱名稱稱</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">訂閱名稱</label>
                             <input type="text" value="${escapeHtml(subscription.name)}" disabled
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
@@ -2551,7 +2551,7 @@ const lunarBiz = {
         });
 
         if (response.ok) {
-          // 本機更新緩存並重绘，避免整表重新要求導致跳動
+          // 本機更新緩存並重繪，避免整表重新要求導致跳動
           if (Array.isArray(subscriptionsCache)) {
             const idx = subscriptionsCache.findIndex(function (s) { return s.id === id; });
             if (idx >= 0) {
@@ -2680,7 +2680,7 @@ const lunarBiz = {
       }
     }
 
-    // 自定義日期選擇器功能
+    // 自訂日期選擇器功能
     class CustomDatePicker {
       constructor(inputId, pickerId, calendarId, monthId, yearId, prevBtnId, nextBtnId) {
         console.log('CustomDatePicker 構造函數:', { inputId, pickerId, calendarId, monthId, yearId, prevBtnId, nextBtnId });
@@ -2861,7 +2861,7 @@ const lunarBiz = {
       forceShow() {
         console.log('forceShow 被調用');
         if (this.picker) {
-          // 确保選擇器顯示
+          // 確保選擇器顯示
           this.picker.classList.remove('hidden');
           // 重置到日歷视圖
           this.currentView = 'calendar';
@@ -2907,7 +2907,7 @@ const lunarBiz = {
         }
         this.hide();
         
-        // 触發change事件，但不冒泡到表單
+        // 觸發change事件，但不冒泡到表單
         if (this.input) {
           const event = new Event('change', { bubbles: false });
           this.input.dispatchEvent(event);
@@ -3179,7 +3179,7 @@ const lunarBiz = {
       }
     }
     
-    // === 自定義下拉菜單逻輯 ===
+    // === 自訂下拉菜單逻輯 ===
     const TYPE_OPTIONS = [
       "流媒體", "视频平台", "音乐平台", "云服務", "軟件訂閱", 
       "域名", "伺服器", "會員服務", "学习平台", "健身/運動", 
@@ -3246,7 +3246,7 @@ const lunarBiz = {
       const expiryDate = document.getElementById('expiryDate');
       const cancelBtn = document.getElementById('cancelBtn');
       
-      initCustomDropdown('customType', 'customTypeDropdown', TYPE_OPTIONS); // 初始化自定義下拉菜單
+      initCustomDropdown('customType', 'customTypeDropdown', TYPE_OPTIONS); // 初始化自訂下拉菜單
       fetch('/api/categories').then(r => r.json()).then(data => {
         const saved = (data && data.categories) || [];
         const merged = [...new Set([...saved, ...CATEGORY_OPTIONS])];
@@ -3579,7 +3579,7 @@ const lunarBiz = {
           setTimeout(() => {
             updateLunarDisplay('startDate', 'startDateLunar');
             updateLunarDisplay('expiryDate', 'expiryDateLunar');
-            // 重要：延遲釋放載入鎖，等待 DatePicker 初始化触發的 change 事件結束
+            // 重要：延遲釋放載入鎖，等待 DatePicker 初始化觸發的 change 事件結束
             setTimeout(() => {
                 isEditingLoading = false;
             }, 200);
