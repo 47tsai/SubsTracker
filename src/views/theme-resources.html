@@ -1,6 +1,6 @@
 
 <style>
-  /* === 全局暗黑模式核心变量与覆盖 === */
+  /* === 全域深色模式核心變數與覆寫 === */
   :root {
     --dark-bg-primary: #111827;   /* 深灰/黑背景 */
     --dark-bg-secondary: #1f2937; /* 卡片/容器背景 */
@@ -50,7 +50,7 @@
   }
   html.dark tbody tr:hover { background-color: #374151 !important; }
   html.dark tbody tr.bg-gray-100 { background-color: #374151 !important; }
-  /* 弹窗与日期选择器 */
+  /* 彈出視窗與日期選擇器 */
   html.dark .custom-date-picker { background-color: var(--dark-bg-secondary); border-color: var(--dark-border); }
   html.dark .custom-date-picker .calendar-day { color: #e5e7eb; }
   html.dark .custom-date-picker .calendar-day:hover { background-color: #374151; }
@@ -96,10 +96,10 @@
 
   @media (max-width: 767px) {   /* === 移动端表格样式(高对比度版) === */
     html.dark .responsive-table td:before {  /* 强制提亮移动端表格的 Label */
-      color: #e5e7eb !important;    /* 改为极亮的浅灰色 (接近纯白) */
+      color: #e5e7eb !important;    /* 改為極亮的淺灰色（接近純白） */
       font-weight: 700 !important;  /* 加粗字体 */
       opacity: 1 !important;
-      text-transform: uppercase;    /* 可选：增加大写使其更突出 */
+      text-transform: uppercase;    /* 可選：改用大寫讓文字更醒目 */
       letter-spacing: 0.05em;
     }
     html.dark .responsive-table tr {
