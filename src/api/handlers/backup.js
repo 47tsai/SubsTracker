@@ -122,7 +122,7 @@ export async function handleExportBackup(request, env) {
 }
 
 /**
- * 校验备份结构
+ * 驗證備份結構
  * @param {any} raw
  * @returns {{ ok: true, backup: any } | { ok: false, message: string }}
  */
@@ -152,7 +152,7 @@ function validateBackup(raw) {
     return { ok: false, message: '備份內容不是有效的 JSON 物件' };
   }
   if (raw.format && raw.format !== BACKUP_FORMAT) {
-    return { ok: false, message: `不支持的备份格式: ${raw.format}` };
+    return { ok: false, message: `不支援的備份格式：${raw.format}` };
   }
   if (raw.version != null && Number(raw.version) > BACKUP_VERSION) {
     return { ok: false, message: `備份版本過新（${raw.version}），請先升級應用程式再匯入` };
@@ -199,7 +199,7 @@ function mergeConfig(current, incoming, includeSecrets) {
     }
   }
 
-  // 始终保留现有 JWT
+  // 一律保留現有 JWT
   next.JWT_SECRET = current.JWT_SECRET;
   return next;
 }
@@ -219,7 +219,7 @@ export async function handleImportBackup(request, env) {
       return json({ success: false, message: '請求本文不是有效的 JSON' }, 400);
     }
 
-    // 兼容：body 直接是备份，或 { backup, mode, includeSecrets }
+    // 相容格式：body 可直接是備份，或 { backup, mode, includeSecrets }
     const rawBackup = body && body.backup ? body.backup : body;
     const mode = body && body.mode === 'replace' ? 'replace' : 'merge';
     const includeSecrets = !!(body && body.includeSecrets);
