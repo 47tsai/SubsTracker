@@ -989,7 +989,7 @@
       ];
       const others = [
         { value: 'Asia/Taipei', name: '台北時間', offset: '+8' },
-        { value: 'Asia/Hong_Kong', name: '香港時間', offset: '+8' }
+        { value: 'Asia/Hong_Kong', name: '香港時間', offset: '+8' },
         { value: 'Asia/Singapore', name: '新加坡時間', offset: '+8' },
         { value: 'Asia/Tokyo', name: '日本時間', offset: '+9' },
         { value: 'Asia/Seoul', name: '韓國時間', offset: '+9' },
@@ -1013,7 +1013,7 @@
 
       // 推荐分组
       const recGroup = document.createElement('optgroup');
-      recGroup.label = '🇨🇳 推薦';
+      recGroup.label = '預設時區';
       recommended.forEach(tz => {
         const o = document.createElement('option');
         o.value = tz.value;
