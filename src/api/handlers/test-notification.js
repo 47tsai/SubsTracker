@@ -1,5 +1,5 @@
 import { getConfig } from '../../data/config.js';
-import { formatBeijingTime } from '../../core/time.js';
+import { formatLocalDate } from '../../core/time.js';
 import { sendTelegramNotification } from '../../services/notify/telegram.js';
 import { sendNotifyXNotification } from '../../services/notify/notifyx.js';
 import { sendWebhookNotification } from '../../services/notify/webhook.js';
@@ -44,7 +44,7 @@ async function handleTestNotification(request, env) {
         TG_TOPIC_ID: typeof body.TG_TOPIC_ID === 'string' && body.TG_TOPIC_ID.trim().length > 0 ? body.TG_TOPIC_ID.trim() : config.TG_TOPIC_ID
       };
 
-      const content = '*測試通知*\n\n這是一則測試通知，用來確認 Telegram 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '*測試通知*\n\n這是一則測試通知，用來確認 Telegram 通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
       success = await sendTelegramNotification(content, testConfig);
       message = success ? 'Telegram 通知傳送成功' : 'Telegram 通知傳送失敗，請檢查設定';
     } else if (type === 'notifyx') {
@@ -56,7 +56,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '## 這是一則測試通知\n\n用來確認 NotifyX 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '## 這是一則測試通知\n\n用來確認 NotifyX 通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
       const description = '測試 NotifyX 通知功能';
 
       success = await sendNotifyXNotification(title, content, description, testConfig);
@@ -75,7 +75,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認Webhook 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認Webhook 通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendWebhookNotification(title, content, testConfig);
       message = success ? 'Webhook 通知傳送成功' : 'Webhook 通知傳送失敗，請檢查設定';
@@ -91,7 +91,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認企業微信機器人功能是否正常工作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認企業微信機器人功能是否正常工作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendWechatBotNotification(title, content, testConfig);
       message = success ? '企業微信機器人通知傳送成功' : '企業微信機器人通知傳送失敗，請檢查設定';
@@ -107,7 +107,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認電子郵件通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認電子郵件通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendEmailNotification(title, content, testConfig);
       message = success ? '電子郵件通知傳送成功' : '電子郵件通知傳送失敗，請檢查設定';
@@ -122,7 +122,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認Bark通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認Bark通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendBarkNotification(title, content, testConfig);
       message = success ? 'Bark 通知傳送成功' : 'Bark 通知傳送失敗，請檢查設定';
@@ -136,7 +136,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認Gotify通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認Gotify通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendGotifyNotification(title, content, testConfig);
       message = success ? 'Gotify 通知傳送成功' : 'Gotify 通知傳送失敗，請檢查設定';
@@ -149,7 +149,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認Server酱通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認Server酱通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendServerChanNotification(title, content, testConfig);
       message = success ? 'Server 酱通知傳送成功' : 'Server 酱通知傳送失敗，請檢查設定';
@@ -164,7 +164,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認PushPlus通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認PushPlus通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendPushPlusNotification(title, content, testConfig);
       message = success ? 'PushPlus 通知傳送成功' : 'PushPlus 通知傳送失敗，請檢查設定';
@@ -178,7 +178,7 @@ async function handleTestNotification(request, env) {
           : config.NTFY_TOKEN
       };
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認 ntfy 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認 ntfy 通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
       success = await sendNtfyNotification(title, content, testConfig);
       message = success ? 'ntfy 通知傳送成功' : 'ntfy 通知傳送失敗，請檢查設定';
     } else if (type === 'wpush') {
@@ -191,7 +191,7 @@ async function handleTestNotification(request, env) {
         WPUSH_TOPIC_CODE: typeof body.WPUSH_TOPIC_CODE === 'string' ? body.WPUSH_TOPIC_CODE.trim() : config.WPUSH_TOPIC_CODE
       };
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認 WPUSH 通知功能是否正常運作。\n\n傳送時間：' + formatBeijingTime();
+      const content = '這是一則測試通知，用來確認 WPUSH 通知功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
       success = await sendWPushNotification(title, content, testConfig);
       message = success ? 'WPUSH 通知傳送成功' : 'WPUSH 通知傳送失敗，請檢查設定';
     }
