@@ -142,7 +142,7 @@ function getRecentPayments(subscriptions, timezone) {
         recentPayments.push({
           name: sub.name,
           amount: payment.amount,
-          currency: sub.currency || 'CNY',
+          currency: sub.currency || 'TWD',
           customType: sub.customType,
           paymentDate: payment.date,
           note: payment.note
