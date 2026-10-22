@@ -146,7 +146,7 @@ async function handleUpdateConfig(request, env) {
 
     if (!updatedConfig.JWT_SECRET || updatedConfig.JWT_SECRET === 'your-secret-key') {
       updatedConfig.JWT_SECRET = generateRandomSecret();
-      console.log('[安全] 生成新的JWT密钥');
+      console.log('[安全] 產生新的 JWT 金鑰');
     }
 
     await setConfig(env, updatedConfig);
@@ -156,7 +156,7 @@ async function handleUpdateConfig(request, env) {
       { headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('配置保存错误:', error);
+    console.error('設定儲存錯誤：', error);
     return new Response(
       JSON.stringify({ success: false, message: '更新設定失敗：' + error.message }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
