@@ -518,7 +518,7 @@ export function getTimezoneOffset(timezone = 'UTC') {
 /**
  * 生成时区显示文本。
  *
- * 例：formatTimezoneDisplay('Asia/Shanghai') → "中国标准时间 (UTC+8)"
+ * 例：formatTimezoneDisplay('Asia/Shanghai') → "中國標準時間 (UTC+8)"
  *
  * @param {string} [timezone='UTC']
  * @returns {string}
@@ -530,16 +530,16 @@ export function formatTimezoneDisplay(timezone = 'UTC') {
     const offsetStr = offset >= 0 ? `+${offset}` : `${offset}`;
     const names = {
       UTC: '世界标准时间',
-      'Asia/Shanghai': '中国标准时间',
-      'Asia/Hong_Kong': '香港时间',
+      'Asia/Shanghai': '中國標準時間',
+      'Asia/Hong_Kong': '香港時間',
       'Asia/Taipei': '台北时间',
-      'Asia/Singapore': '新加坡时间',
-      'Asia/Tokyo': '日本时间',
-      'Asia/Seoul': '韩国时间',
-      'America/New_York': '美国东部时间',
-      'America/Los_Angeles': '美国太平洋时间',
-      'America/Chicago': '美国中部时间',
-      'America/Denver': '美国山地时间',
+      'Asia/Singapore': '新加坡時間',
+      'Asia/Tokyo': '日本時間',
+      'Asia/Seoul': '韓國時間',
+      'America/New_York': '美國東部時間',
+      'America/Los_Angeles': '美國太平洋時間',
+      'America/Chicago': '美國中部時間',
+      'America/Denver': '美國山地時間',
       'Europe/London': '英国时间',
       'Europe/Paris': '巴黎时间',
       'Europe/Berlin': '柏林时间',
@@ -556,7 +556,7 @@ export function formatTimezoneDisplay(timezone = 'UTC') {
 }
 
 /**
- * 北京时间快捷格式化函数。
+ * 北京時間快捷格式化函式。
  *
  * @param {Date | string | number} [date=new Date()]
  * @param {'date'|'datetime'|'full'|'isoLocal'} [format='full']
