@@ -3304,7 +3304,7 @@ const lunarBiz = {
         cancelBtn.dataset.bound = 'true';
         cancelBtn.addEventListener('click', () => {
           document.getElementById('subscriptionModal').classList.add('hidden');
-          document.body.classList.remove('overflow-hidden'); // 恢複背景滚動
+          document.body.classList.remove('overflow-hidden'); // 恢復背景捲動
         });
       }
 
@@ -3495,7 +3495,7 @@ const lunarBiz = {
         if (result.success) {
           showToast((id ? '更新' : '新增') + '訂閱成功', 'success');
           document.getElementById('subscriptionModal').classList.add('hidden');
-          document.body.classList.remove('overflow-hidden'); // 恢複背景滚動
+          document.body.classList.remove('overflow-hidden'); // 恢復背景捲動
           loadSubscriptions();
         } else {
           showToast((id ? '更新' : '新增') + '訂閱失敗: ' + (result.message || '未知錯誤'), 'error');
@@ -3597,7 +3597,7 @@ const lunarBiz = {
     async function deleteSubscription(e) {
       const id = e.target.dataset.id || e.target.parentElement.dataset.id;
       
-      if (!confirm('确定要刪除這個訂閱吗？此操作不可恢複。')) {
+      if (!confirm('確定要刪除這筆訂閱嗎？此操作無法復原。')) {
         return;
       }
       
