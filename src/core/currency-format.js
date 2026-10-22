@@ -1,9 +1,9 @@
 // @ts-check
 /**
- * 货币格式化共享工具
+ * 貨幣格式化共用工具
  *
- * 早期版本曾在不同代码路径（添加表单 / 列表 / 通知正文 / 历史 / 第三方触发）
- * 中重复定义了 currencySymbols，且偶尔默认回退 ¥（CNY 符号）造成币种与展示不一致。
+ * 早期版本曾在不同程式路徑（新增表單／清單／通知內容／歷史／第三方觸發）
+ * 中重複定義 currencySymbols，且偶爾預設回退 ¥（人民幣符號），造成幣別與顯示不一致。
  *
  * 统一使用本模块：
  *   formatAmount(123.45, 'USD')   → '$123.45'
@@ -13,7 +13,7 @@
  */
 
 /**
- * 币种 → 符号（前缀）映射。
+ * 幣別 → 符號（前綴）對照表。
  * JPY 故意使用 'JP¥' 前缀以避免与 CNY 的 ¥ 混淆。
  */
 export const CURRENCY_SYMBOLS = {
@@ -29,9 +29,9 @@ export const CURRENCY_SYMBOLS = {
 };
 
 /**
- * 取币种符号，未知币种回退到币种代码本身。
+ * 取得幣別符號，未知幣別則回傳幣別代碼。
  *
- * @param {string} [currency='CNY']
+ * @param {string} [currency='TWD']
  * @returns {string}
  */
 export function getCurrencySymbol(currency = 'TWD') {
@@ -40,14 +40,14 @@ export function getCurrencySymbol(currency = 'TWD') {
 }
 
 /**
- * 格式化金额字符串，amount 为空时返回空串。
+ * 格式化金額字串；amount 為空時回傳空字串。
  *
  * @param {number|string|null|undefined} amount
- * @param {string} [currency='CNY']
+ * @param {string} [currency='TWD']
  * @param {{ withDecimal?: boolean }} [opts]
  * @returns {string}
  */
-export function formatAmount(amount, currency = 'CNY', opts = {}) {
+export function formatAmount(amount, currency = 'TWD', opts = {}) {
   if (amount === null || amount === undefined || amount === '') return '';
   const n = Number(amount);
   if (Number.isNaN(n)) return '';
