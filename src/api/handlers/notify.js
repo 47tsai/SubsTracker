@@ -21,7 +21,7 @@ async function handleThirdPartyNotify(request, env, config, url) {
 
   if (!providedToken || providedToken !== expectedToken) {
     return new Response(
-      JSON.stringify({ message: '访问未授权，令牌无效或缺失' }),
+      JSON.stringify({ message: '未經授權的存取，權杖無效或缺失' }),
       { status: 401, headers: { 'Content-Type': 'application/json' } }
     );
   }
@@ -35,7 +35,7 @@ async function handleThirdPartyNotify(request, env, config, url) {
 
     if (!content) {
       return new Response(
-        JSON.stringify({ message: '缺少必填参数 content' }),
+        JSON.stringify({ message: '缺少必填參數 content' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -54,7 +54,7 @@ async function handleThirdPartyNotify(request, env, config, url) {
 
     return new Response(
       JSON.stringify({
-        message: '发送成功',
+        message: '傳送成功',
         response: {
           errcode: 0,
           errmsg: 'ok',
@@ -64,10 +64,10 @@ async function handleThirdPartyNotify(request, env, config, url) {
       { headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('[第三方API] 发送通知失败:', error);
+    console.error('[第三方API] 傳送通知失敗:', error);
     return new Response(
       JSON.stringify({
-        message: '发送失败',
+        message: '傳送失敗',
         response: {
           errcode: 1,
           errmsg: error.message
