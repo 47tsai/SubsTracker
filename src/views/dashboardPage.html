@@ -131,7 +131,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
       <h2 class="text-2xl font-bold text-gray-800">📊 仪表板</h2>
-      <p class="text-sm text-gray-500 mt-1">訂閱費用和活動概覽（統計金額已折合為 CNY）</p>
+      <p class="text-sm text-gray-500 mt-1">訂閱費用和活動概覽（統計金額已換算為 CNY）</p>
     </div>
 
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
@@ -179,7 +179,7 @@
           <i class="fas fa-clock text-yellow-500"></i>
           <h3 class="text-lg font-medium text-gray-900">即將續費</h3>
         </div>
-        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">未来7天</span>
+        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">未來7天</span>
       </div>
       <div class="p-6" id="upcomingRenewals">
         <div class="loading-skeleton"></div>
@@ -205,7 +205,7 @@
             <i class="fas fa-chart-bar text-purple-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按類型支出排行</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (折合CNY)</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (換算為 CNY)</span>
         </div>
         <div class="p-6" id="expenseByType">
           <div class="loading-skeleton"></div>
@@ -218,7 +218,7 @@
             <i class="fas fa-folder text-green-500"></i>
             <h3 class="text-lg font-medium text-gray-900">按分類支出統計</h3>
           </div>
-          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (折合CNY)</span>
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">每年統計 (換算為 CNY)</span>
         </div>
         <div class="p-6" id="expenseByCategory">
           <div class="loading-skeleton"></div>
@@ -228,7 +228,7 @@
   </div>
 
   <script>
-    // 統一 API 要求封装：401 自動跳轉登入頁
+    // 統一 API 要求封裝：401 自動跳轉登入頁
     async function apiFetch(url, options) {
       const response = await fetch(url, options);
       if (response.status === 401) {
@@ -311,7 +311,7 @@
         if (schedulerStatusEl) {
           const status = data.schedulerStatus;
           if (!status) {
-            schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">目前沒有排程執行紀錄（等待下一次 Cron）</div></div>';
+            schedulerStatusEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🕐</div><div class="empty-state-text">目前沒有排程執行紀錄（等待下一次 Cron 執行）</div></div>';
           } else {
             const sendResult = status.sendResult || {};
             const runAt = status.lastRunAt ? new Date(status.lastRunAt).toLocaleString('zh-CN') : '未知';
@@ -378,12 +378,12 @@
           <div class="stat-card">
             <div class="stat-card-header">每年支出 (CNY)</div>
             <div class="stat-card-value">¥${data.yearlyExpense.amount.toFixed(2)}</div>
-            <div class="stat-card-subtitle">月均支出: ¥${data.yearlyExpense.monthlyAverage.toFixed(2)}</div>
+            <div class="stat-card-subtitle">每月平均支出: ¥${data.yearlyExpense.monthlyAverage.toFixed(2)}</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-header">啟用中的訂閱</div>
             <div class="stat-card-value">${data.activeSubscriptions.active}</div>
-            <div class="stat-card-subtitle">總訂閱數: ${data.activeSubscriptions.total}</div>
+            <div class="stat-card-subtitle">訂閱總數: ${data.activeSubscriptions.total}</div>
             ${data.activeSubscriptions.expiringSoon>0?`<div class="stat-card-trend down"><i class="fas fa-exclamation-circle"></i>${data.activeSubscriptions.expiringSoon} 即將到期</div>`:''}
           </div>
         `;
@@ -473,7 +473,7 @@
     showSystemTime();
     loadDashboardData();
 
-    // 自動重新整理：頁面可见時每 60 秒重新整理，不可见時暂停
+    // 自動重新整理：頁面可見時每 60 秒重新整理，不可見時暫停
     let refreshTimer = setInterval(loadDashboardData, 60000);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
