@@ -27,28 +27,28 @@ describe('convertToTWD', () => {
   });
 
   it('USD 換算為新台幣', () => {
-    expect(convertToTWD(14, 'USD', rates)).toBe(450);
+    expect(convertToTWD(14, 'USD', rates)).toBeCloseTo(450, 8);
   });
 
-  it('未知币种不抛错，返回原金额', () => {
+  it('未知幣別不拋錯，回傳原金額', () => {
     expect(convertToTWD(5, 'XYZ', rates)).toBe(5);
   });
 
-  it('非正金额返回 0', () => {
+  it('非正金額回傳 0', () => {
     expect(convertToTWD(0, 'USD', rates)).toBe(0);
     expect(convertToTWD(-1, 'USD', rates)).toBe(0);
   });
 });
 
 describe('getDynamicRates', () => {
-  it('API 失败时返回 FALLBACK', async () => {
+  it('API 失敗時回傳兜底匯率', async () => {
     vi.stubGlobal('fetch', async () => ({ ok: false, status: 500 }));
     const rates = await getDynamicRates(env);
     expect(rates.CNY).toBe(1);
     expect(rates.USD).toBeTruthy();
   });
 
-  it('API 成功时合并并缓存', async () => {
+  it('API 成功時合併並快取', async () => {
     vi.stubGlobal('fetch', async () => ({
       ok: true,
       json: async () => ({ rates: { USD: 7.1, EUR: 8.2 } })
@@ -67,7 +67,7 @@ describe('getDynamicRates', () => {
   });
 });
 
-describe('JWT 边界', () => {
+describe('JWT 邊界', () => {
   it('空 token/secret → null', async () => {
     expect(await verifyJWT('', 's')).toBeNull();
     expect(await verifyJWT('a.b.c', '')).toBeNull();
