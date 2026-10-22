@@ -2,17 +2,18 @@ import { MS_PER_DAY, getCurrentTimeInTimezone, getTimezoneDateParts } from './ti
 
 const CATEGORY_SEPARATOR_REGEX = /[\/，,\s]+/;
 
-// 汇率配置 (以 CNY 为基准，当 API 不可用或缺少特定币种如 TWD 时使用)
+// 匯率以 CNY 為基準，數值代表「1 CNY 可兌換多少該幣別」。
+// Frankfurter 未提供 TWD，因此以保守的兜底匯率補上；API 失敗時亦使用此表。
 const FALLBACK_RATES = {
-  'CNY': 1,
-  'USD': 6.98,
-  'HKD': 0.90,
-  'TWD': 0.22,
-  'JPY': 0.044,
-  'EUR': 8.16,
-  'GBP': 9.40,
-  'KRW': 0.0048,
-  'TRY': 0.16
+  CNY: 1,
+  USD: 0.1433,
+  HKD: 1.1111,
+  TWD: 4.55,
+  JPY: 22.73,
+  EUR: 0.1225,
+  GBP: 0.1064,
+  KRW: 189.4,
+  TRY: 4.45
 };
 
 async function getDynamicRates(env) {
@@ -48,13 +49,15 @@ async function getDynamicRates(env) {
   return FALLBACK_RATES;
 }
 
-function convertToCNY(amount, currency, rates) {
+function convertToTWD(amount, currency, rates) {
   if (!amount || amount <= 0) return 0;
-  const code = currency || 'CNY';
-  if (code === 'CNY') return amount;
-  const rate = rates[code];
-  if (!rate) return amount;
-  return amount / rate;
+  const code = String(currency || 'TWD').toUpperCase();
+  if (code === 'TWD') return amount;
+  const sourceRate = rates[code];
+  const twdRate = rates.TWD;
+  if (!sourceRate || !twdRate) return amount;
+  // rates 是每 1 CNY 可兌換的外幣數量，先換算回 CNY 再換算成 TWD。
+  return (amount / sourceRate) * twdRate;
 }
 
 function calculateMonthlyExpense(subscriptions, timezone, rates) {
@@ -71,7 +74,7 @@ function calculateMonthlyExpense(subscriptions, timezone, rates) {
       const paymentDate = new Date(payment.date);
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear && paymentParts.month === currentMonth) {
-        amount += convertToCNY(payment.amount, sub.currency, rates);
+        amount += convertToTWD(payment.amount, sub.currency, rates);
       }
     });
   });
@@ -86,7 +89,7 @@ function calculateMonthlyExpense(subscriptions, timezone, rates) {
       const paymentDate = new Date(payment.date);
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === lastMonthYear && paymentParts.month === lastMonth) {
-        lastMonthAmount += convertToCNY(payment.amount, sub.currency, rates);
+        lastMonthAmount += convertToTWD(payment.amount, sub.currency, rates);
       }
     });
   });
@@ -117,7 +120,7 @@ function calculateYearlyExpense(subscriptions, timezone, rates) {
       const paymentDate = new Date(payment.date);
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
-        amount += convertToCNY(payment.amount, sub.currency, rates);
+        amount += convertToTWD(payment.amount, sub.currency, rates);
       }
     });
   });
@@ -188,9 +191,9 @@ function getExpenseByType(subscriptions, timezone, rates) {
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
         const type = sub.customType || '未分类';
-        const amountCNY = convertToCNY(payment.amount, sub.currency, rates);
-        typeMap[type] = (typeMap[type] || 0) + amountCNY;
-        total += amountCNY;
+        const amountTWD = convertToTWD(payment.amount, sub.currency, rates);
+        typeMap[type] = (typeMap[type] || 0) + amountTWD;
+        total += amountTWD;
       }
     });
   });
@@ -219,13 +222,13 @@ function getExpenseByCategory(subscriptions, timezone, rates) {
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
         const categories = sub.category ? sub.category.split(CATEGORY_SEPARATOR_REGEX).filter(c => c.trim()) : ['未分类'];
-        const amountCNY = convertToCNY(payment.amount, sub.currency, rates);
+        const amountTWD = convertToTWD(payment.amount, sub.currency, rates);
 
         categories.forEach(category => {
           const cat = category.trim() || '未分类';
-          categoryMap[cat] = (categoryMap[cat] || 0) + amountCNY / categories.length;
+          categoryMap[cat] = (categoryMap[cat] || 0) + amountTWD / categories.length;
         });
-        total += amountCNY;
+        total += amountTWD;
       }
     });
   });
@@ -242,7 +245,7 @@ function getExpenseByCategory(subscriptions, timezone, rates) {
 export {
   FALLBACK_RATES,
   getDynamicRates,
-  convertToCNY,
+  convertToTWD,
   calculateMonthlyExpense,
   calculateYearlyExpense,
   getRecentPayments,
