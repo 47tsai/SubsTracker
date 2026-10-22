@@ -306,7 +306,7 @@ describe('testChannel', () => {
   it('未知渠道返回失败', async () => {
     const r = await testChannel('unknown', {});
     expect(r.success).toBe(false);
-    expect(r.error).toContain('未知渠道');
+    expect(r.error).toContain('未知管道');
   });
 
   it('已知渠道走 channel.test()', async () => {
