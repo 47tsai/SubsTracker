@@ -5,9 +5,9 @@
  * 早期版本曾在不同程式路徑（新增表單／清單／通知內容／歷史／第三方觸發）
  * 中重複定義 currencySymbols，且偶爾預設回退 ¥（人民幣符號），造成幣別與顯示不一致。
  *
- * 统一使用本模块：
+ * 統一使用本模組：
  *   formatAmount(123.45, 'USD')   → '$123.45'
- *   formatAmount(123.45, 'JPY')   → 'JP¥123.45'   （JPY 与 CNY 同符号但加前缀以避免歧义）
+ *   formatAmount(123.45, 'JPY')   → 'JP¥123.45'   （JPY 與 CNY 使用相同符號，因此加上前綴避免混淆）
  *   formatAmount(null, 'USD')     → ''
  *
  */
