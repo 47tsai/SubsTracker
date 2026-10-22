@@ -62,7 +62,7 @@ describe('POST /api/login', () => {
     );
     const body = await res.json();
     expect(body.success).toBe(false);
-    expect(String(body.message)).toMatch(/错误|尝试/);
+    expect(String(body.message)).toMatch(/錯誤|嘗試/);
   });
 
   it('连续失败 5 次后限流 429', async () => {
