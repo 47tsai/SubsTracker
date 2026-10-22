@@ -24,7 +24,7 @@ async function testSingleSubscriptionNotification(id, env) {
     }
     const config = await getConfig(env);
 
-    const title = `手動測試通知: ${subscription.name}`;
+    const title = `手動測試通知：${subscription.name}`;
 
     const showLunar = config.SHOW_LUNAR === true;
     let lunarExpiryText = '';
@@ -48,12 +48,12 @@ async function testSingleSubscriptionNotification(id, env) {
     const categoryText = subscription.category ? subscription.category : '未分類';
 
     const commonContent = `**訂閱详情**
-类型: ${subscription.customType || '其他'}${amountText}
-分类: ${categoryText}
-日历类型: ${calendarType}
-到期日期: ${formattedExpiryDate}${lunarExpiryText}
-自动续期: ${autoRenewText}
-备注: ${subscription.notes || '無'}
+類型：${subscription.customType || '其他'}${amountText}
+分類：${categoryText}
+曆法類型：${calendarType}
+到期日期：${formattedExpiryDate}${lunarExpiryText}
+自動續訂：${autoRenewText}
+備註：${subscription.notes || '無'}
 傳送時間: ${currentTime}
 目前時區: ${formatTimezoneDisplay(timezone)}`;
 
@@ -81,7 +81,7 @@ async function testSingleSubscriptionNotification(id, env) {
 
     return { success: true, message: `測試通知傳送成功（共 ${successCount} 個管道）` };
   } catch (error) {
-    console.error('[手動测试] 傳送失敗:', error);
+    console.error('[手動測試] 傳送失敗：', error);
     return { success: false, message: '傳送時發生錯誤: ' + error.message };
   }
 }
