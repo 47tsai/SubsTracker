@@ -2571,7 +2571,7 @@ const lunarBiz = {
         }
       } catch (error) {
         console.error((isActivate ? '啟用' : '停用') + '訂閱失敗:', error);
-        showToast((isActivate ? '啟用' : '停用') + '失敗，請稍後再试', 'error');
+        showToast((isActivate ? '啟用' : '停用') + '失敗，請稍後再試', 'error');
         button.innerHTML = originalContent;
         button.disabled = false;
       }
@@ -2673,7 +2673,7 @@ const lunarBiz = {
         showToast('已填入複製內容，確認後儲存為新訂閱', 'info', 3500);
       } catch (err) {
         console.error('複製失敗:', err);
-        showToast('複製失敗，請稍後再试', 'error');
+        showToast('複製失敗，請稍後再試', 'error');
       } finally {
         button.disabled = false;
         button.innerHTML = original;
@@ -3181,7 +3181,7 @@ const lunarBiz = {
     
     // === 自訂下拉菜單逻輯 ===
     const TYPE_OPTIONS = [
-      "流媒體", "视频平台", "音乐平台", "云服務", "軟件訂閱", 
+      "串流媒體", "影音平台", "音樂平台", "雲端服務", "軟體訂閱", 
       "域名", "伺服器", "會員服務", "学习平台", "健身/運動", 
       "游戏", "新闻/雜志", "生日", "纪念日", "其他"
     ];
@@ -3502,7 +3502,7 @@ const lunarBiz = {
         }
       } catch (error) {
         console.error((id ? '更新' : '新增') + '訂閱失敗:', error);
-        showToast((id ? '更新' : '新增') + '訂閱失敗，請稍後再试', 'error');
+        showToast((id ? '更新' : '新增') + '訂閱失敗，請稍後再試', 'error');
       } finally {
         submitButton.innerHTML = originalContent;
         submitButton.disabled = false;
@@ -3622,7 +3622,7 @@ const lunarBiz = {
         }
       } catch (error) {
         console.error('刪除訂閱失敗:', error);
-        showToast('刪除失敗，請稍後再试', 'error');
+        showToast('刪除失敗，請稍後再試', 'error');
         button.innerHTML = originalContent;
         button.disabled = false;
       }
