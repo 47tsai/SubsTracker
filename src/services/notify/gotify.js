@@ -45,7 +45,7 @@ export const gotifyChannel = {
 
   async test(config) {
     return gotifyChannel.send(
-      { title: '订阅管理 - 测试通知', content: '这是一条 Gotify 测试通知。' },
+      { title: '订阅管理 - 测试通知', content: '這是一則 Gotify 測試通知。' },
       config
     );
   }
