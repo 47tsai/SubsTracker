@@ -11,7 +11,7 @@
  * - 业务逻辑保持兼容，外部 API 签名不变
  *
  * 注意：reminderUnit/reminderValue 字段保留兼容，Task 8 会在新 API 引入
- * 多提醒规则（reminder_rules:{id}），届时 Service 层会同步两边。
+ * 多條提醒規則（reminder_rules:{id}），屆時 Service 層會同步兩邊。
  */
 
 import { getConfig } from './config.js';
@@ -28,7 +28,7 @@ import * as subRepo from './subscriptions.repo.js';
 import { addCategory } from './categories.js';
 
 /**
- * 裁剪支付历史，保留 1 条 initial + 最近 N 条其他记录。
+ * 裁切付款歷史，保留 1 筆 initial + 最近 N 条其他紀錄。
  *
  * @param {Array} records
  * @param {number} limit
@@ -102,7 +102,7 @@ async function getAllSubscriptions(env) {
 }
 
 /**
- * 將多條規則同步回訂閱的 legacy 提醒字段，避免列表/舊路徑与规则脱节。
+ * 將多條規則同步回訂閱的 legacy 提醒欄位，避免列表/舊路徑与規則脫節。
  *
  * @param {any} env
  * @param {string} subId
@@ -123,7 +123,7 @@ async function syncLegacyReminderFields(env, subId, rules) {
       updatedAt: new Date().toISOString()
     });
   } catch (error) {
-    console.error('[subscriptions] 同步 legacy 提醒字段失敗:', error);
+    console.error('[subscriptions] 同步 legacy 提醒欄位失敗:', error);
   }
 }
 
@@ -293,7 +293,7 @@ async function updateSubscription(id, subscription, env) {
         expiryParts.day
       );
       if (!lunar) {
-        return { success: false, message: '农历日期超出支持范围（1900-2100年）' };
+        return { success: false, message: '農曆日期超出支援範圍（1900-2100年）' };
       }
       if (autoRenew && lunar && getTimezoneMidnightTimestamp(expiryDate, timezone) < todayMidnight && subscription.periodValue && subscription.periodUnit) {
         do {
@@ -421,7 +421,7 @@ async function deleteSubscription(id, env) {
   try {
     const ok = await subRepo.deleteById(env, id);
     if (!ok) return { success: false, message: '找不到訂閱' };
-    // 联动清理提醒规则，避免孤儿 reminder_rules:{id}
+    // 連動清理提醒規則，避免孤立的 reminder_rules:{id}
     try {
       const remindersRepo = await import('./reminders.repo.js');
       await remindersRepo.clearForSubscription(env, id);
@@ -438,10 +438,10 @@ async function deleteSubscription(id, env) {
 /**
  * 手動續訂订阅。
  *
- * 业务规则：
- * - reset 模式：以支付日期为新开始
- * - cycle 模式：现到期日 > 支付日 时接续，否则以支付日为新开始
- * - 农历模式按農曆週期推算
+ * 業務規則：
+ * - reset 模式：以付款日期作為新起點
+ * - cycle 模式：若目前到期日晚於付款日則接續，否則以付款日作為新起點
+ * - 農曆模式依農曆週期推算
  *
  * @param {string} id
  * @param {any} env
@@ -453,7 +453,7 @@ async function manualRenewSubscription(id, env, options = {}) {
     if (!subscription) return { success: false, message: '找不到訂閱' };
 
     if (!subscription.periodValue || !subscription.periodUnit) {
-      return { success: false, message: '订阅未設定續訂週期' };
+      return { success: false, message: '訂閱尚未設定續訂週期' };
     }
 
     const config = await getConfig(env);
@@ -526,10 +526,10 @@ async function manualRenewSubscription(id, env, options = {}) {
 
     await subRepo.save(env, updated);
 
-    return { success: true, subscription: updated, message: '续订成功' };
+    return { success: true, subscription: updated, message: '續訂成功' };
   } catch (error) {
     console.error('手動續訂失敗:', error);
-    return { success: false, message: '续订失敗: ' + (error && error.message ? error.message : error) };
+    return { success: false, message: '續訂失敗: ' + (error && error.message ? error.message : error) };
   }
 }
 
@@ -673,8 +673,8 @@ async function toggleSubscriptionStatus(id, isActive, env) {
 
     return { success: true, subscription: updated };
   } catch (error) {
-    console.error('[subscriptions] 切换状态失敗:', error);
-    return { success: false, message: '更新訂閱状态失敗' };
+    console.error('[subscriptions] 切換狀態失敗:', error);
+    return { success: false, message: '更新訂閱狀態失敗' };
   }
 }
 
