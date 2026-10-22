@@ -38,6 +38,17 @@ describe('convertToTWD', () => {
     expect(convertToTWD(0, 'USD', rates)).toBe(0);
     expect(convertToTWD(-1, 'USD', rates)).toBe(0);
   });
+
+  it('數字字串會正確轉成數字，避免支出加總變成字串串接', () => {
+    expect(convertToTWD('10', 'TWD', rates)).toBe(10);
+    expect(convertToTWD('14', 'USD', rates)).toBeCloseTo(450, 8);
+  });
+
+  it('無效或非有限金額回傳 0', () => {
+    expect(convertToTWD('not-a-number', 'TWD', rates)).toBe(0);
+    expect(convertToTWD(Number.NaN, 'USD', rates)).toBe(0);
+    expect(convertToTWD(Number.POSITIVE_INFINITY, 'USD', rates)).toBe(0);
+  });
 });
 
 describe('getDynamicRates', () => {
