@@ -20,11 +20,11 @@ async function testSingleSubscriptionNotification(id, env) {
   try {
     const subscription = await getSubscription(id, env);
     if (!subscription) {
-      return { success: false, message: '未找到该订阅' };
+      return { success: false, message: '未找到该訂閱' };
     }
     const config = await getConfig(env);
 
-    const title = `手动测试通知: ${subscription.name}`;
+    const title = `手動测试通知: ${subscription.name}`;
 
     const showLunar = config.SHOW_LUNAR === true;
     let lunarExpiryText = '';
@@ -42,23 +42,23 @@ async function testSingleSubscriptionNotification(id, env) {
 
     const calendarType = subscription.useLunar ? '农历' : '公历';
     const autoRenewText = subscription.autoRenew ? '是' : '否';
-    const formattedAmount = formatAmount(subscription.amount, subscription.currency || 'CNY');
+    const formattedAmount = formatAmount(subscription.amount, subscription.currency || 'TWD');
     const amountText = formattedAmount ? `\n金额: ${formattedAmount}/周期` : '';
 
     const categoryText = subscription.category ? subscription.category : '未分类';
 
-    const commonContent = `**订阅详情**
+    const commonContent = `**訂閱详情**
 类型: ${subscription.customType || '其他'}${amountText}
 分类: ${categoryText}
 日历类型: ${calendarType}
 到期日期: ${formattedExpiryDate}${lunarExpiryText}
 自动续期: ${autoRenewText}
 备注: ${subscription.notes || '无'}
-发送时间: ${currentTime}
+傳送时间: ${currentTime}
 当前时区: ${formatTimezoneDisplay(timezone)}`;
 
     const tags = extractTagsFromSubscriptions([subscription]);
-    const notifyResult = await sendNotificationToAllChannels(title, commonContent, config, '[手动测试]', {
+    const notifyResult = await sendNotificationToAllChannels(title, commonContent, config, '[手動测试]', {
       env, subId: id, ruleId: 'manual-test',
       metadata: { tags }
     });
@@ -68,21 +68,21 @@ async function testSingleSubscriptionNotification(id, env) {
     const failedCount = notifyResult?.failedCount || 0;
 
     if (attempted === 0) {
-      return { success: false, message: '未启用任何通知渠道，请先在系统配置中开启至少一种通知方式' };
+      return { success: false, message: '未启用任何通知管道，請先在系統設定中开启至少一種通知方式' };
     }
 
     if (successCount === 0) {
-      return { success: false, message: `测试通知发送失败（已尝试 ${attempted} 个渠道）` };
+      return { success: false, message: `测试通知傳送失敗（已尝试 ${attempted} 个渠道）` };
     }
 
     if (failedCount > 0) {
-      return { success: true, message: `测试通知已发送：成功 ${successCount} 个，失败 ${failedCount} 个渠道` };
+      return { success: true, message: `测试通知已傳送：成功 ${successCount} 个，失敗 ${failedCount} 个渠道` };
     }
 
-    return { success: true, message: `测试通知发送成功（共 ${successCount} 个渠道）` };
+    return { success: true, message: `测试通知傳送成功（共 ${successCount} 个渠道）` };
   } catch (error) {
-    console.error('[手动测试] 发送失败:', error);
-    return { success: false, message: '发送时发生错误: ' + error.message };
+    console.error('[手動测试] 傳送失敗:', error);
+    return { success: false, message: '傳送时发生错误: ' + error.message };
   }
 }
 
@@ -120,7 +120,7 @@ async function handleSubscriptions(request, env, path) {
           await remindersRepo.replaceForSubscription(env, result.subscription.id, rules);
           await syncLegacyReminderFields(env, result.subscription.id, rules);
         } catch (err) {
-          console.error('[subscriptions] 写入提醒规则失败（订阅本身已创建）:', err);
+          console.error('[subscriptions] 写入提醒规则失敗（訂閱本身已创建）:', err);
         }
       }
       return new Response(JSON.stringify(result), {
@@ -163,7 +163,7 @@ async function handleSubscriptions(request, env, path) {
     if (parts[3] === 'payments' && method === 'GET') {
       const subscription = await getSubscription(id, env);
       if (!subscription) {
-        return new Response(JSON.stringify({ success: false, message: '订阅不存在' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify({ success: false, message: '訂閱不存在' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
       }
       return new Response(JSON.stringify({ success: true, payments: subscription.paymentHistory || [] }), { headers: { 'Content-Type': 'application/json' } });
     }
@@ -185,7 +185,7 @@ async function handleSubscriptions(request, env, path) {
       const subscription = await getSubscription(id, env);
       if (!subscription) {
         return new Response(
-          JSON.stringify({ success: false, message: '订阅不存在' }),
+          JSON.stringify({ success: false, message: '訂閱不存在' }),
           { status: 404, headers: { 'Content-Type': 'application/json' } }
         );
       }
@@ -212,7 +212,7 @@ async function handleSubscriptions(request, env, path) {
           await remindersRepo.replaceForSubscription(env, id, rules);
           await syncLegacyReminderFields(env, id, rules);
         } catch (err) {
-          console.error('[subscriptions] 更新提醒规则失败（订阅本体已更新）:', err);
+          console.error('[subscriptions] 更新提醒规则失敗（訂閱本体已更新）:', err);
         }
       }
       return new Response(JSON.stringify(result), { status: result.success ? 200 : 400, headers: { 'Content-Type': 'application/json' } });
