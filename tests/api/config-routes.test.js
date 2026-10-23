@@ -6,6 +6,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 // @ts-ignore
 import { env } from 'cloudflare:test';
 import app from '../../src/app.js';
+import { generateJWT } from '../../src/core/auth.js';
 import { getConfig } from '../../src/data/config.js';
 
 async function clearKv() {
@@ -37,7 +38,8 @@ async function loginCookie() {
     },
     env
   );
-  return res.headers.get('Set-Cookie')?.split(';')[0] || '';
+  const token = await generateJWT('chi-owner', 'secret-jwt');
+  return 'token=' + token;
 }
 
 beforeEach(clearKv);
