@@ -80,8 +80,8 @@ export async function getById(env, id) {
 /**
  * 一次性读取所有订阅（按索引顺序）。
  *
- * 实现：先读索引，再 Promise.all 并发拿单个订阅；缺失的项被过滤。
- * 对 N 数十量级仍亚秒级。N 上千时建议分批或改用分页接口。
+ * 實作：先讀取索引，再透過 Promise.all 並行取得個別訂閱；缺少的項目會被過濾。
+ * N 為數十筆時仍可在一秒內完成；若超過千筆，建議分批處理或改用分頁介面。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @returns {Promise<Object[]>}
@@ -102,7 +102,7 @@ export async function listAll(env) {
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {Object} subscription 必須包含字串型別的 id
- * @returns {Promise<Object>} 写入后的对象
+ * @returns {Promise<Object>} 寫入後的物件
  */
 export async function save(env, subscription) {
   if (!subscription || typeof subscription.id !== 'string' || subscription.id === '') {
@@ -124,7 +124,7 @@ export async function save(env, subscription) {
 /**
  * 批次儲存訂閱（用於自動續訂一次更新多筆等情境）。
  *
- * 顺序保留；并发写入单条，最后统一写一次索引。
+ * 保留原有順序；並行寫入各筆資料，最後統一更新索引。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {Object[]} subs
@@ -145,7 +145,7 @@ export async function saveMany(env, subs) {
 }
 
 /**
- * 删除一条订阅（同时从索引中移除）。
+ * 刪除一筆訂閱（並同步從索引中移除）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} id
