@@ -1,8 +1,6 @@
 import { getKVJson, putKVJson } from './kv.js';
 
 const DEFAULT_CONFIG = {
-  ADMIN_USERNAME: 'admin',
-  ADMIN_PASSWORD: 'password',
   TG_BOT_TOKEN: '',
   TG_CHAT_ID: '',
   TG_TOPIC_ID: '',
