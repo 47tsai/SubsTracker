@@ -16,7 +16,7 @@ async function handleAdminRequest(request, env) {
       console.log('[管理页面] 用户未登录，重定向到登录页面');
       return new Response('', {
         status: 302,
-        headers: { 'Location': '/auth/login' }
+        headers: { 'Location': '/login' }
       });
     }
 
