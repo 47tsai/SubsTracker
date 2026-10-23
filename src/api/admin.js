@@ -1,5 +1,5 @@
 import { getUserFromRequest } from './handlers/auth.js';
-import { loginPage, adminPage, configPage, dashboardPage, notifyLogsPage } from '../views/pages.js';
+import { adminPage, configPage, dashboardPage, notifyLogsPage } from '../views/pages.js';
 
 async function handleAdminRequest(request, env) {
   try {
@@ -50,10 +50,4 @@ async function handleAdminRequest(request, env) {
   }
 }
 
-function handleLoginPage() {
-  return new Response(loginPage, {
-    headers: { 'Content-Type': 'text/html; charset=utf-8' }
-  });
-}
-
-export { handleAdminRequest, handleLoginPage };
+export { handleAdminRequest };
