@@ -39,13 +39,13 @@ async function generateJWT(username, secret) {
 async function verifyJWT(token, secret) {
   try {
     if (!token || !secret) {
-      console.log('[JWT] Token或Secret为空');
+      console.log('[JWT] Token 或 Secret 為空');
       return null;
     }
 
     const parts = token.split('.');
     if (parts.length !== 3) {
-      console.log('[JWT] Token格式错误，部分数量:', parts.length);
+      console.log('[JWT] Token 格式錯誤，分段數量：', parts.length);
       return null;
     }
 
@@ -54,12 +54,12 @@ async function verifyJWT(token, secret) {
     const expectedSignature = await CryptoJS.HmacSHA256(signatureInput, secret);
 
     if (signature !== expectedSignature) {
-      console.log('[JWT] 签名验证失败');
+      console.log('[JWT] 簽章驗證失敗');
       return null;
     }
 
     const payload = JSON.parse(atob(payloadBase64));
-    // 必须校验 exp，否则过期 token 仍可长期使用
+    // 必須驗證 exp，否則過期的 token 仍可能長期有效
     if (payload.exp != null) {
       const exp = Number(payload.exp);
       if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) {
@@ -67,10 +67,10 @@ async function verifyJWT(token, secret) {
         return null;
       }
     }
-    console.log('[JWT] 验证成功，用户:', payload.username);
+    console.log('[JWT] 驗證成功，使用者：', payload.username);
     return payload;
   } catch (error) {
-    console.error('[JWT] 验证过程出错:', error);
+    console.error('[JWT] 驗證過程發生錯誤：', error);
     return null;
   }
 }
