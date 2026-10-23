@@ -72,9 +72,9 @@ describe('Hono app 路由兼容', () => {
     expect(json.success).toBe(false);
   });
 
-  it('未匹配路徑走兜底 → 導向 CHIAuth', async () => {
+  it('未匹配路徑走兜底 → 導向 SubsTracker 登入頁', async () => {
     const res = await app.request('/random/path/xyz', {}, env);
     expect(res.status).toBe(302);
-    expect(res.headers.get('Location')).toBe('/auth/login');
+    expect(res.headers.get('Location')).toBe('/login');
   });
 });
