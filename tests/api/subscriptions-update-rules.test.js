@@ -6,6 +6,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 // @ts-ignore
 import { env } from 'cloudflare:test';
 import app from '../../src/app.js';
+import { generateJWT } from '../../src/core/auth.js';
 import * as remindersRepo from '../../src/data/reminders.repo.js';
 import * as subRepo from '../../src/data/subscriptions.repo.js';
 
@@ -33,7 +34,8 @@ async function loginCookie() {
     },
     env
   );
-  return res.headers.get('Set-Cookie')?.split(';')[0] || '';
+  const token = await generateJWT('chi-owner', 'k');
+  return 'token=' + token;
 }
 
 beforeEach(clearKv);
