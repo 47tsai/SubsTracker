@@ -5,7 +5,7 @@
  * GET  /api/backup?includeSecrets=0|1
  * POST /api/restore  body: { backup, mode: 'merge'|'replace', includeSecrets?: boolean }
  *
- * 设计约束：
+ * 設計原則：
  * - 預設匯出不包含金鑰／密碼，避免備份檔案外洩
  * - JWT_SECRET 永不匯出，匯入時也不會覆寫（避免工作階段意外失效；更換環境後請重新登入）
  * - 訂閱與 reminder_rules 會一併匯出，確保多條提醒規則可完整遷移
@@ -50,7 +50,7 @@ function buildExportConfig(config, includeSecrets) {
       if (key in out) out[key] = '';
     }
   } else {
-    // 即使包含金鑰，也不匯出 JWT_SECRET
+    // 即使選擇匯出金鑰，也不會匯出 JWT_SECRET
     delete out.JWT_SECRET;
   }
 
@@ -85,7 +85,7 @@ export async function handleExportBackup(request, env) {
       reminderRules[sub.id] = rules;
     }
 
-    // 匯出資料不會附帶執行階段的額外欄位
+    // 匯出資料不會附帶執行階段產生的額外欄位
     const cleanSubs = subscriptions.map((sub) => {
       const { reminderRules: _rr, reminderRulesSummary: _rs, ...rest } = sub || {};
       return rest;
