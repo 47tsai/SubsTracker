@@ -58,7 +58,7 @@ export function escapeMarkdownV2(text = '') {
 }
 
 /**
- * 移除 commonContent 中的 Markdown 標記（用于纯文本渠道）。
+ * 移除 commonContent 中的 Markdown 標記（用於純文字管道）。
  *
  * @param {string} text
  * @returns {string}
