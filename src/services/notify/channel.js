@@ -6,28 +6,28 @@
  *
  *   export const xxxChannel = {
  *     name: 'xxx',                        // 管道名稱（必須與 ENABLED_NOTIFIERS／設定 key 一致）
- *     validateConfig(config) { ... },     // 返回 { ok: true } 或 { ok: false, error: '...' }
+ *     validateConfig(config) { ... },     // 回傳 { ok: true } 或 { ok: false, error: '...' }
  *     async send(payload, config) { ... },// 實際傳送
  *     async test(config) { ... }          // 使用設定傳送一則測試通知
  *   };
  *
- * 这样 dispatch / 通知紀錄 / 設定頁的測試按鈕可以用同一份代码处理 9 种渠道。
+ * 如此 dispatch／通知紀錄／設定頁的測試按鈕便可共用同一份程式碼處理 9 種管道。
  *
  */
 
 /**
  * @typedef {Object} ChannelPayload 通知内容载荷
  * @property {string} title 标题
- * @property {string} content 正文（Markdown 风格，由各渠道按需转换）
- * @property {Object} [metadata] 元数据（tags、subscriptionId 等）
+ * @property {string} content 正文（Markdown 格式，由各管道依需求轉換）
+ * @property {Object} [metadata] 中繼資料（tags、subscriptionId 等）
  */
 
 /**
- * @typedef {Object} ChannelResult 渠道发送结果
+ * @typedef {Object} ChannelResult 管道傳送結果
  * @property {boolean} success 是否成功
  * @property {string} channel 渠道名
- * @property {string} [error] 失败原因（HTTP 错误、API 拒绝等）
- * @property {any} [raw] 三方接口原始返回，便于排查
+ * @property {string} [error] 失敗原因（HTTP 錯誤、API 拒絕等）
+ * @property {any} [raw] 第三方介面的原始回應，方便排查問題
  */
 
 /**
@@ -47,8 +47,8 @@
 /**
  * Telegram MarkdownV2 转义。
  *
- * 修复 #81：订阅名包含 `_*[]()~`>#+-=|{}.!\\` 时 Telegram 会拒绝消息。
- * 注意：这个函数只僅用於傳送至 Telegram 的內容，不要影響其他管道。
+ * 修正 #81：訂閱名稱包含 `_*[]()~`>#+-=|{}.!\\` 時，Telegram 會拒絕訊息。
+ * 注意：此函式僅用於傳送至 Telegram 的內容，不應影響其他管道。
  *
  * @param {string} text
  * @returns {string}
@@ -91,7 +91,7 @@ export function fail(name, error, raw) {
 }
 
 /**
- * 把任意 error 转字符串（兼容 fetch 抛出的 TypeError、Response 等）。
+ * 將任意 error 轉成字串（相容 fetch 拋出的 TypeError、Response 等）。
  *
  * @param {any} err
  * @returns {string}
