@@ -3,7 +3,7 @@
  * 提醒规则触发引擎单元测试（表驱动）
  */
 import { describe, it, expect } from 'vitest';
-import { shouldFire } from '../../../src/services/notify/reminder-engine.js';
+import { shouldFire, getNextFireTime } from '../../../src/services/notify/reminder-engine.js';
 
 /**
  * @param {Partial<import('../../../src/data/reminders.repo.js').ReminderRule>} r
@@ -144,5 +144,24 @@ describe('after_expiry', () => {
       nowIso: '2026-05-24T20:00:00Z' // 10h 后，未到 24h
     });
     expect(result.fire).toBe(false);
+  });
+});
+
+
+describe('getNextFireTime', () => {
+  it('無效的目前時間回傳 null，不拋出例外', () => {
+    expect(
+      getNextFireTime(
+        rule({ type: 'after_expiry', repeatInterval: 24 }),
+        '2026-05-24T00:00:00Z',
+        'not-a-date'
+      )
+    ).toBeNull();
+  });
+
+  it('無效的到期時間回傳 null', () => {
+    expect(
+      getNextFireTime(rule({ type: 'after_expiry' }), 'not-a-date', '2026-05-24T00:00:00Z')
+    ).toBeNull();
   });
 });
