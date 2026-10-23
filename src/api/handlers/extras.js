@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * 提醒规则 / 通知日志 / 调度日志 路由
+ * 提醒規則／通知紀錄／排程紀錄路由
  *
  * 接口表（路径前缀 /api）：
  *   GET    /subscriptions/:id/reminders           列出某筆訂閱的提醒規則
@@ -9,11 +9,11 @@
  *   DELETE /subscriptions/:id/reminders/:ruleId   刪除一條規則
  *
  *   GET    /notification-logs?subId=&channel=&status=&since=&limit=
- *                                                 查询通知日志
+ *                                                 查詢通知紀錄
  *   GET    /scheduler-logs?limit=N                查詢排程執行紀錄
  *
- * 鉴权：与既有客户端约定一致——需要登录（cookie token），由 router.js 在 routes 之前
- * 統一驗證。本文件被 router.js 调用，不再单独校验。
+ * 驗證方式：沿用既有用戶端約定，需要登入（cookie token），由 router.js 在 routes 之前
+ * 統一驗證。本檔案由 router.js 呼叫，不再單獨驗證。
  *
  */
 
@@ -25,7 +25,7 @@ import { getNextFireTime } from '../../services/notify/reminder-engine.js';
 
 export const VERSION = '3.0.0';
 
-/** 标准 JSON 响应 */
+/** 標準 JSON 回應 */
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -34,7 +34,7 @@ function json(data, status = 200) {
 }
 
 /**
- * 規則變更後同步訂閱上的 legacy 提醒字段，保证列表展示一致。
+ * 規則變更後同步訂閱上的 legacy 提醒欄位，確保列表顯示一致。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -46,7 +46,7 @@ async function syncLegacyAfterRulesChange(env, subId, rules) {
     const list = rules || (await remindersRepo.listForSubscription(env, subId));
     await syncLegacyReminderFields(env, subId, list);
   } catch (err) {
-    console.error('[reminders] 同步 legacy 字段失败:', err);
+    console.error('[reminders] 同步 legacy 欄位失敗：', err);
   }
 }
 
