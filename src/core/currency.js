@@ -74,6 +74,9 @@ function calculateMonthlyExpense(subscriptions, timezone, rates) {
     paymentHistory.forEach(payment => {
       if (!payment.amount || payment.amount <= 0) return;
       const paymentDate = new Date(payment.date);
+      // 無效日期不能交給 getTimezoneDateParts：該函式會以現在時間作為通用備援，
+      // 否則損壞的付款紀錄可能被誤算進本月或今年的支出。
+      if (Number.isNaN(paymentDate.getTime())) return;
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear && paymentParts.month === currentMonth) {
         amount += convertToTWD(payment.amount, sub.currency, rates);
@@ -89,6 +92,9 @@ function calculateMonthlyExpense(subscriptions, timezone, rates) {
     paymentHistory.forEach(payment => {
       if (!payment.amount || payment.amount <= 0) return;
       const paymentDate = new Date(payment.date);
+      // 無效日期不能交給 getTimezoneDateParts：該函式會以現在時間作為通用備援，
+      // 否則損壞的付款紀錄可能被誤算進本月或今年的支出。
+      if (Number.isNaN(paymentDate.getTime())) return;
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === lastMonthYear && paymentParts.month === lastMonth) {
         lastMonthAmount += convertToTWD(payment.amount, sub.currency, rates);
@@ -120,6 +126,9 @@ function calculateYearlyExpense(subscriptions, timezone, rates) {
     paymentHistory.forEach(payment => {
       if (!payment.amount || payment.amount <= 0) return;
       const paymentDate = new Date(payment.date);
+      // 無效日期不能交給 getTimezoneDateParts：該函式會以現在時間作為通用備援，
+      // 否則損壞的付款紀錄可能被誤算進本月或今年的支出。
+      if (Number.isNaN(paymentDate.getTime())) return;
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
         amount += convertToTWD(payment.amount, sub.currency, rates);
@@ -190,6 +199,9 @@ function getExpenseByType(subscriptions, timezone, rates) {
     paymentHistory.forEach(payment => {
       if (!payment.amount || payment.amount <= 0) return;
       const paymentDate = new Date(payment.date);
+      // 無效日期不能交給 getTimezoneDateParts：該函式會以現在時間作為通用備援，
+      // 否則損壞的付款紀錄可能被誤算進本月或今年的支出。
+      if (Number.isNaN(paymentDate.getTime())) return;
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
         const type = sub.customType || '未分類';
@@ -221,6 +233,9 @@ function getExpenseByCategory(subscriptions, timezone, rates) {
     paymentHistory.forEach(payment => {
       if (!payment.amount || payment.amount <= 0) return;
       const paymentDate = new Date(payment.date);
+      // 無效日期不能交給 getTimezoneDateParts：該函式會以現在時間作為通用備援，
+      // 否則損壞的付款紀錄可能被誤算進本月或今年的支出。
+      if (Number.isNaN(paymentDate.getTime())) return;
       const paymentParts = getTimezoneDateParts(paymentDate, timezone);
       if (paymentParts.year === currentYear) {
         const categories = sub.category ? sub.category.split(CATEGORY_SEPARATOR_REGEX).filter(c => c.trim()) : ['未分類'];
