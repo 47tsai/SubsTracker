@@ -82,7 +82,15 @@ describe('notification-logs.repo', () => {
     expect(r).toHaveLength(3);
   });
 
-  it('recentForSubscription 等价于 query+limit', async () => {
+  it('同一毫秒寫入多筆通知紀錄不會互相覆蓋', async () => {
+    const timestamp = '2026-05-24T10:00:00.000Z';
+    for (let i = 0; i < 3; i++) {
+      await writeLog(env, { subId: 's1', channel: 'tg', status: 'success', timestamp });
+    }
+    expect((await recentForSubscription(env, 's1', 10))).toHaveLength(3);
+  });
+
+  it('recentForSubscription 等價於 query+limit', async () => {
     for (let i = 0; i < 3; i++) {
       await writeLog(env, { subId: 's1', channel: 'tg', status: 'success' });
     }
