@@ -8,4 +8,10 @@ describe('admin page subscription list', () => {
       /listShowLunar\.addEventListener\(['"]change['"],\s*handleListLunarToggle\)/
     );
   });
+
+  it('uses the payment record currency when editing a historical payment', () => {
+    expect(adminPage).toContain(
+      "payment.currency || subscription.currency || 'TWD'"
+    );
+  });
 });
