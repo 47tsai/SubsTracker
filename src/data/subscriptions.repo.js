@@ -2,20 +2,20 @@
 /**
  * 订阅仓库
  *
- * ── 设计动机 ────────────────────────────────────────────────
+ * ── 設計動機 ────────────────────────────────────────────────
  * 早期实现把所有订阅塞在一个 KV key（'subscriptions'）里，每次读写整数组，
- * 并发编辑会丢数据，且数量大时性能下降。
+ * 同時編輯可能造成資料遺失，資料量大時效能也會下降。
  *
  * 改为：
  *   sub_index = JSON 数组 [id1, id2, ...]    ← 用于快速枚举
- *   sub:{id}  = JSON 对象                     ← 单订阅完整数据
+ *   sub:{id}  = JSON 物件                     ← 單筆訂閱的完整資料
  *
- * 单订阅 CRUD 不再触碰整数组，仅写 sub:{id}（修改）或 sub_index+sub:{id}（新增/删除）。
+ * 單筆訂閱的 CRUD 不再操作整個陣列，只寫入 sub:{id}（修改）或 sub_index+sub:{id}（新增／刪除）。
  *
  * ── 并发安全说明 ────────────────────────────────────────────
  * KV 不支持事务，sub_index 的"读-改-写"在并发下仍可能丢更新。
- * 真实使用场景（单用户、操作稀疏）下风险可接受。
- * 数据本体在 sub:{id}，即使索引漏更新也可以通过 KV.list 修复。
+ * 在實際使用情境（單一使用者、操作頻率低）下，風險可接受。
+ * 資料本體位於 sub:{id}，即使索引未更新，也能透過 KV.list 修復。
  *
  */
 
@@ -72,7 +72,7 @@ export async function getById(env, id) {
   try {
     return JSON.parse(raw);
   } catch (err) {
-    console.error('[sub-repo] 反序列化失败:', id, err);
+    console.error('[sub-repo] 反序列化失敗：', id, err);
     return null;
   }
 }
@@ -101,7 +101,7 @@ export async function listAll(env) {
  * - 若 ID 已存在：仅写 sub:{id}（不动索引，避免不必要的 RPC）
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
- * @param {Object} subscription 必须包含 string 类型的 id
+ * @param {Object} subscription 必須包含字串型別的 id
  * @returns {Promise<Object>} 写入后的对象
  */
 export async function save(env, subscription) {
@@ -173,7 +173,7 @@ export async function deleteById(env, id) {
 /**
  * 整个仓库覆盖（用于迁移、导入等场景）。
  *
- * 流程：先清旧的 sub:{id}（按当前索引），再写新数据。
+ * 流程：先清除舊的 sub:{id}（依目前索引），再寫入新資料。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {Object[]} subs
