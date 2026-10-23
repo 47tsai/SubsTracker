@@ -17,9 +17,10 @@
 import { Hono } from 'hono';
 
 import { handleApiRequest } from './api/router.js';
-import { handleAdminRequest, handleLoginPage } from './api/admin.js';
+import { handleAdminRequest } from './api/admin.js';
 import { handleDebug } from './api/debug.js';
 import { getUserFromRequest } from './api/handlers/auth.js';
+import { handleChiAuthLogin, handleChiAuthCallback } from './api/handlers/chiauth.js';
 import { ensureMigrations } from './data/migrate.js';
 
 /**
@@ -58,13 +59,19 @@ app.onError((err, c) => {
 });
 
 // ─────────────────────────────────────────────────────────────
-// 路由：根路径
-// 已登录跳 /admin；未登录返回登录页
+ // CHIAuth OAuth Authorization Code + PKCE
+ // ─────────────────────────────────────────────────────────────
+ app.get('/auth/login', async (c) => handleChiAuthLogin(c.req.raw, c.env));
+ app.get('/auth/callback', async (c) => handleChiAuthCallback(c.req.raw, c.env));
+
+ // ─────────────────────────────────────────────────────────────
+ // 路由：根路径
+// 已登录跳 /admin；未登录转交 CHIAuth
 // ─────────────────────────────────────────────────────────────
 app.get('/', async (c) => {
   const { user } = await getUserFromRequest(c.req.raw, c.env);
   if (user) return c.redirect('/admin');
-  return handleLoginPage();
+  return c.redirect('/auth/login');
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -100,10 +107,10 @@ app.get('/admin', async (c) => {
 });
 
 // ─────────────────────────────────────────────────────────────
-// 兜底：其他路径返回登录页（（兜底行为））
+// 兜底：其他路径转交 CHIAuth 登录
 // ─────────────────────────────────────────────────────────────
-app.all('*', async () => {
-  return handleLoginPage();
+app.all('*', async (c) => {
+  return c.redirect('/auth/login');
 });
 
 export default app;
