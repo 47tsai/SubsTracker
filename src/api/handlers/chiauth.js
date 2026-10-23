@@ -3,6 +3,7 @@ import { getConfig } from '../../data/config.js';
 import { getCookieValue } from '../utils.js';
 
 const CHIAUTH_ORIGIN = 'https://auth.chi.qzz.io';
+const CHIAUTH_CLIENT_ID = 'j2xhKF7JXweeTSjVToQwcL8tckJ4VC-q';
 const CALLBACK_PATH = '/auth/callback';
 const STATE_TTL_SECONDS = 300;
 const SESSION_TTL_SECONDS = 12 * 60 * 60;
@@ -35,7 +36,7 @@ function callbackUrl(request) {
 }
 
 async function handleChiAuthLogin(request, env) {
-  const clientId = env.CHI_AUTH_CLIENT_ID;
+  const clientId = env.CHI_AUTH_CLIENT_ID || CHIAUTH_CLIENT_ID;
   if (!clientId || !/^[A-Za-z0-9_-]{20,80}$/.test(clientId)) {
     return new Response('CHIAuth 尚未設定完成：缺少有效的 CHI_AUTH_CLIENT_ID。', {
       status: 503,
@@ -93,7 +94,7 @@ async function handleChiAuthCallback(request, env) {
     return jsonError('登入驗證資料無效，請重新登入。', 400);
   }
 
-  const clientId = env.CHI_AUTH_CLIENT_ID;
+  const clientId = env.CHI_AUTH_CLIENT_ID || CHIAUTH_CLIENT_ID;
   if (!clientId) return jsonError('CHIAuth 尚未設定完成。', 503);
 
   const redirectUri = callbackUrl(request);
