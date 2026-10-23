@@ -1,4 +1,4 @@
-// 注：dashboard 业务逻辑较多，此处不启用 // @ts-check（依赖外部 currency 模块的复杂返回类型）
+// 註：dashboard 業務邏輯較多，暫不啟用 // @ts-check（依賴外部 currency 模組的複雜回傳型別）
 /**
  * 儀表板統計 handler
  *
@@ -26,13 +26,13 @@ async function handleDashboardStats(env, config) {
     const subscriptions = await getAllSubscriptions(env);
     const timezone = (config && config.TIMEZONE) || 'Asia/Taipei';
 
-    /** 本次：從結構化日誌資料庫读最新排程狀態 */
+    /** 從結構化日誌資料庫讀取最新排程狀態 */
     let schedulerStatus = null;
     let schedulerStatusHistory = [];
     try {
       const recent = await schedulerLogsRepo.getRecent(env, 10);
       schedulerStatusHistory = recent;
-      // 兼容老前端字段：转一份扁平结构
+      // 相容舊版前端欄位：轉換成扁平結構
       if (recent.length > 0) {
         const head = recent[0];
         schedulerStatus = {
@@ -89,14 +89,14 @@ async function handleDashboardStats(env, config) {
           expenseByCategory,
           schedulerStatus,
           schedulerStatusHistory,
-          /** 新增：使用者時區（前端可据此显示） */
+          /** 使用者時區（前端可據此顯示） */
           timezone
         }
       }),
       { headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('获取儀表板統計失敗:', error);
+    console.error('取得儀表板統計失敗：', error);
     return new Response(
       JSON.stringify({
         success: false,
