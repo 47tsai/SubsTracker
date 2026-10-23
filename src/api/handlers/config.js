@@ -23,7 +23,7 @@ function isConfiguredSecret(value) {
 }
 
 function buildSafeConfig(config) {
-  const { JWT_SECRET, ADMIN_PASSWORD, ...safeConfig } = config;
+  const { JWT_SECRET, ADMIN_PASSWORD, ADMIN_USERNAME, ...safeConfig } = config;
   const response = { ...safeConfig };
 
   // 每個敏感欄位都回傳空字串及一個 *_CONFIGURED 標記
@@ -80,7 +80,6 @@ async function handleUpdateConfig(request, env) {
 
     const updatedConfig = {
       ...config,
-      ADMIN_USERNAME: newConfig.ADMIN_USERNAME || config.ADMIN_USERNAME,
       THEME_MODE: newConfig.THEME_MODE || 'system',
 
       TG_BOT_TOKEN: mergeSecretField(config, newConfig, 'TG_BOT_TOKEN', clearSecretFields),
@@ -139,10 +138,6 @@ async function handleUpdateConfig(request, env) {
     };
 
     updatedConfig.NOTIFICATION_HOURS = sanitizeNotificationHours(newConfig.NOTIFICATION_HOURS);
-
-    if (newConfig.ADMIN_PASSWORD) {
-      updatedConfig.ADMIN_PASSWORD = newConfig.ADMIN_PASSWORD;
-    }
 
     if (!updatedConfig.JWT_SECRET || updatedConfig.JWT_SECRET === 'your-secret-key') {
       updatedConfig.JWT_SECRET = generateRandomSecret();
