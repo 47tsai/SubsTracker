@@ -51,8 +51,8 @@ async function syncLegacyAfterRulesChange(env, subId, rules) {
 }
 
 /**
- * 处理提醒规则 / 通知日志 / 调度日志相关的 新 API。
- * 回傳 null 表示路徑不符，由调用方继续转给下一组路由。
+ * 處理提醒規則／通知紀錄／排程紀錄相關的新 API。
+ * 回傳 null 代表路徑不符，由呼叫端繼續交給下一組路由處理。
  *
  * @param {Request} request
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
