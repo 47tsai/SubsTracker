@@ -424,7 +424,7 @@
                 </select>
               </div>
               <div>
-                <label for="webhookHeaders" class="block text-sm font-medium text-gray-700">自訂要求標頭 (JSON格式，可選)</label>
+                <label for="webhookHeaders" class="block text-sm font-medium text-gray-700">自訂要求標頭 (JSON 格式，可選)</label>
                 <div class="mt-1 flex flex-col sm:flex-row sm:items-start gap-3">
                   <textarea id="webhookHeaders" rows="3" placeholder='留空表示不修改；輸入新值後會更新' class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                   <button type="button" id="clearWebhookHeaders" class="btn-warning text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap">
@@ -432,7 +432,7 @@
                   </button>
                 </div>
                 <p id="WEBHOOK_HEADERSStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">JSON格式的自訂要求標頭，留空使用預設</p>
+                <p class="mt-1 text-sm text-gray-500">JSON 格式的自訂要求標頭，留空使用預設</p>
               </div>
               <div>
                 <label for="webhookTemplate" class="block text-sm font-medium text-gray-700">訊息範本（JSON 格式，可選）</label>
@@ -459,7 +459,7 @@
                   </button>
                 </div>
                 <p id="WECHATBOT_WEBHOOKStatus" class="mt-1 text-xs text-gray-500">載入中...</p>
-                <p class="mt-1 text-sm text-gray-500">從在企業微信群組中新增機器人取得的 Webhook URL</p>
+                <p class="mt-1 text-sm text-gray-500">從企業微信群組新增機器人後取得的 Webhook URL</p>
               </div>
               <div>
                 <label for="wechatbotMsgType" class="block text-sm font-medium text-gray-700">訊息類型</label>
@@ -1204,7 +1204,7 @@
 
         if (result.success) {
           showToast('設定儲存成功', 'success');
-          if (window.updateAppTheme) {    // 儲存成功後立即應用主題，無需重新整理
+          if (window.updateAppTheme) {    // 儲存成功後立即套用主題，無須重新整理
             window.updateAppTheme(config.THEME_MODE);
           }
           passwordField.value = '';
@@ -1216,7 +1216,7 @@
           // 標記時區已更新，供其他頁面檢測
           localStorage.setItem('timezoneUpdated', Date.now().toString());
           
-          // 如果目前在訂閱清單頁面，則自動重新整理頁面以更新時區顯示
+          // 若目前位於訂閱清單頁面，則自動重新整理頁面以更新時區顯示
           if (window.location.pathname === '/admin') {
             window.location.reload();
           }
@@ -1584,7 +1584,7 @@
               update();
             }
           } catch (error) {
-            console.error('檢查時區更新失敗:', error);
+            console.error('檢查時區更新失敗：', error);
           }
         }, 30000);
       } catch (e) {
