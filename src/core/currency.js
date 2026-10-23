@@ -22,15 +22,23 @@ async function getDynamicRates(env) {
 
   try {
     const cached = await env.SUBSCRIPTIONS_KV.get(CACHE_KEY, { type: 'json' });
-    if (cached && cached.ts && (Date.now() - cached.ts < CACHE_TTL)) {
+    const now = Date.now();
+    if (
+      cached && Number.isFinite(cached.ts) && cached.ts <= now &&
+      now - cached.ts < CACHE_TTL && cached.rates &&
+      typeof cached.rates === 'object' && !Array.isArray(cached.rates)
+    ) {
       return cached.rates;
     }
     const response = await fetch('https://api.frankfurter.dev/v1/latest?base=CNY');
     if (response.ok) {
       const data = await response.json();
+      const apiRates = data?.rates && typeof data.rates === 'object' && !Array.isArray(data.rates)
+        ? data.rates
+        : {};
       const newRates = {
         ...FALLBACK_RATES,
-        ...data.rates,
+        ...apiRates,
         'CNY': 1
       };
 
