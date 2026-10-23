@@ -206,7 +206,10 @@ export function getDaysBetween(from, to, timezone = 'UTC') {
  */
 export function getTimezoneMidnightTimestamp(date, timezone = 'UTC') {
   const tz = safeTimezone(timezone);
-  const { year, month, day } = getTimezoneDateParts(date, tz);
+  const inputDate = date instanceof Date ? date : new Date(date);
+  // 無效日期不可交給 getTimezoneDateParts，否則會被當成「現在」而產生錯誤的日期差。
+  if (!Number.isFinite(inputDate.getTime())) return Number.NaN;
+  const { year, month, day } = getTimezoneDateParts(inputDate, tz);
   // 通过反推：tz 下 (year,month,day) 0:00 对应的 UTC 时刻
   // 算法：构造一个临时 UTC 时刻 t0 = Date.UTC(y,m-1,d), 求它在 tz 下的偏移分钟数 offsetMin,
   //      则 tz 下零点的 UTC ms = t0 - offsetMin*60_000
@@ -452,7 +455,7 @@ export function formatLocalDate(time, timezone = 'UTC', format = 'full') {
 
   try {
     if (format === 'date') {
-      return d.toLocaleDateString('zh-CN', {
+      return d.toLocaleDateString('zh-TW', {
         timeZone: tz,
         year: 'numeric',
         month: '2-digit',
@@ -460,7 +463,7 @@ export function formatLocalDate(time, timezone = 'UTC', format = 'full') {
       });
     }
     if (format === 'datetime') {
-      return d.toLocaleString('zh-CN', {
+      return d.toLocaleString('zh-TW', {
         timeZone: tz,
         year: 'numeric',
         month: '2-digit',
@@ -471,7 +474,7 @@ export function formatLocalDate(time, timezone = 'UTC', format = 'full') {
         hour12: false
       });
     }
-    return d.toLocaleString('zh-CN', { timeZone: tz });
+    return d.toLocaleString('zh-TW', { timeZone: tz });
   } catch {
     return d.toISOString();
   }
