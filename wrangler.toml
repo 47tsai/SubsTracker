@@ -3,6 +3,9 @@ main = "src/index.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
+# Custom Domain for the production Worker
+routes = [{ pattern = "sub.chi.qzz.io", custom_domain = true }]
+
 [env.production]
 name = "subscription-manager"
 
