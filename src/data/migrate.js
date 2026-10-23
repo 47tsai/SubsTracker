@@ -13,7 +13,7 @@
  * ── KV 標記一覽 ─────────────────────────────────────────────
  *   schema_version           = 'v3'        ← 資料 schema 版本標記，設定後每次請求即可快速略過
  *   migrate:subscriptions_v3 = 'done'      ← 每個 step 自己的標記
- *   migration_lock           = ISO 時間戳記   ← TTL 60s 的悲观锁
+ *   migration_lock           = ISO 時間戳記   ← TTL 60s 的悲觀鎖
  *
  */
 
