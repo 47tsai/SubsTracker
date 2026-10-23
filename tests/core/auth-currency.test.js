@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 // @ts-ignore
 import { env } from 'cloudflare:test';
 import { generateJWT, verifyJWT } from '../../src/core/auth.js';
-import { convertToTWD, getDynamicRates } from '../../src/core/currency.js';
+import { convertToTWD, getDynamicRates, calculateMonthlyExpense } from '../../src/core/currency.js';
 
 async function clearKv() {
   const list = await env.SUBSCRIPTIONS_KV.list();
@@ -48,6 +48,28 @@ describe('convertToTWD', () => {
     expect(convertToTWD('not-a-number', 'TWD', rates)).toBe(0);
     expect(convertToTWD(Number.NaN, 'USD', rates)).toBe(0);
     expect(convertToTWD(Number.POSITIVE_INFINITY, 'USD', rates)).toBe(0);
+  });
+});
+
+describe('calculateMonthlyExpense', () => {
+  it('略過日期無效的付款紀錄，不把它誤算為本月支出', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-10-15T12:00:00.000Z'));
+
+    const subscriptions = [{
+      currency: 'TWD',
+      paymentHistory: [
+        { amount: 100, date: '2026-10-10T12:00:00.000Z' },
+        { amount: 500, date: 'not-a-date' }
+      ]
+    }];
+
+    try {
+      const result = calculateMonthlyExpense(subscriptions, 'Asia/Taipei', { TWD: 4.5 });
+      expect(result.amount).toBe(100);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
 
