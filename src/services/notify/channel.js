@@ -16,8 +16,8 @@
  */
 
 /**
- * @typedef {Object} ChannelPayload 通知内容载荷
- * @property {string} title 标题
+ * @typedef {Object} ChannelPayload 通知內容
+ * @property {string} title 標題
  * @property {string} content 正文（Markdown 格式，由各管道依需求轉換）
  * @property {Object} [metadata] 中繼資料（tags、subscriptionId 等）
  */
@@ -25,7 +25,7 @@
 /**
  * @typedef {Object} ChannelResult 管道傳送結果
  * @property {boolean} success 是否成功
- * @property {string} channel 渠道名
+ * @property {string} channel 管道名稱
  * @property {string} [error] 失敗原因（HTTP 錯誤、API 拒絕等）
  * @property {any} [raw] 第三方介面的原始回應，方便排查問題
  */
