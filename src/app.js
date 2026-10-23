@@ -116,7 +116,7 @@ app.get('/admin', async (c) => {
 // 兜底：其他路径返回 SubsTracker 登录页面
 // ─────────────────────────────────────────────────────────────
 app.all('*', async (c) => {
-  return c.redirect('/auth/login');
+  return c.redirect('/login');
 });
 
 export default app;
