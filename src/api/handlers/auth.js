@@ -7,7 +7,7 @@ function handleLogout() {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: '/auth/login',
+      Location: '/login',
       'Set-Cookie': 'token=; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=0',
       'Cache-Control': 'no-store'
     }
