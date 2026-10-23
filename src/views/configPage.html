@@ -139,27 +139,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="bg-white rounded-lg shadow-md p-6">
       <h2 class="text-2xl font-bold text-gray-800 mb-6">系統設定</h2>
-      <div id="defaultPasswordBanner" class="hidden mb-4 p-3 rounded-md border border-amber-300 bg-amber-50 text-amber-900 text-sm">
-        <i class="fas fa-exclamation-triangle mr-1"></i>
-        偵測到仍可能使用預設管理員密碼。請立即修改下方「管理員密碼」並儲存，避免帳號在公開網路上遭到接管。
-      </div>
-      
       <form id="configForm" class="space-y-8">
-        <div class="border-b border-gray-200 pb-6">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">管理員帳戶</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label for="adminUsername" class="block text-sm font-medium text-gray-700">使用者名稱</label>
-              <input type="text" id="adminUsername" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
-            <div>
-              <label for="adminPassword" class="block text-sm font-medium text-gray-700">密碼</label>
-              <input type="password" id="adminPassword" placeholder="如不修改密碼，請留空" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              <p class="mt-1 text-sm text-gray-500">留空表示不修改目前密碼</p>
-            </div>
-          </div>
-        </div>
-        
         <div class="border-b border-gray-200 pb-6">
           <h3 class="text-lg font-medium text-gray-900 mb-4">顯示設定</h3>
           
@@ -882,12 +862,6 @@
         // 2) 不填寫 token/金鑰欄位並儲存時，後端會保持原值不變。
         // 3) 如需清空，請點選對應的「清空」按鈕（儲存後生效）。
 
-        document.getElementById('adminUsername').value = config.ADMIN_USERNAME || '';
-        const _banner = document.getElementById('defaultPasswordBanner');
-        if (_banner) {
-          // 無法讀取密碼；使用者名稱仍為 admin 時提示改密（預設部署風險）
-          _banner.classList.toggle('hidden', (config.ADMIN_USERNAME || 'admin') !== 'admin');
-        }
         document.getElementById('themeModeSelect').value = config.THEME_MODE || 'system';  // 回顯主題設定
 
         // 非敏感欄位正常回顯
@@ -1119,7 +1093,6 @@
       }
 
       const config = {
-        ADMIN_USERNAME: document.getElementById('adminUsername').value.trim(),
         THEME_MODE: document.getElementById('themeModeSelect').value,      // 儲存主題設定
 
         // token/金鑰類欄位：預設留空=不修改；要清空則走 CLEAR_SECRET_FIELDS
@@ -1183,11 +1156,6 @@
         })()
       };
 
-      const passwordField = document.getElementById('adminPassword');
-      if (passwordField.value.trim()) {
-        config.ADMIN_PASSWORD = passwordField.value.trim();
-      }
-
       const submitButton = e.target.querySelector('button[type="submit"]');
       const originalContent = submitButton.innerHTML;
       submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>儲存中...';
@@ -1207,7 +1175,6 @@
           if (window.updateAppTheme) {    // 儲存成功後立即套用主題，無須重新整理
             window.updateAppTheme(config.THEME_MODE);
           }
-          passwordField.value = '';
           
           // 前端始終顯示瀏覽器本機時區
           globalTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
