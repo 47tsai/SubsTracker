@@ -16,14 +16,14 @@
  *   - 新增 getNowInTimezone(tz)，回傳結構 {utc, parts, hourString, isoLocal}
  *     要求呼叫端明確選擇要使用 UTC 時刻，或使用者時區下的日期欄位
  * - 新增 getDaysBetween(fromIso, toIso, tz) 依「使用者時區各自的午夜」計算整天數差，
- *   修正"凌晨 0–8 点创建订阅預設日期變成前一天"的 #166
+ *   修正「凌晨 0–8 點建立訂閱時，預設日期變成前一天」的 #166 問題
  * - 所有公開函式皆有 JSDoc 標註與中文用途說明，並由 // @ts-check 協助檢查
  *
  */
 
 /** 一小時的毫秒數 */
 export const MS_PER_HOUR = 1000 * 60 * 60;
-/** 一天的毫秒数 */
+/** 一天的毫秒數 */
 export const MS_PER_DAY = MS_PER_HOUR * 24;
 
 /**
@@ -38,8 +38,8 @@ export const MS_PER_DAY = MS_PER_HOUR * 24;
 
 /**
  * @typedef {Object} TimezoneNow 目前時刻在指定時區下的完整快照
- * @property {Date} utc 原生 Date（UTC 时刻，等价于 new Date()）
- * @property {TimezoneDateParts} parts 该时刻在 timezone 下的年月日时分秒
+ * @property {Date} utc 原生 Date（UTC 時刻，等同於 new Date()）
+ * @property {TimezoneDateParts} parts 該時刻在 timezone 下的年、月、日、時、分、秒
  * @property {string} hourString parts.hour 的兩位數字字串（例如 "08"），排程器可直接用來比對通知時段
  * @property {string} isoLocal "YYYY-MM-DDTHH:mm:ss" 的當地時間表示（不含時區後綴，用於顯示）
  * @property {string} timezone 實際生效的時區（無效時回退至 'UTC'）
@@ -174,10 +174,10 @@ export function getTimezoneHourString(date, timezone = 'UTC') {
  *   → 1 天
  *
  *   from = "2026-05-24T16:00:00Z"  to = "2026-05-25T16:00:00Z"  tz=Asia/Shanghai
- *   → 1 天（本地 24:00 → 次日 00:00）
+ *   → 1 天（當地 24:00 → 次日 00:00）
  *
  *   from = "2026-05-24T20:00:00Z"  to = "2026-05-24T22:00:00Z"  tz=Asia/Shanghai
- *   → 0 天（本地 04:00 → 06:00 同一天）
+ *   → 0 天（當地 04:00 → 同日 06:00）
  *
  * 若 to < from，則回傳負數。
  *
