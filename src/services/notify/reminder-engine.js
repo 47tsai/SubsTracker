@@ -156,7 +156,8 @@ export function getNextFireTime(rule, expiryDateIso, nowIso) {
 
   const expiry = new Date(expiryDateIso).getTime();
   const now = nowIso ? new Date(nowIso).getTime() : Date.now();
-  if (Number.isNaN(expiry)) return null;
+  // 無效的目前時間不可繼續計算，否則 after_expiry 可能產生 NaN 並在 toISOString 時拋錯。
+  if (!Number.isFinite(expiry) || !Number.isFinite(now)) return null;
 
   const MS_HOUR = 3600_000;
   const MS_DAY = 86400_000;
