@@ -14,14 +14,14 @@ async function handleThirdPartyNotify(request, env, config, url) {
 
   if (!expectedToken) {
     return new Response(
-      JSON.stringify({ message: '第三方 API 已禁用，请在后台配置访问令牌后使用' }),
+      JSON.stringify({ message: '第三方 API 已停用，請先在管理頁面設定存取權杖' }),
       { status: 403, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
   if (!providedToken || providedToken !== expectedToken) {
     return new Response(
-      JSON.stringify({ message: '未經授權的存取，權杖無效或缺失' }),
+      JSON.stringify({ message: '未經授權的存取，權杖無效或缺少權杖' }),
       { status: 401, headers: { 'Content-Type': 'application/json' } }
     );
   }
