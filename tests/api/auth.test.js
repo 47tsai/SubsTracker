@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * 认证相关测试
- * 覆盖：登录成功/失败、限流、登出、JWT 签名与过期校验
+ * 覆盖：禁用本地密码登入、登出、JWT 签名与过期校验
  */
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 // @ts-ignore
@@ -31,69 +31,18 @@ afterEach(() => {
 });
 
 describe('POST /api/login', () => {
-  it('正确凭据 → 200 + Set-Cookie token', async () => {
+  it('本地帳號密碼登入已永久停用', async () => {
     await seedAdmin();
-    const res = await app.request(
-      '/api/login',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: 'admin', password: 'password' })
-      },
-      env
-    );
-    expect(res.status).toBe(200);
-    const body = await res.json();
-    expect(body.success).toBe(true);
-    expect(res.headers.get('Set-Cookie') || '').toMatch(/token=/);
-    expect(res.headers.get('Set-Cookie') || '').toMatch(/HttpOnly/i);
-  });
-
-  it('错误密码 → success=false', async () => {
-    await seedAdmin();
-    const res = await app.request(
-      '/api/login',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: 'admin', password: 'wrong' })
-      },
-      env
-    );
+    const res = await app.request('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: 'admin', password: 'password' })
+    }, env);
+    expect(res.status).toBe(410);
     const body = await res.json();
     expect(body.success).toBe(false);
-    expect(String(body.message)).toMatch(/錯誤|嘗試/);
-  });
-
-  it('连续失败 5 次后限流 429', async () => {
-    await seedAdmin();
-    for (let i = 0; i < 5; i++) {
-      await app.request(
-        '/api/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'CF-Connecting-IP': '1.2.3.4'
-          },
-          body: JSON.stringify({ username: 'admin', password: 'wrong' })
-        },
-        env
-      );
-    }
-    const res = await app.request(
-      '/api/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'CF-Connecting-IP': '1.2.3.4'
-        },
-        body: JSON.stringify({ username: 'admin', password: 'password' })
-      },
-      env
-    );
-    expect(res.status).toBe(429);
+    expect(body.message).toContain('CHIAuth');
+    expect(res.headers.get('Set-Cookie')).toBeNull();
   });
 });
 
