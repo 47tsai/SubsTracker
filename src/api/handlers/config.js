@@ -1,7 +1,7 @@
 import { getConfig, setConfig } from '../../data/config.js';
 import { generateRandomSecret, sanitizeNotificationHours } from '../utils.js';
 
-// 这些字段可能包含 token/密钥，绝不下发到浏览器
+// 這些欄位可能包含 token／金鑰，絕不傳送到瀏覽器
 const SECRET_FIELDS = [
   'TG_BOT_TOKEN',
   'NOTIFYX_API_KEY',
@@ -26,7 +26,7 @@ function buildSafeConfig(config) {
   const { JWT_SECRET, ADMIN_PASSWORD, ...safeConfig } = config;
   const response = { ...safeConfig };
 
-  // 对每个敏感字段：返回空字符串 + 一个 *_CONFIGURED 标记
+  // 每個敏感欄位都回傳空字串及一個 *_CONFIGURED 標記
   SECRET_FIELDS.forEach((key) => {
     response[`${key}_CONFIGURED`] = isConfiguredSecret(safeConfig[key]);
     response[key] = '';
@@ -47,7 +47,7 @@ function normalizeClearSecretFields(value) {
 }
 
 function mergeSecretField(existingConfig, newConfig, key, clearSecretFields = []) {
-  // 显式清空优先级最高
+  // 明確清空的優先級最高
   if (clearSecretFields.includes(key)) return '';
 
   const incoming = newConfig?.[key];
@@ -55,7 +55,7 @@ function mergeSecretField(existingConfig, newConfig, key, clearSecretFields = []
 
   const trimmed = incoming.trim();
 
-  // 兼容旧前端：曾用 "********" 作为占位符，表示不修改
+  // 相容舊版前端：曾用 "********" 作為佔位符，代表不修改
   if (trimmed === '********') return existingConfig?.[key] || '';
 
   // 安全預設：空字串不代表清空，避免前端未回填時誤清除設定
