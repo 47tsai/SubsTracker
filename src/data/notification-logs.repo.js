@@ -74,10 +74,9 @@ export function ymdhUtc(date) {
  */
 export async function writeLog(env, entry) {
   const ts = entry.timestamp ? new Date(entry.timestamp) : new Date();
-  // 增加随机后缀避免同小时同 sub/rule/channel 多次发送相互覆盖
-  const rand = Math.floor(ts.getTime() % 100000)
-    .toString(36)
-    .padStart(4, '0');
+  // 使用隨機後綴，避免同一毫秒內相同訂閱／規則／管道的紀錄互相覆蓋。
+  // 只用時間戳記取餘數會在同一毫秒重複，導致紀錄遺失。
+  const rand = crypto.randomUUID().replace(/-/g, '').slice(0, 8);
   const ruleId = entry.ruleId || 'none';
   const key = `${PREFIX}${ymdhUtc(ts)}:${entry.subId}:${ruleId}:${entry.channel}:${rand}`;
 
