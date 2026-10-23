@@ -29,6 +29,24 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
+describe('SubsTracker login page', () => {
+  it('renders the branded login page without immediately redirecting to CHIAuth', async () => {
+    const response = await app.fetch(new Request('https://sub.chi.qzz.io/login'), env);
+    expect(response.status).toBe(200);
+    expect(response.headers.get('Content-Type')).toContain('text/html');
+    const html = await response.text();
+    expect(html).toContain('SubsTracker');
+    expect(html).toContain('使用 CHIAuth 登入');
+    expect(html).toContain('href="/auth/login"');
+  });
+
+  it('sends unauthenticated root visits to the local login page', async () => {
+    const response = await app.fetch(new Request('https://sub.chi.qzz.io/'), env);
+    expect(response.status).toBe(302);
+    expect(response.headers.get('Location')).toBe('/login');
+  });
+});
+
 describe('GET /auth/login', () => {
   it('redirects to CHIAuth with Authorization Code + PKCE S256 and stores state', async () => {
     const response = await app.fetch(new Request('https://sub.chi.qzz.io/auth/login'), env);
