@@ -20,10 +20,10 @@ async function clearKv() {
 beforeEach(clearKv);
 
 describe('Hono app 路由兼容', () => {
-  it('GET / 未登入導向 CHIAuth', async () => {
+  it('GET / 未登入導向 SubsTracker 登入頁', async () => {
     const res = await app.request('/', {}, env);
     expect(res.status).toBe(302);
-    expect(res.headers.get('Location')).toBe('/auth/login');
+    expect(res.headers.get('Location')).toBe('/login');
   });
 
   it('GET /admin 未登录跳回 / (302)', async () => {
