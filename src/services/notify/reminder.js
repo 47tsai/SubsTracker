@@ -7,12 +7,12 @@ import { formatAmount } from '../../core/currency-format.js';
  *
  * @param {Date | string | number} expiry
  * @param {string} timezone
- * @returns {string} 空串表示无法转换或不展示
+ * @returns {string} 空串表示無法轉換或不顯示
  */
 function formatLunarExpiryText(expiry, timezone) {
   const parts = getTimezoneDateParts(expiry, timezone || 'UTC');
   const lunarExpiry = lunarCalendar.solar2lunar(parts.year, parts.month, parts.day);
-  return lunarExpiry ? `\n农历日期: ${lunarExpiry.fullStr}` : '';
+  return lunarExpiry ? `\n農曆日期：${lunarExpiry.fullStr}` : '';
 }
 
 function resolveReminderSetting(subscription) {
@@ -62,12 +62,12 @@ function shouldTriggerReminder(reminder, daysDiff, hoursDiff) {
 }
 
 function formatMatchedReminderRule(rule) {
-  if (rule.type === 'on_expiry') return '到期当天';
+  if (rule.type === 'on_expiry') return '到期當天';
   if (rule.type === 'after_expiry') {
-    return `到期后每 ${rule.repeatInterval || 24} 小时`;
+    return `到期後每 ${rule.repeatInterval || 24} 小時`;
   }
-  if (rule.value === 0) return rule.unit === 'hours' ? '到期当小时' : '到期当天';
-  return `提前 ${rule.value} ${rule.unit === 'hours' ? '小时' : '天'}`;
+  if (rule.value === 0) return rule.unit === 'hours' ? '到期当小時' : '到期當天';
+  return `提前 ${rule.value} ${rule.unit === 'hours' ? '小時' : '天'}`;
 }
 
 function formatNotificationContent(subscriptions, config) {
@@ -77,7 +77,7 @@ function formatNotificationContent(subscriptions, config) {
 
   for (const sub of subscriptions) {
     const typeText = sub.customType || '其他';
-    const periodText = (sub.periodValue && sub.periodUnit) ? `(周期: ${sub.periodValue} ${ { day: '天', month: '月', year: '年' }[sub.periodUnit] || sub.periodUnit})` : '';
+    const periodText = (sub.periodValue && sub.periodUnit) ? `(週期： ${sub.periodValue} ${ { day: '天', month: '月', year: '年' }[sub.periodUnit] || sub.periodUnit})` : '';
     const categoryText = sub.category ? sub.category : '未分類';
     const reminderSetting = sub.matchedReminderRule ? null : resolveReminderSetting(sub);
 
@@ -103,16 +103,16 @@ function formatNotificationContent(subscriptions, config) {
     }
 
     const reminderSuffix = reminderSetting?.value === 0
-      ? '（仅到期时提醒）'
-      : (reminderSetting?.unit === 'hour' ? '（小时级提醒）' : '');
+      ? '（僅在到期時提醒）'
+      : (reminderSetting?.unit === 'hour' ? '（小時级提醒）' : '');
     const reminderText = sub.matchedReminderRule
       ? `提醒策略：${formatMatchedReminderRule(sub.matchedReminderRule)}`
-      : `提醒策略：提前 ${reminderSetting.value} ${reminderSetting.unit === 'hour' ? '小时' : '天'}${reminderSuffix}`;
+      : `提醒策略：提前 ${reminderSetting.value} ${reminderSetting.unit === 'hour' ? '小時' : '天'}${reminderSuffix}`;
 
-    const calendarType = sub.useLunar ? '农历' : '公历';
+    const calendarType = sub.useLunar ? '農曆' : '國曆';
     const autoRenewText = sub.autoRenew ? '是' : '否';
-    const formattedAmount = formatAmount(sub.amount, sub.currency || 'CNY');
-    const amountText = formattedAmount ? `\n金额: ${formattedAmount}/周期` : '';
+    const formattedAmount = formatAmount(sub.amount, sub.currency || 'TWD');
+    const amountText = formattedAmount ? `\n金額：${formattedAmount}／週期` : '';
 
     const subscriptionContent = `${statusEmoji} **${sub.name}**
 類型：${typeText} ${periodText}
@@ -121,7 +121,7 @@ function formatNotificationContent(subscriptions, config) {
 到期日期：${formattedExpiryDate}${lunarExpiryText}
 自動續訂：${autoRenewText}
 ${reminderText}
-到期状态: ${statusText}`;
+到期狀態： ${statusText}`;
 
     let finalContent = sub.notes ? 
       subscriptionContent + `\n備註：${sub.notes}` : 
