@@ -1,6 +1,4 @@
-import { getConfig } from '../data/config.js';
-import { verifyJWT } from '../core/auth.js';
-import { getCookieValue } from './utils.js';
+import { getUserFromRequest } from './handlers/auth.js';
 import { loginPage, adminPage, configPage, dashboardPage, notifyLogsPage } from '../views/pages.js';
 
 async function handleAdminRequest(request, env) {
@@ -10,11 +8,7 @@ async function handleAdminRequest(request, env) {
 
     console.log('[管理页面] 访问路径:', pathname);
 
-    const token = getCookieValue(request.headers.get('Cookie'), 'token');
-    console.log('[管理页面] Token存在:', !!token);
-
-    const config = await getConfig(env);
-    const user = token ? await verifyJWT(token, config.JWT_SECRET) : null;
+    const { user } = await getUserFromRequest(request, env);
 
     console.log('[管理页面] 用户验证结果:', !!user);
 
@@ -22,7 +16,7 @@ async function handleAdminRequest(request, env) {
       console.log('[管理页面] 用户未登录，重定向到登录页面');
       return new Response('', {
         status: 302,
-        headers: { 'Location': '/' }
+        headers: { 'Location': '/auth/login' }
       });
     }
 
