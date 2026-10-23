@@ -81,6 +81,22 @@ describe('getDynamicRates', () => {
     expect(rates.USD).toBeTruthy();
   });
 
+  it('忽略時間戳記在未來的損壞快取並重新取得匯率', async () => {
+    await env.SUBSCRIPTIONS_KV.put('SYSTEM_EXCHANGE_RATES_TWD_V2', JSON.stringify({
+      ts: Date.now() + 86400000,
+      rates: { CNY: 1, USD: 0.1, TWD: 4.5 }
+    }));
+    let called = 0;
+    vi.stubGlobal('fetch', async () => {
+      called++;
+      return { ok: true, json: async () => ({ rates: { USD: 0.15 } }) };
+    });
+
+    const rates = await getDynamicRates(env);
+    expect(called).toBe(1);
+    expect(rates.USD).toBe(0.15);
+  });
+
   it('API 成功時合併並快取', async () => {
     vi.stubGlobal('fetch', async () => ({
       ok: true,
