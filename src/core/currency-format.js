@@ -50,7 +50,7 @@ export function getCurrencySymbol(currency = 'TWD') {
 export function formatAmount(amount, currency = 'TWD', opts = {}) {
   if (amount === null || amount === undefined || amount === '') return '';
   const n = Number(amount);
-  if (Number.isNaN(n)) return '';
+  if (!Number.isFinite(n)) return '';
   const sym = getCurrencySymbol(currency);
   const fixed = opts.withDecimal === false ? String(Math.round(n)) : n.toFixed(2);
   return sym + fixed;
