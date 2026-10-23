@@ -20,6 +20,7 @@ import { handleApiRequest } from './api/router.js';
 import { handleAdminRequest } from './api/admin.js';
 import { handleDebug } from './api/debug.js';
 import { getUserFromRequest } from './api/handlers/auth.js';
+import { loginPage } from './views/pages.js';
 import { handleChiAuthLogin, handleChiAuthCallback } from './api/handlers/chiauth.js';
 import { ensureMigrations } from './data/migrate.js';
 
@@ -61,17 +62,22 @@ app.onError((err, c) => {
 // ─────────────────────────────────────────────────────────────
  // CHIAuth OAuth Authorization Code + PKCE
  // ─────────────────────────────────────────────────────────────
- app.get('/auth/login', async (c) => handleChiAuthLogin(c.req.raw, c.env));
+ app.get('/login', async (c) => {
+  const { user } = await getUserFromRequest(c.req.raw, c.env);
+  if (user) return c.redirect('/admin');
+  return c.html(loginPage, 200, { 'Cache-Control': 'no-store' });
+});
+app.get('/auth/login', async (c) => handleChiAuthLogin(c.req.raw, c.env));
  app.get('/auth/callback', async (c) => handleChiAuthCallback(c.req.raw, c.env));
 
  // ─────────────────────────────────────────────────────────────
  // 路由：根路径
-// 已登录跳 /admin；未登录转交 CHIAuth
+// 已登录跳 /admin；未登录显示 SubsTracker 自有登录页面
 // ─────────────────────────────────────────────────────────────
 app.get('/', async (c) => {
   const { user } = await getUserFromRequest(c.req.raw, c.env);
   if (user) return c.redirect('/admin');
-  return c.redirect('/auth/login');
+  return c.redirect('/login');
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -107,7 +113,7 @@ app.get('/admin', async (c) => {
 });
 
 // ─────────────────────────────────────────────────────────────
-// 兜底：其他路径转交 CHIAuth 登录
+// 兜底：其他路径返回 SubsTracker 登录页面
 // ─────────────────────────────────────────────────────────────
 app.all('*', async (c) => {
   return c.redirect('/auth/login');
