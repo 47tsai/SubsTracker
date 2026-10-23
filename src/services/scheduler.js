@@ -15,13 +15,13 @@
  *    的多條規則互相影響。
  * 4. 結構化紀錄：每次執行寫入一筆 sched_log；每次通知傳送（成功／失敗）寫入 notify_log。
  *
- * 数据流：
+ * 資料流程：
  *   Cron tick →
  *     ensureMigrations →
  *     load config + subs + rules →
  *     check window →
  *     for each (sub, rule):
- *       - daysDiff/hoursDiff 用 getDaysBetween（按用户 TZ）算
+ *       - daysDiff／hoursDiff 使用 getDaysBetween 計算（依使用者時區）
  *       - 自動續訂（针对 sub 整体，仅算一次）
  *       - shouldFire? → dedupe → dispatch.send → notify_log
  *     → sched_log
@@ -51,7 +51,7 @@ const DEDUPE_TTL_SEC = 60 * 60 * 48; // 48h
 const LAST_FIRE_TTL_SEC = 60 * 60 * 24 * 60; // 60 天
 
 /**
- * 日级规则（before_expiry/days、on_expiry）按本地日期去重；小时级与 after_expiry 按本地小时。
+ * 日期級規則（before_expiry／days、on_expiry）依當地日期去重；小時級與 after_expiry 依當地小時去重。
  * @param {import('../data/reminders.repo.js').ReminderRule} rule
  * @param {{ year: number, month: number, day: number, hourString: string }} nowParts
  */
@@ -85,7 +85,7 @@ async function writeLastFireAt(env, subId, ruleId, iso) {
 }
 
 /**
- * 入口：被 Cron 触发的 scheduled() 调用。
+ * 入口：由 Cron 觸發的 scheduled() 函式。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @returns {Promise<import('../data/scheduler-logs.repo.js').SchedulerLogEntry|null>}
