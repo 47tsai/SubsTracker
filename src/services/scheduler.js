@@ -1,19 +1,19 @@
 // 註：本檔案暫不啟用 // @ts-check，因 lunar 套件的回傳型別分支較多，型別整理延後處理。
 /**
- * 定时任务调度器
+ * 定時任務排程器
  *
- * ── 修复的核心问题（#91 / #52 / #166 根因）─────────────────
- * 旧调度器把"当前 UTC 时刻的小时"当作"用户本地小时"来对比 NOTIFICATION_HOURS，
- * 配合"通知时段语义不一致"的文档表述，造成大量"不响 / 错时响"。
+ * ── 已修正的核心問題（#91／#52／#166 根因）─────────────────
+ * 舊版排程器將「目前 UTC 時刻的小時」當成「使用者當地小時」來比對 NOTIFICATION_HOURS，
+ * 再加上文件對通知時段的描述不一致，造成大量「未通知／時間錯誤」。
  *
- * 修复：
- * 1. 统一时区基准：通过 getNowInTimezone(config.TIMEZONE) 取用户 TZ 下的 hourString
- *    与 NOTIFICATION_HOURS（按用户 TZ 解释）比对，语义清晰。
- * 2. 多提醒规则：从 reminders.repo 加载每筆訂閱的规则数组，逐条调
+ * 修正方式：
+ * 1. 統一時區基準：透過 getNowInTimezone(config.TIMEZONE) 取得使用者時區的 hourString
+ *    再與 NOTIFICATION_HOURS（依使用者時區解讀）比對，語意明確。
+ * 2. 多條提醒規則：從 reminders.repo 載入每筆訂閱的規則陣列，逐條判斷。
  *    reminder-engine.shouldFire 判断（不再单点 reminderUnit/reminderValue）。
- * 3. 去重粒度细化：dedup key 改为 (subId × ruleId × ymdh-local)，避免一条订阅
- *    多规则相互打架。
- * 4. 结构化日志：每次执行写一条 sched_log；每条通知发送（成功/失败）写 notify_log。
+ * 3. 細化去重範圍：dedup key 改為 (subId × ruleId × ymdh-local)，避免同一筆訂閱
+ *    的多條規則互相影響。
+ * 4. 結構化紀錄：每次執行寫入一筆 sched_log；每次通知傳送（成功／失敗）寫入 notify_log。
  *
  * 数据流：
  *   Cron tick →
