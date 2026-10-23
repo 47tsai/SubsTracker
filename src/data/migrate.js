@@ -6,7 +6,7 @@
  * 1. **冪等**：每個 step 多次執行的結果皆一致，且 `migrate:{step.id}=done` 標記為略過。
  * 2. **可重複進入且安全**：透過 `migration_lock` Key（60s TTL）避免 Cron 與請求同時觸發。
  *    最壞情況是其中一方放棄遷移，由另一方完成；不會重複寫入。
- * 3. **可累加**：後續 Task 在 `MIGRATION_STEPS` 陣列中新增 step，不影響已執行的步驟。
+ * 3. **可累加**：後續任務可在 `MIGRATION_STEPS` 陣列中新增步驟，不影響已執行的步驟。
  * 4. **資料安全**：舊 `subscriptions` 单 Key 在迁移成功后重新命名為
  *    `subscriptions_v2_backup`（7 天 TTL）保留作為回復備份。
  *
