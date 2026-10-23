@@ -10,7 +10,7 @@
  * 1. 統一時區基準：透過 getNowInTimezone(config.TIMEZONE) 取得使用者時區的 hourString
  *    再與 NOTIFICATION_HOURS（依使用者時區解讀）比對，語意明確。
  * 2. 多條提醒規則：從 reminders.repo 載入每筆訂閱的規則陣列，逐條判斷。
- *    reminder-engine.shouldFire 判断（不再单点 reminderUnit/reminderValue）。
+ *    reminder-engine.shouldFire 判斷（不再只依賴 reminderUnit／reminderValue）。
  * 3. 細化去重範圍：dedup key 改為 (subId × ruleId × ymdh-local)，避免同一筆訂閱
  *    的多條規則互相影響。
  * 4. 結構化紀錄：每次執行寫入一筆 sched_log；每次通知傳送（成功／失敗）寫入 notify_log。
@@ -186,7 +186,7 @@ export async function checkExpiringSubscriptions(env) {
       console.log(`[定时任务] 已自動續訂 ${updatedSubsToSave.length} 筆訂閱`);
     }
 
-    // 不在通知時段 → 寫入紀錄後返回
+    // 不在通知時段 → 寫入紀錄後回傳
     if (!inWindow) {
       const entry = await schedulerLogsRepo.writeLog(env, {
         startedAt: startedAtIso,
