@@ -1,4 +1,4 @@
-import { generateJWT, verifyJWT } from '../../core/auth.js';
+import { verifyJWT } from '../../core/auth.js';
 import { getConfig } from '../../data/config.js';
 import { getCookieValue } from '../utils.js';
 
@@ -21,4 +21,4 @@ async function getUserFromRequest(request, env) {
   return { user, config };
 }
 
-export { generateJWT, handleLogout, getUserFromRequest };
+export { handleLogout, getUserFromRequest };
