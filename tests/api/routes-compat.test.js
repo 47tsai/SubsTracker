@@ -52,6 +52,13 @@ describe('Hono app 路由兼容', () => {
   });
 
 
+  it('POST /api/logout 清除工作階段並導向 SubsTracker 登入頁', async () => {
+    const res = await app.request('/api/logout', { method: 'POST' }, env);
+    expect(res.status).toBe(302);
+    expect(res.headers.get('Location')).toBe('/login');
+    expect(res.headers.get('Set-Cookie')).toContain('Max-Age=0');
+  });
+
   it('GET /debug 未登录返回 401', async () => {
     const res = await app.request('/debug', {}, env);
     expect(res.status).toBe(401);
