@@ -51,6 +51,14 @@ async function getConfig(env) {
   console.log('[設定] 從 KV 讀取設定:', data ? '成功' : '空設定');
   const config = data ? JSON.parse(data) : {};
 
+  // Remove credentials from the former built-in username/password login.
+  const hadLegacyCredentials = Object.hasOwn(config, 'ADMIN_USERNAME') || Object.hasOwn(config, 'ADMIN_PASSWORD');
+  delete config.ADMIN_USERNAME;
+  delete config.ADMIN_PASSWORD;
+  if (hadLegacyCredentials) {
+    await env.SUBSCRIPTIONS_KV.put('config', JSON.stringify(config));
+  }
+
   let jwtSecret = config.JWT_SECRET;
   if (!jwtSecret) {
     console.log('[設定] 產生新的 JWT 密鑰');
