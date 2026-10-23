@@ -3,7 +3,7 @@
  * 時區核心模組
  *
  * ── 設計原則 ────────────────────────────────────────────────
- * 1. 資料儲存層：所有日期一律 ISO 8601 UTC 字符串（如 "2026-05-24T17:30:00.000Z"）
+ * 1. 資料儲存層：所有日期一律使用 ISO 8601 UTC 字串（例如 "2026-05-24T17:30:00.000Z"）
  * 2. 業務邏輯層：判斷「通知時段」與「剩餘天數」前，先將 UTC 時刻轉換成使用者設定時區的日期分量
  *    年／月／日／時；本模組是此層的唯一可信來源
  * 3. 顯示層：所有顯示給使用者的日期都走 formatLocalDate / formatTimezoneDisplay
@@ -17,17 +17,17 @@
  *     要求呼叫端明確選擇要使用 UTC 時刻，或使用者時區下的日期欄位
  * - 新增 getDaysBetween(fromIso, toIso, tz) 依「使用者時區各自的午夜」計算整天數差，
  *   修正"凌晨 0–8 点创建订阅預設日期變成前一天"的 #166
- * - 所有公开函数 JSDoc 标注 + 中文用途说明，从此可被 // @ts-check 守护
+ * - 所有公開函式皆有 JSDoc 標註與中文用途說明，並由 // @ts-check 協助檢查
  *
  */
 
-/** 一小时的毫秒数 */
+/** 一小時的毫秒數 */
 export const MS_PER_HOUR = 1000 * 60 * 60;
 /** 一天的毫秒数 */
 export const MS_PER_DAY = MS_PER_HOUR * 24;
 
 /**
- * @typedef {Object} TimezoneDateParts 时区下的日期分量
+ * @typedef {Object} TimezoneDateParts 指定時區下的日期分量
  * @property {number} year 年（4 位整数）
  * @property {number} month 月（1-12）
  * @property {number} day 日（1-31）
@@ -40,13 +40,13 @@ export const MS_PER_DAY = MS_PER_HOUR * 24;
  * @typedef {Object} TimezoneNow 目前時刻在指定時區下的完整快照
  * @property {Date} utc 原生 Date（UTC 时刻，等价于 new Date()）
  * @property {TimezoneDateParts} parts 该时刻在 timezone 下的年月日时分秒
- * @property {string} hourString parts.hour 的两位字符串（如 "08"），调度器对比通知时段直接用它
- * @property {string} isoLocal "YYYY-MM-DDTHH:mm:ss" 本地表示（不带时区后缀，用于展示）
- * @property {string} timezone 实际生效的时区（无效时回退 'UTC'）
+ * @property {string} hourString parts.hour 的兩位數字字串（例如 "08"），排程器可直接用來比對通知時段
+ * @property {string} isoLocal "YYYY-MM-DDTHH:mm:ss" 的當地時間表示（不含時區後綴，用於顯示）
+ * @property {string} timezone 實際生效的時區（無效時回退至 'UTC'）
  */
 
 /**
- * 判斷字符串是否为 IANA 合法时区。
+ * 判斷字串是否為有效的 IANA 時區。
  *
  * @param {string} timezone
  * @returns {boolean}
@@ -106,7 +106,7 @@ export function getTimezoneDateParts(date, timezone = 'UTC') {
       return part ? Number(part.value) : 0;
     };
     let hour = pick('hour');
-    // Intl 在某些 runtime 把 24 显示为 0/24 不一致，归一化到 0–23
+    // Intl 在部分執行環境中對 24 與 0 的顯示不一致，統一正規化為 0–23
     if (hour === 24) hour = 0;
     return {
       year: pick('year'),
@@ -133,10 +133,10 @@ export function getTimezoneDateParts(date, timezone = 'UTC') {
  * 取得「目前時刻」在指定時區下的完整快照。
  *
  * 業務程式碼請優先使用本函式，而非 `getCurrentTimeInTimezone`，
- * 因为本函数明确告诉你：
- * - utc：UTC 原生 Date（用于持久化、计算时间差）
+ * 本函式會明確提供以下資訊：
+ * - utc：原生 UTC Date（用於儲存及計算時間差）
  * - parts.hour：你設定的時區下的目前小時（用于通知时段判斷）
- * - hourString：直接拿来和 NOTIFICATION_HOURS 字符串数组比较
+ * - hourString：可直接與 NOTIFICATION_HOURS 字串陣列比對
  *
  * @param {string} [timezone='UTC']
  * @param {Date} [now] 可選擇注入目前時間（測試用）
@@ -152,9 +152,9 @@ export function getNowInTimezone(timezone = 'UTC', now) {
 }
 
 /**
- * 取得指定時刻在指定時區下的小時（两位字符串）。
+ * 取得指定時刻在指定時區下的小時（兩位數字字串）。
  *
- * 调度器判斷"目前是否為允許傳送通知的時段"专用。
+ * 專供排程器判斷「目前是否為允許傳送通知的時段」。
  *
  * @param {Date | string | number} [date]
  * @param {string} [timezone='UTC']
@@ -196,9 +196,9 @@ export function getDaysBetween(from, to, timezone = 'UTC') {
 /**
  * 計算指定時刻在指定時區下「午夜」對應的 UTC 時間戳記。
  *
- * 例：date=2026-05-24T15:30:00Z, tz=Asia/Shanghai → 2026-05-24 23:30 北京时间
+ * 例：date=2026-05-24T15:30:00Z、tz=Asia/Shanghai → 北京時間 2026-05-24 23:30
  *     → 该日北京零点 = 2026-05-24T16:00:00Z (因为北京 00:00 = UTC 前一天 16:00)
- *     → 返回 1748015200000
+ *     → 回傳 1748015200000
  *
  * @param {Date | string | number} date
  * @param {string} [timezone='UTC']
@@ -303,7 +303,7 @@ export function getTimestampForTimezoneParts(parts, timezone = 'UTC') {
 }
 
 /**
- * 以指定时区的本地零点解释 "YYYY-MM-DD" 日期输入。
+ * 將 "YYYY-MM-DD" 日期輸入解讀為指定時區的當地午夜。
  *
  * 若輸入為完整 ISO／時間戳記，則保留其絕對時刻語意並直接解析。
  *
@@ -335,7 +335,7 @@ export function parseDateInputInTimezone(value, timezone = 'UTC') {
 }
 
 /**
- * 把某个时刻格式化为指定时区下的日期输入值 "YYYY-MM-DD"。
+ * 將指定時刻格式化為指定時區的日期輸入值 "YYYY-MM-DD"。
  *
  * @param {Date | string | number} value
  * @param {string} [timezone='UTC']
@@ -360,7 +360,7 @@ export function getTodayDateStringInTimezone(timezone = 'UTC', now) {
 }
 
 /**
- * 在指定时区的本地日期语义下增加日/月/年周期，并返回新时刻（本地零点）。
+ * 依指定時區的當地日期語意增加日／月／年週期，並回傳新時刻（當地午夜）。
  *
  * @param {Date | string | number} value
  * @param {number} amount
@@ -431,13 +431,13 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
 }
 
 /**
- * 在指定时区下格式化日期。
+ * 依指定時區格式化日期。
  *
  * 不同 fmt 用于：
  * - 'date'      → "2026/05/24"
  * - 'datetime'  → "2026/05/24 17:30:00"
  * - 'full'（預設）→ 包含星期等資訊的完整在地化字串
- * - 'isoLocal'  → "2026-05-24T17:30:00"（无时区后缀）
+ * - 'isoLocal' → "2026-05-24T17:30:00"（不含時區後綴）
  *
  * @param {Date | string | number} time
  * @param {string} [timezone='UTC']
