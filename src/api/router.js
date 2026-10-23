@@ -1,4 +1,4 @@
-import { handleLogin, handleLogout, getUserFromRequest } from './handlers/auth.js';
+import { handleLogout, getUserFromRequest } from './handlers/auth.js';
 import { handleGetConfig, handleUpdateConfig } from './handlers/config.js';
 import { handleDashboardStats } from './handlers/dashboard.js';
 import { handleThirdPartyNotify } from './handlers/notify.js';
@@ -15,7 +15,10 @@ async function handleApiRequest(request, env) {
   const config = await getConfig(env);
 
   if (path === '/login' && method === 'POST') {
-    return handleLogin(request, env);
+    return new Response(JSON.stringify({ success: false, message: '已停用 SUB 帳號密碼登入，請使用 CHIAuth Passkey。' }), {
+      status: 410,
+      headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }
+    });
   }
 
   if (path === '/logout' && (method === 'GET' || method === 'POST')) {
@@ -29,7 +32,7 @@ async function handleApiRequest(request, env) {
   }
 
   const { user } = await getUserFromRequest(request, env);
-  if (!user && path !== '/login') {
+  if (!user) {
     return new Response(
       JSON.stringify({ success: false, message: '未授权访问' }),
       { status: 401, headers: { 'Content-Type': 'application/json' } }
