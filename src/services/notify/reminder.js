@@ -66,7 +66,7 @@ function formatMatchedReminderRule(rule) {
   if (rule.type === 'after_expiry') {
     return `到期後每 ${rule.repeatInterval || 24} 小時`;
   }
-  if (rule.value === 0) return rule.unit === 'hours' ? '到期当小時' : '到期當天';
+  if (rule.value === 0) return rule.unit === 'hours' ? '到期當小時' : '到期當天';
   return `提前 ${rule.value} ${rule.unit === 'hours' ? '小時' : '天'}`;
 }
 
@@ -77,7 +77,7 @@ function formatNotificationContent(subscriptions, config) {
 
   for (const sub of subscriptions) {
     const typeText = sub.customType || '其他';
-    const periodText = (sub.periodValue && sub.periodUnit) ? `(週期： ${sub.periodValue} ${ { day: '天', month: '月', year: '年' }[sub.periodUnit] || sub.periodUnit})` : '';
+    const periodText = (sub.periodValue && sub.periodUnit) ? `(週期：${sub.periodValue} ${ { day: '天', month: '月', year: '年' }[sub.periodUnit] || sub.periodUnit})` : '';
     const categoryText = sub.category ? sub.category : '未分類';
     const reminderSetting = sub.matchedReminderRule ? null : resolveReminderSetting(sub);
 
@@ -104,7 +104,7 @@ function formatNotificationContent(subscriptions, config) {
 
     const reminderSuffix = reminderSetting?.value === 0
       ? '（僅在到期時提醒）'
-      : (reminderSetting?.unit === 'hour' ? '（小時级提醒）' : '');
+      : (reminderSetting?.unit === 'hour' ? '（小時級提醒）' : '');
     const reminderText = sub.matchedReminderRule
       ? `提醒策略：${formatMatchedReminderRule(sub.matchedReminderRule)}`
       : `提醒策略：提前 ${reminderSetting.value} ${reminderSetting.unit === 'hour' ? '小時' : '天'}${reminderSuffix}`;
