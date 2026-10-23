@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { env } from 'cloudflare:test';
 import { generateJWT, verifyJWT } from '../../src/core/auth.js';
 import { convertToTWD, getDynamicRates, calculateMonthlyExpense } from '../../src/core/currency.js';
+import { formatAmount } from '../../src/core/currency-format.js';
 
 async function clearKv() {
   const list = await env.SUBSCRIPTIONS_KV.list();
@@ -48,6 +49,18 @@ describe('convertToTWD', () => {
     expect(convertToTWD('not-a-number', 'TWD', rates)).toBe(0);
     expect(convertToTWD(Number.NaN, 'USD', rates)).toBe(0);
     expect(convertToTWD(Number.POSITIVE_INFINITY, 'USD', rates)).toBe(0);
+  });
+});
+
+describe('formatAmount', () => {
+  it('非有限數值回傳空字串', () => {
+    expect(formatAmount(Number.NaN, 'TWD')).toBe('');
+    expect(formatAmount(Number.POSITIVE_INFINITY, 'TWD')).toBe('');
+    expect(formatAmount('-Infinity', 'TWD')).toBe('');
+  });
+
+  it('預設幣別使用新台幣符號', () => {
+    expect(formatAmount(123)).toBe('NT$123.00');
   });
 });
 
