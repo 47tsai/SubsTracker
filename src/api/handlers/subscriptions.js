@@ -33,7 +33,7 @@ async function testSingleSubscriptionNotification(id, env) {
       const timezoneForLunar = config?.TIMEZONE || 'UTC';
       const expiryParts = getTimezoneDateParts(subscription.expiryDate, timezoneForLunar);
       const lunarExpiry = lunarCalendar.solar2lunar(expiryParts.year, expiryParts.month, expiryParts.day);
-      lunarExpiryText = lunarExpiry ? ` (農曆: ${lunarExpiry.fullStr})` : '';
+      lunarExpiryText = lunarExpiry ? `（農曆：${lunarExpiry.fullStr}）` : '';
     }
 
     const timezone = config?.TIMEZONE || 'UTC';
@@ -47,18 +47,18 @@ async function testSingleSubscriptionNotification(id, env) {
 
     const categoryText = subscription.category ? subscription.category : '未分類';
 
-    const commonContent = `**訂閱详情**
+    const commonContent = `**訂閱詳情**
 類型：${subscription.customType || '其他'}${amountText}
 分類：${categoryText}
 曆法類型：${calendarType}
 到期日期：${formattedExpiryDate}${lunarExpiryText}
 自動續訂：${autoRenewText}
 備註：${subscription.notes || '無'}
-傳送時間: ${currentTime}
-目前時區: ${formatTimezoneDisplay(timezone)}`;
+傳送時間：${currentTime}
+目前時區：${formatTimezoneDisplay(timezone)}`;
 
     const tags = extractTagsFromSubscriptions([subscription]);
-    const notifyResult = await sendNotificationToAllChannels(title, commonContent, config, '[手動测试]', {
+    const notifyResult = await sendNotificationToAllChannels(title, commonContent, config, '[手動測試]', {
       env, subId: id, ruleId: 'manual-test',
       metadata: { tags }
     });
@@ -82,7 +82,7 @@ async function testSingleSubscriptionNotification(id, env) {
     return { success: true, message: `測試通知傳送成功（共 ${successCount} 個管道）` };
   } catch (error) {
     console.error('[手動測試] 傳送失敗：', error);
-    return { success: false, message: '傳送時發生錯誤: ' + error.message };
+    return { success: false, message: '傳送時發生錯誤：' + error.message };
   }
 }
 
