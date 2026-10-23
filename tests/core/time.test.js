@@ -150,6 +150,10 @@ describe('getTimezoneMidnightTimestamp', () => {
     const ts = getTimezoneMidnightTimestamp(new Date('2026-05-24T18:00:00Z'), 'Asia/Shanghai');
     expect(new Date(ts).toISOString()).toBe('2026-05-24T16:00:00.000Z');
   });
+
+  it('無效日期回傳 NaN，不可錯誤地當成今天', () => {
+    expect(getTimezoneMidnightTimestamp('not-a-date', 'Asia/Taipei')).toBeNaN();
+  });
 });
 
 describe('getDaysBetween（剩余天数计算 / #166 修复）', () => {
@@ -203,6 +207,11 @@ describe('getDaysBetween（剩余天数计算 / #166 修复）', () => {
     expect(
       getDaysBetween('2026-05-25T00:00:00Z', '2026-05-23T00:00:00Z', 'UTC')
     ).toBe(-2);
+  });
+
+  it('任一日期無效時回傳 NaN', () => {
+    expect(getDaysBetween('bad-date', '2026-05-24T00:00:00Z', 'UTC')).toBeNaN();
+    expect(getDaysBetween('2026-05-24T00:00:00Z', 'bad-date', 'UTC')).toBeNaN();
   });
 });
 
