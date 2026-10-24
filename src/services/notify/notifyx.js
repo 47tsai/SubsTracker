@@ -21,7 +21,7 @@ export const notifyxChannel = {
     const body = JSON.stringify({
       title: payload.title || '訂閱提醒',
       content: `## ${payload.title || '訂閱提醒'}\n\n${payload.content || ''}`,
-      description: '订阅提醒'
+      description: '訂閱提醒'
     });
 
     try {
