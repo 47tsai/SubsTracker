@@ -4,15 +4,15 @@
  *
  * 用途：每次 Cron `scheduled` 觸發時，都會寫入一筆彙總記錄，包含本次執行的：
  *   - 起訖時間、使用者時區、是否位於通知時段
- *   - 检查的订阅总数 / 命中提醒规则数 / 去重跳过数
- *   - 自動續訂筆數 / 通知发送统计
- *   - 错误（如有）
+ *   - 檢查的訂閱總數 / 命中提醒規則數 / 去重略過數
+ *   - 自動續訂筆數 / 通知傳送統計
+ *   - 錯誤（如有）
  *
  * 配合 notification-logs（细粒度）形成"链路日志"：
  *   sched_log:{isoUtc}                  ← 一次调度的总览
- *   notify_log:{ymdh}:{sub}:{rule}:{ch} ← 该调度发出的每条通知
+ *   notify_log:{ymdh}:{sub}:{rule}:{ch} ← 該次排程發出的每筆通知
  *
- * Key 规则：sched_log:{ISO_UTC}（如 sched_log:2026-05-24T17:00:00.000Z）
+ * Key 規則：sched_log:{ISO_UTC}（如 sched_log:2026-05-24T17:00:00.000Z）
  *   ISO 字典序等於時間順序，方便倒序讀取清單。
  *
  * 預設 TTL：30 天。
@@ -30,15 +30,15 @@ const DEFAULT_TTL_SEC = 30 * 24 * 3600;
  * @property {string} timezone 调度生效时区
  * @property {string} currentHour 使用者時區下的目前小時（"HH"）
  * @property {string[]} configuredHours 通知時段設定（使用者時區小時）
- * @property {boolean} inWindow 是否在通知时段内
+ * @property {boolean} inWindow 是否位於通知時段內
  * @property {number} checkedCount 检查订阅数
- * @property {number} matchedCount 命中规则的（订阅×规则）对数
- * @property {number} dedupedCount 因去重跳过数
- * @property {number} sentCount 实际发送通知数
+ * @property {number} matchedCount 命中規則的（訂閱 × 規則）組數
+ * @property {number} dedupedCount 因去重略過數
+ * @property {number} sentCount 實際傳送通知數
  * @property {number} autoRenewedCount 自动续订订阅数
  * @property {string} status 'ok' | 'skipped' | 'error'
- * @property {string} [reason] 跳过原因或错误摘要
- * @property {any} [extra] 附加信息（可选）
+ * @property {string} [reason] 略過原因或錯誤摘要
+ * @property {any} [extra] 附加資訊（選填）
  */
 
 /**
