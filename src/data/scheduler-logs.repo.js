@@ -8,7 +8,7 @@
  *   - 自動續訂筆數 / 通知傳送統計
  *   - 錯誤（如有）
  *
- * 配合 notification-logs（細部紀錄）形成"链路日志"：
+ * 配合 notification-logs（細部紀錄）形成「呼叫鏈紀錄」：
  *   sched_log:{isoUtc}                  ← 單次排程總覽
  *   notify_log:{ymdh}:{sub}:{rule}:{ch} ← 該次排程發出的每筆通知
  *
