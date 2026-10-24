@@ -40,7 +40,7 @@ export async function listIds(env) {
 }
 
 /**
- * 写回订阅 ID 列表（索引）。
+ * 寫回訂閱 ID 清單（索引）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string[]} ids
@@ -95,10 +95,10 @@ export async function listAll(env) {
 }
 
 /**
- * 保存（创建或更新）一条订阅。
+ * 儲存（建立或更新）一筆訂閱。
  *
  * - 若 ID 不在索引中：写 sub:{id} 并 append 到索引
- * - 若 ID 已存在：仅写 sub:{id}（不动索引，避免不必要的 RPC）
+ * - 若 ID 已存在：僅寫入 sub:{id}（不动索引，避免不必要的 RPC）
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {Object} subscription 必須包含字串型別的 id
@@ -106,7 +106,7 @@ export async function listAll(env) {
  */
 export async function save(env, subscription) {
   if (!subscription || typeof subscription.id !== 'string' || subscription.id === '') {
-    throw new Error('订阅缺少有效 id');
+    throw new Error('訂閱缺少有效 ID');
   }
   await env.SUBSCRIPTIONS_KV.put(
     KEY_PREFIX + subscription.id,
@@ -149,7 +149,7 @@ export async function saveMany(env, subs) {
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} id
- * @returns {Promise<boolean>} true 表示确实存在并已删除
+ * @returns {Promise<boolean>} true 表示確實存在且已刪除
  */
 export async function deleteById(env, id) {
   if (!id) return false;
