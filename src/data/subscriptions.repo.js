@@ -98,7 +98,7 @@ export async function listAll(env) {
  * 儲存（建立或更新）一筆訂閱。
  *
  * - 若 ID 不在索引中：写 sub:{id} 并 append 到索引
- * - 若 ID 已存在：僅寫入 sub:{id}（不动索引，避免不必要的 RPC）
+ * - 若 ID 已存在：僅寫入 sub:{id}（不變更索引，避免不必要的 RPC）
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {Object} subscription 必須包含字串型別的 id
