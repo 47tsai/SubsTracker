@@ -9,13 +9,13 @@
  *   notify_log:{ymdh}:{subId}:{ruleId}:{channel}
  *     ymdh    = "YYYYMMDDHH"（UTC，方便依時間區間列出）
  *     subId   = 訂閱 ID
- *     ruleId  = 觸發的規則 ID（手动触发可填 'manual'，第三方 API 可填 'thirdparty'）
+ *     ruleId  = 觸發的規則 ID（手動觸發可填 'manual'，第三方 API 可填 'thirdparty'）
  *     channel = 通知管道（telegram, bark, ...）
  *
  *   一筆 KV 同時也會將資料存入 metadata ymdhmsRand，避免同一小時內重複 key 覆蓋。
  *
  * 預設 TTL：30 天，到期後自動清理。失敗紀錄可單獨設定更長的 TTL（这里统一 30 天即可，
- * 後續如有需要可改為 writeLog 接受 ttl 参数）。
+ * 後續如有需要可改為 writeLog 接受 ttl 參數）。
  *
  */
 
