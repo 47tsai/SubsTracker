@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * NotifyX 通知渠道（https://www.notifyx.cn）
+ * NotifyX 通知管道（https://www.notifyx.cn）
  */
 import { ok, fail, errorMessage } from './channel.js';
 
@@ -33,7 +33,7 @@ export const notifyxChannel = {
       const result = await r.json();
       return result.status === 'queued'
         ? ok('notifyx', result)
-        : fail('notifyx', `NotifyX 返回 ${result.status || 'unknown'}`, result);
+        : fail('notifyx', `NotifyX 回傳 ${result.status || 'unknown'}`, result);
     } catch (err) {
       return fail('notifyx', errorMessage(err));
     }
@@ -47,9 +47,9 @@ export const notifyxChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendNotifyXNotification(title, content, _description, config) {
-  // 早期接口签名带一个 description 参数；新接口已弃用此字段
+  // 早期介面簽章帶有 description 參數；新介面已棄用此欄位
   void _description;
   const r = await notifyxChannel.send({ title, content }, config);
   if (!r.success) console.error('[NotifyX]', r.error);
