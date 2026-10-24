@@ -2,7 +2,7 @@
 /**
  * 提醒规则仓库
  *
- * 数据结构：reminder_rules:{subId} = JSON 数组，每条规则形如：
+ * 資料結構：reminder_rules:{subId} = JSON 数组，每条规则形如：
  * {
  *   id: string,                                 // UUID
  *   type: 'before_expiry' | 'on_expiry' | 'after_expiry',
@@ -42,7 +42,7 @@ export function makeRuleId() {
 }
 
 /**
- * 智慧預設：4 条 — 到期前 7/3/1 天 + 当天。
+ * 智慧預設：4 條 — 到期前 7/3/1 天 + 當天。
  *
  * @returns {ReminderRule[]}
  */
@@ -57,7 +57,7 @@ export function defaultPresetRules() {
 }
 
 /**
- * 把旧的 reminderUnit/reminderValue 單一提醒转换为 1 条等价规则。
+ * 把旧的 reminderUnit/reminderValue 單一提醒轉換為 1 条等价规则。
  *
  * @param {{ reminderUnit?: string, reminderValue?: number, reminderDays?: number, reminderHours?: number }} sub
  * @returns {ReminderRule}
@@ -116,7 +116,7 @@ export function normalizeRule(raw) {
 }
 
 /**
- * 读取一个订阅的所有提醒规则。
+ * 讀取一筆訂閱的所有提醒规则。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -135,7 +135,7 @@ export async function listForSubscription(env, subId) {
 }
 
 /**
- * 整份取代某筆訂閱的提醒規則（CRUD 都基于此）。
+ * 整份取代某筆訂閱的提醒規則（CRUD 都以此為基礎）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
@@ -208,7 +208,7 @@ export async function clearForSubscription(env, subId) {
 
 /**
  * 從多條規則推導清單顯示用的 legacy 單一提醒欄位（兼容旧 UI / 通知正文）。
- * 優先取已啟用的 before_expiry 中 value 最大的一条；否則 on_expiry；否則首条启用规则。
+ * 優先取已啟用的 before_expiry 中 value 最大的一條；否則 on_expiry；否則第一條啟用規則。
  *
  * @param {ReminderRule[]} rules
  * @returns {{ unit: 'day'|'hour', value: number }}
