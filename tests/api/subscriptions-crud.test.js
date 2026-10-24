@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * 订阅 CRUD 生命周期
- * 覆盖：创建/读取/更新/删除、缺字段、删除清理 reminder_rules、toggle、续订
+ * 涵蓋：建立／讀取／更新／刪除、缺少欄位、删除清理 reminder_rules、toggle、续订
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 // @ts-ignore
