@@ -33,7 +33,7 @@ function applyTemplate(template, data) {
 }
 
 /**
- * 构造可供模板替换的变量集合。
+ * 建立可供範本替換的變數集合。
  *
  * @param {import('./channel.js').ChannelPayload} payload
  * @param {any} config
