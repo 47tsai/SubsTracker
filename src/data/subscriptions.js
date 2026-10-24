@@ -140,7 +140,7 @@ async function getSubscription(id, env) {
 /**
  * 建立訂閱。
  *
- * @param {any} subscription 来自前端的字段集
+ * @param {any} subscription 來自前端的欄位集合
  * @param {any} env
  * @returns {Promise<{success: boolean, message?: string, subscription?: any}>}
  */
