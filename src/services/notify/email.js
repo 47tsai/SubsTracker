@@ -50,7 +50,7 @@ export const emailChannel = {
 
   async send(payload, config) {
     const v = emailChannel.validateConfig(config);
-    if (!v.ok) return fail('email', v.error || '配置无效');
+    if (!v.ok) return fail('email', v.error || '設定無效');
 
     const fromEmail = config.EMAIL_FROM_NAME
       ? `${config.EMAIL_FROM_NAME} <${config.EMAIL_FROM}>`
@@ -82,7 +82,7 @@ export const emailChannel = {
 
   async test(config) {
     return emailChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則電子郵件測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則電子郵件測試通知。' },
       config
     );
   }
