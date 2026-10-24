@@ -130,7 +130,7 @@ export function _getCachedSchemaVersion() {
 
 /**
  * 嘗試取得遷移鎖。
- * KV 不支援 CAS，只能「先讀後寫」——存在短暫的競態窗口，但足以應付大多數情境。
+ * KV 不支援 CAS，只能「先讀後寫」——存在短暫的競態視窗，但足以應付大多數情境。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @returns {Promise<boolean>}
