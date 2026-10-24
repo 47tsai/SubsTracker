@@ -3003,7 +3003,7 @@ const lunarBiz = {
             if (lunar) {
               if (lunar.day === 1) {
                 // 初一，只顯示月份
-                lunarText = lunar.isLeap ? '闰' + lunar.monthStr.replace('闰', '') : lunar.monthStr;
+                lunarText = lunar.isLeap ? '閏' + lunar.monthStr.replace('閏', '') : lunar.monthStr;
               } else {
                 // 不是初一，顯示日
                 lunarText = lunar.dayStr;
