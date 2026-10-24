@@ -48,7 +48,7 @@ export const telegramChannel = {
 
   async send(payload, config) {
     const v = telegramChannel.validateConfig(config);
-    if (!v.ok) return fail('telegram', v.error || '配置无效');
+    if (!v.ok) return fail('telegram', v.error || '設定無效');
 
     const url = `https://api.telegram.org/bot${config.TG_BOT_TOKEN}/sendMessage`;
     const fullText = payload.title
@@ -88,7 +88,7 @@ export const telegramChannel = {
   async test(config) {
     return telegramChannel.send(
       {
-        title: '订阅管理 - 测试通知',
+        title: '訂閱管理 - 測試通知',
         content: '這是一則來自訂閱管理系統的測試訊息。若收到此訊息，代表 Telegram 設定正常。'
       },
       config
