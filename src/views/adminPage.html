@@ -1032,7 +1032,7 @@ const lunarBiz = {
         return;
       }
 
-      // 【修復】直接解析字串 "YYYY-MM-DD"，避免 new Date() 帶来的時區偏移導致日期少一天
+      // 【修復】直接解析字串 "YYYY-MM-DD"，避免 new Date() 帶來的時區偏移導致日期少一天
       const parts = dateInput.value.split('-');
       const year = parseInt(parts[0], 10);
       const month = parseInt(parts[1], 10);
@@ -3965,10 +3965,10 @@ const lunarBiz = {
       }
     })();
 
-    // 編輯訂閱時拉取規則（钩在 editSubscription / subscription detail 載入之後）
+    // 編輯訂閱時拉取規則（掛接在 editSubscription / subscription detail 載入之後）
     (function () {
       const originalEditSubscription = window.editSubscription;
-      // editSubscription 是顶層 async 函數；通過點擊事件代理来掛接更稳。
+      // editSubscription 是頂層 async 函數；透過點擊事件代理來掛接更穩妥。
       // 這里改為：每次在 subscriptionId 欄位被填值後异步 GET 規則。
       const subIdField = document.getElementById('subscriptionId');
       if (!subIdField) return;
