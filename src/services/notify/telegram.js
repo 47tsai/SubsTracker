@@ -1,15 +1,15 @@
 // @ts-check
 /**
- * Telegram 通知渠道
+ * Telegram 通知管道
  *
  * 接口：MarkdownV2 + 失敗時降級為純文字備援。
- * 关键修复（#81）：订阅名含 `_*` 等特殊字符时不再炸。
+ * 關鍵修正（#81）：訂閱名稱包含 `_*` 等特殊字元時不再出錯。
  */
 import { escapeMarkdownV2, ok, fail, errorMessage } from './channel.js';
 
 /** @type {import('./channel.js').Channel} */
 /**
- * 可选 Topic ID（Forum 群组 message_thread_id）。空字符串视为未配置。
+ * 可选 Topic ID（Forum 群组 message_thread_id）。空字串視為未設定。
  * @param {any} config
  * @returns {number|undefined}
  */
@@ -97,7 +97,7 @@ export const telegramChannel = {
 };
 
 /**
- * 旧的导出函数：调用方传 `*title*\n\n...` 拼好的 message。
+ * 舊的匯出函式：调用方传 `*title*\n\n...` 拼好的 message。
  *
  * @deprecated 新代码请用 telegramChannel.send
  * @param {string} message
@@ -105,7 +105,7 @@ export const telegramChannel = {
  * @returns {Promise<boolean>}
  */
 export async function sendTelegramNotification(message, config) {
-  // 旧调用方传入的 message 已经是组合好的 `*title*\n\ncontent`
+  // 舊呼叫端傳入的 message 已经是组合好的 `*title*\n\ncontent`
   // 这里把它整体作为 content，title 留空避免重复加包装
   const r = await telegramChannel.send({ title: '', content: message }, config);
   if (!r.success) console.error('[Telegram]', r.error);
