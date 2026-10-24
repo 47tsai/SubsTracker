@@ -83,7 +83,7 @@ export const webhookChannel = {
 
   async send(payload, config) {
     const v = webhookChannel.validateConfig(config);
-    if (!v.ok) return fail('webhook', v.error || '配置无效');
+    if (!v.ok) return fail('webhook', v.error || '設定無效');
 
     let headers = { 'Content-Type': 'application/json' };
     if (config.WEBHOOK_HEADERS) {
