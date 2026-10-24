@@ -481,7 +481,7 @@ export function formatLocalDate(time, timezone = 'UTC', format = 'full') {
 }
 
 /**
- * 同 formatLocalDate，保留原命名以兼容老调用方。
+ * 同 formatLocalDate，保留原命名以相容舊呼叫端。
  *
  * @param {Date | string | number} time
  * @param {string} [timezone='UTC']
@@ -616,7 +616,7 @@ export function getCurrentTimeInTimezone(timezone = 'UTC') {
 }
 
 /**
- * 兼容老调用：回傳目前 UTC 毫秒時間戳記。
+ * 相容舊呼叫：回傳目前 UTC 毫秒時間戳記。
  *
  * @param {string} [timezone='UTC']
  * @returns {number}
