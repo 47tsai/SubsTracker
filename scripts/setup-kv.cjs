@@ -68,10 +68,10 @@ function ensureNamespace(title) {
 function updateWranglerToml(prodId, previewId) {
   let content = fs.readFileSync(WRANGLER_TOML, 'utf8');
 
-  content = content.replace(/\n# KV 命名空间配置（自动生成）[\s\S]*?(?=\n# 环境变量|\n\[vars\]|\n# 定时任务配置|\n\[triggers\]|$)/m, '\n');
+  content = content.replace(/\n# KV 命名空間設定（自動產生）[\s\S]*?(?=\n# 環境變數|\n\[vars\]|\n# 排程工作設定|\n\[triggers\]|$)/m, '\n');
   content = content.replace(/\n\[\[kv_namespaces\]\][\s\S]*?(?=\n\[|\n#|$)/g, '\n');
 
-  const kvBlock = `\n# KV 命名空间配置（自动生成）\n[[kv_namespaces]]\nbinding = "SUBSCRIPTIONS_KV"\nid = "${prodId}"\npreview_id = "${previewId}"\n`;
+  const kvBlock = `\n# KV 命名空間設定（自動產生）\n[[kv_namespaces]]\nbinding = "SUBSCRIPTIONS_KV"\nid = "${prodId}"\npreview_id = "${previewId}"\n`;
 
   if (content.includes('\n[triggers]')) {
     content = content.replace('\n[triggers]', `${kvBlock}\n[triggers]`);
