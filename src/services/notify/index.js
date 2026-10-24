@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * 通知调度入口
+ * 通知排程入口
  *
  * 旧 sendNotificationToAllChannels 现在是 dispatch.dispatch 的薄壳，
  * 保留簽章以維持向後相容。新程式碼請直接使用 dispatch / testChannel。
@@ -34,7 +34,7 @@ export async function sendNotificationToAllChannels(
     }
   );
 
-  // 旧调用方期望的字段名
+  // 舊呼叫端預期的欄位名稱
   return {
     attempted: result.attempted,
     successCount: result.successCount,
