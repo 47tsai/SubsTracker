@@ -74,7 +74,7 @@ export async function handleExtraRoutes(request, env, path) {
     const [, subId] = nrMatch;
     const { getSubscription } = await import('../../data/subscriptions.js');
     const sub = await getSubscription(subId, env);
-    if (!sub) return json({ success: false, message: '订阅不存在' }, 404);
+    if (!sub) return json({ success: false, message: '訂閱不存在' }, 404);
     const rules = await remindersRepo.listForSubscription(env, subId);
     const nowIso = new Date().toISOString();
     const times = rules
