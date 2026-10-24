@@ -164,17 +164,6 @@ async function handleChiAuthCallback(request, env) {
   });
 }
 
-function handleLogout() {
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: '/auth/login',
-      'Set-Cookie': 'token=; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=0',
-      'Cache-Control': 'no-store'
-    }
-  });
-}
-
 async function getUserFromRequest(request, env) {
   const token = getCookieValue(request.headers.get('Cookie'), 'token');
   const config = await getConfig(env);
@@ -185,6 +174,5 @@ async function getUserFromRequest(request, env) {
 export {
   handleChiAuthLogin,
   handleChiAuthCallback,
-  handleLogout,
   getUserFromRequest
 };
