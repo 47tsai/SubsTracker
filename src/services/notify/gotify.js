@@ -16,7 +16,7 @@ export const gotifyChannel = {
 
   async send(payload, config) {
     const v = gotifyChannel.validateConfig(config);
-    if (!v.ok) return fail('gotify', v.error || '配置无效');
+    if (!v.ok) return fail('gotify', v.error || '設定無效');
 
     const url =
       String(config.GOTIFY_SERVER_URL).replace(/\/+$/, '') +
@@ -45,7 +45,7 @@ export const gotifyChannel = {
 
   async test(config) {
     return gotifyChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則 Gotify 測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則 Gotify 測試通知。' },
       config
     );
   }
