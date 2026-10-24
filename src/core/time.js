@@ -211,7 +211,7 @@ export function getTimezoneMidnightTimestamp(date, timezone = 'UTC') {
   if (!Number.isFinite(inputDate.getTime())) return Number.NaN;
   const { year, month, day } = getTimezoneDateParts(inputDate, tz);
   // 透過反推：時區下 (year,month,day) 0:00 对应的 UTC 时刻
-  // 演算法：建立一個暫時的 UTC 時刻 t0 = Date.UTC(y,m-1,d), 求它在 時區下的偏移分钟数 offsetMin,
+  // 演算法：建立一個暫時的 UTC 時刻 t0 = Date.UTC(y,m-1,d), 求它在 時區下的偏移分鐘數 offsetMin,
   //      则 時區下零点的 UTC ms = t0 - offsetMin*60_000
   const t0 = Date.UTC(year, month - 1, day, 0, 0, 0);
   const probeParts = getTimezoneDateParts(new Date(t0), tz);
@@ -548,7 +548,7 @@ export function formatTimezoneDisplay(timezone = 'UTC') {
       'Europe/Berlin': '柏林時間',
       'Europe/Moscow': '莫斯科時間',
       'Australia/Sydney': '雪梨時間',
-      'Australia/Melbourne': '墨尔本时间',
+      'Australia/Melbourne': '墨爾本時間',
       'Pacific/Auckland': '奧克蘭時間'
     };
     const cn = names[tz] || tz;
@@ -602,7 +602,7 @@ export function extractTimezone(request) {
 // ─────────────────────────────────────────────────────────────
 
 /**
- * 兼容老调用：返回目前的 UTC 時刻的 Date。
+ * 相容舊呼叫：回傳目前 UTC 時刻的 Date。
  *
  * 舊 API 名稱容易誤導（"InTimezone"），實際語意是「目前時刻」。
  * 後續 Task 會將所有呼叫端遷移至 getNowInTimezone。
@@ -627,7 +627,7 @@ export function getTimestampInTimezone(timezone = 'UTC') {
 }
 
 /**
- * 相容舊呼叫：將 UTC 時刻"转换到"目标时区。
+ * 相容舊呼叫：將 UTC 時刻「轉換至」目標時區。
  *
  * 注意：這是個語意陷阱——Date 本身永遠代表 UTC 時刻（絕對時刻），
  * 「轉換至」另一個時區只影響顯示，不影響 Date 實例。本函式僅回傳原 Date 的複本。
