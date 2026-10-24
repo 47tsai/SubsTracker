@@ -2,7 +2,7 @@
 /**
  * Telegram 通知渠道
  *
- * 接口：MarkdownV2 + 失败时降级纯文本兜底。
+ * 接口：MarkdownV2 + 失敗時降級為純文字備援。
  * 关键修复（#81）：订阅名含 `_*` 等特殊字符时不再炸。
  */
 import { escapeMarkdownV2, ok, fail, errorMessage } from './channel.js';
@@ -66,7 +66,7 @@ export const telegramChannel = {
 
       if (result.ok) return ok('telegram', result);
 
-      // 兜底：MarkdownV2 仍解析失败时降级纯文本
+      // 兜底：MarkdownV2 仍解析失敗時降級為純文字
       if (result.description && /parse entities/i.test(result.description)) {
         const r2 = await fetch(url, {
           method: 'POST',
