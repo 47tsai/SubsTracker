@@ -4,7 +4,7 @@ async function getKVJson(env, key, defaultValue = null) {
   try {
     return JSON.parse(raw);
   } catch (error) {
-    console.error(`[KV] 解析 ${key} 失败:`, error);
+    console.error(`[KV] 解析 ${key} 失敗:`, error);
     return defaultValue;
   }
 }
