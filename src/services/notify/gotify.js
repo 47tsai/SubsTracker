@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Gotify 通知渠道（自托管）
+ * Gotify 通知管道（自托管）
  */
 import { ok, fail, errorMessage, stripMarkdown } from './channel.js';
 
@@ -51,7 +51,7 @@ export const gotifyChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendGotifyNotification(title, content, config) {
   const r = await gotifyChannel.send({ title, content }, config);
   if (!r.success) console.error('[Gotify]', r.error);
