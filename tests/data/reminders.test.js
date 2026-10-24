@@ -54,7 +54,7 @@ describe('reminders.repo', () => {
     expect(await repo.listForSubscription(env, 's1')).toEqual([]);
   });
 
-  it('defaultPresetRules 返回 4 条预设（7/3/1/当天）', () => {
+  it('defaultPresetRules 回傳 4 條預設規則（7/3/1/當天）', () => {
     const rules = repo.defaultPresetRules();
     expect(rules).toHaveLength(4);
     expect(rules.map((r) => `${r.type}:${r.value}${r.unit[0]}`)).toEqual([
