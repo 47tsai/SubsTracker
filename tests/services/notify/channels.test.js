@@ -86,7 +86,7 @@ describe('telegramChannel', () => {
     expect(body.text).toContain('\\!');
   });
 
-  it('MarkdownV2 失败时降级纯文本兜底', async () => {
+  it('MarkdownV2 失敗時降級為純文字備援', async () => {
     let call = 0;
     vi.spyOn(globalThis, 'fetch').mockImplementation(async () => {
       call++;
@@ -153,7 +153,7 @@ describe('其它渠道 happy path', () => {
       expect(r.channel).toBe(name);
     });
 
-    it(`${name} 配置缺失 → 直接失败`, async () => {
+    it(`${name} 缺少設定 → 直接失敗`, async () => {
       const r = await ch.send({ title: '测试', content: '内容' }, {});
       expect(r.success).toBe(false);
     });
@@ -324,7 +324,7 @@ describe('注册表完整性', () => {
     );
   });
 
-  it('每个渠道都有 4 个必备字段', () => {
+  it('每個管道都有 4 個必要欄位', () => {
     for (const [name, ch] of Object.entries(ALL_CHANNELS)) {
       expect(ch.name).toBe(name);
       expect(typeof ch.validateConfig).toBe('function');
@@ -408,7 +408,7 @@ describe('wpushChannel', () => {
     expect(JSON.stringify(r.raw)).not.toContain('WPUSHshould-not-leak');
   });
 
-  it('第三方回显 apikey 时通知日志不保存密钥', async () => {
+  it('第三方回显 apikey 时通知紀錄不保存金鑰', async () => {
     const apiKey = 'WPUSHlog-secret';
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       jsonResponse({ code: 40001, message: `invalid ${apiKey}`, apikey: apiKey })
@@ -434,7 +434,7 @@ describe('wpushChannel', () => {
     expect(result.error).not.toContain(apiKey);
   });
 
-  it('配置缺失 → 直接失败', async () => {
+  it('缺少設定 → 直接失敗', async () => {
     const r = await wpushChannel.send({ title: 'T', content: 'C' }, {});
     expect(r.success).toBe(false);
   });
