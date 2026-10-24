@@ -8,10 +8,10 @@
  * 設計為純函式，與 KV／網路解耦，方便單元測試涵蓋所有邊界。
  *
  * 三種規則類型的語意：
- * - before_expiry: value 表示"提前 N 天/小时"。当 daysDiff/hoursDiff 落在 [0, value] 区间触发。
+ * - before_expiry: value 表示"提前 N 天／小時"。當 daysDiff／hoursDiff 落在 [0, value] 区间触发。
  *   特別的是，value=0 等同于 on_expiry。
  * - on_expiry: 僅在到期日（daysDiff===0）触发。
- * - after_expiry: 已過期的情境。每隔 repeatInterval 小时触发一次，直到符合終止條件
+ * - after_expiry: 已過期的情境。每隔 repeatInterval 小時觸發一次，直到符合終止條件
  *   （renewed/acknowledged/never）。本引擎不處理終止條件判斷（由 scheduler 在載入規則前篩選），
  *   但會檢查"距離上次觸發是否超過 repeatInterval"。
  *
@@ -73,7 +73,7 @@ function decideBeforeExpiry(rule, ctx) {
   const { daysDiff, hoursDiff } = ctx;
 
   if (rule.unit === 'hours') {
-    // hours 模式：value=0 代表"到期当小时内"
+    // hours 模式：value=0 代表"到期當小時內"
     if (rule.value === 0) {
       return hoursDiff >= 0 && hoursDiff < 1
         ? { fire: true, reason: 'within_hour' }
