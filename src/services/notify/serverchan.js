@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Server酱 3 通知渠道
+ * Server酱 3 通知管道
  */
 import { ok, fail, errorMessage } from './channel.js';
 
@@ -32,7 +32,7 @@ export const serverChanChannel = {
       const result = await r.json().catch(() => ({}));
       return result && result.code === 0
         ? ok('serverchan', result)
-        : fail('serverchan', `Server酱返回 code=${result?.code} ${result?.message || ''}`, result);
+        : fail('serverchan', `Server 酱回傳 code=${result?.code} ${result?.message || ''}`, result);
     } catch (err) {
       return fail('serverchan', errorMessage(err));
     }
@@ -46,7 +46,7 @@ export const serverChanChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendServerChanNotification(title, content, config) {
   const r = await serverChanChannel.send({ title, content }, config);
   if (!r.success) console.error('[Server酱]', r.error);
