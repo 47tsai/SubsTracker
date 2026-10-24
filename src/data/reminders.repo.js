@@ -14,7 +14,7 @@
  *   createdAt: string                           // ISO
  * }
  *
- * 智慧預設（新订阅默认 4 条）：到期前 7/3/1 天 + 到期当天。
+ * 智慧預設（新訂閱預設 4 條）：到期前 7/3/1 天 + 到期當天。
  *
  */
 
@@ -69,7 +69,7 @@ export function legacyFieldToRule(sub) {
   const value = Number(
     sub.reminderValue !== undefined && sub.reminderValue !== null ? sub.reminderValue : fallback
   );
-  // value 为非数字时回退 7；value=0 视为"到期当天"，保留
+  // value 非數字時回退為 7；value=0 視為「到期當天」，保留
   const safeValue = Number.isFinite(value) && value >= 0 ? value : 7;
   return {
     id: makeRuleId(),
