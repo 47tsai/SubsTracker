@@ -63,7 +63,7 @@ async function verifyJWT(token, secret) {
     if (payload.exp != null) {
       const exp = Number(payload.exp);
       if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) {
-        console.log('[JWT] Token 已过期');
+        console.log('[JWT] Token 已過期');
         return null;
       }
     }
