@@ -51,7 +51,7 @@ describe('GET /api/backup', () => {
     expect(res.status).toBe(401);
   });
 
-  it('默认导出不含密钥，含订阅与规则', async () => {
+  it('預設匯出不含金鑰，包含訂閱與規則', async () => {
     const cookie = await loginCookie();
     await subRepo.save(env, {
       id: 's1',
