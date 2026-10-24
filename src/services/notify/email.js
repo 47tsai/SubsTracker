@@ -1,12 +1,12 @@
 // @ts-check
 /**
- * 邮件通知渠道（Resend API）
+ * 電子郵件通知管道（Resend API）
  */
 import { ok, fail, errorMessage, stripMarkdown } from './channel.js';
 import { formatLocalDate } from '../../core/time.js';
 
 /**
- * 构造 HTML 模板。
+ * 建立 HTML 範本。
  * @param {string} title
  * @param {string} content
  * @param {string} timezone
@@ -88,7 +88,7 @@ export const emailChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendEmailNotification(title, content, config) {
   const r = await emailChannel.send({ title, content }, config);
   if (!r.success) console.error('[Email]', r.error);
