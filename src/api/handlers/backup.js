@@ -136,13 +136,13 @@ function validateSubscriptionEntry(sub, index) {
     return `subscriptions[${index}] 不是物件`;
   }
   if (typeof sub.id !== 'string' || !sub.id.trim()) {
-    return `subscriptions[${index}] 缺少有效的 id`;
+    return `subscriptions[${index}] 缺少有效的 ID`;
   }
   if (typeof sub.name !== 'string' || !sub.name.trim()) {
-    return `subscriptions[${index}] 缺少 name`;
+    return `subscriptions[${index}] 缺少 name 欄位`;
   }
   if (!sub.expiryDate || Number.isNaN(new Date(sub.expiryDate).getTime())) {
-    return `subscriptions[${index}] 缺少有效的 expiryDate`;
+    return `subscriptions[${index}] 缺少有效的到期日期 expiryDate`;
   }
   return null;
 }
