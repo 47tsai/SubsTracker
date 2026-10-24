@@ -113,10 +113,10 @@ async function handleDebug(request, env) {
     <h3>時區診斷</h3>
     <div class="row"><span class="k">設定的時區</span><span class="v">${esc(debugInfo.timezoneDisplay)}</span></div>
     <div class="row"><span class="k">時區偏移</span><span class="v">UTC${debugInfo.timezoneOffsetHours >= 0 ? '+' : ''}${debugInfo.timezoneOffsetHours} 小時</span></div>
-    <div class="row"><span class="k">当前 UTC</span><span class="v">${esc(debugInfo.utcIso)}</span></div>
+    <div class="row"><span class="k">目前 UTC</span><span class="v">${esc(debugInfo.utcIso)}</span></div>
     <div class="row"><span class="k">目前使用者當地時間</span><span class="v">${esc(debugInfo.localIso)}</span></div>
     <div class="row"><span class="k">用于通知时段判断的小時</span><span class="v">${esc(debugInfo.currentHour)}</span></div>
-    <div class="row"><span class="k">配置的通知小時（用户 TZ）</span><span class="v">${notificationHours.length === 0 ? '<em class="warn">空白（預設全天允許傳送）</em>' : `<code>${esc(notificationHours.join(', '))}</code>`}</span></div>
+    <div class="row"><span class="k">設定的通知小時（使用者時區）</span><span class="v">${notificationHours.length === 0 ? '<em class="warn">空白（預設全天允許傳送）</em>' : `<code>${esc(notificationHours.join(', '))}</code>`}</span></div>
     <div class="row"><span class="k">目前是否允許傳送</span><span class="v ${debugInfo.inNotificationWindow ? 'success' : 'warn'}">${debugInfo.inNotificationWindow ? '✓ 位於允許時段內' : '✗ 不在允許時段內'}</span></div>
   </div>
 
