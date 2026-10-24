@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Bark 通知渠道（iOS）
+ * Bark 通知管道（iOS）
  *
  * 支援兩種 URL 模式：
  *   1. 标准：BARK_SERVER + BARK_DEVICE_KEY → POST {server}/push
@@ -42,7 +42,7 @@ export const barkChannel = {
         url = parsed.href.replace(/\/+$/, '');
         body = { title: payload.title, body: stripMarkdown(payload.content) };
       } else {
-        if (!config.BARK_DEVICE_KEY) return fail('bark', '标准 Bark API 缺少 BARK_DEVICE_KEY');
+        if (!config.BARK_DEVICE_KEY) return fail('bark', '標準 Bark API 缺少 BARK_DEVICE_KEY');
         url = `${parsed.href.replace(/\/+$/, '')}/push`;
         body = {
           title: payload.title,
@@ -65,7 +65,7 @@ export const barkChannel = {
       const result = await r.json().catch(() => ({}));
       return result && result.code === 200
         ? ok('bark', result)
-        : fail('bark', `Bark 返回 code=${result?.code}`, result);
+        : fail('bark', `Bark 回傳 code=${result?.code}`, result);
     } catch (err) {
       return fail('bark', errorMessage(err));
     }
@@ -79,7 +79,7 @@ export const barkChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendBarkNotification(title, content, config) {
   const r = await barkChannel.send({ title, content }, config);
   if (!r.success) console.error('[Bark]', r.error);
