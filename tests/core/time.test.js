@@ -6,7 +6,7 @@
  * - getNowInTimezone：注入式时间 + 各时区分量
  * - getTimezoneHourString：调度器通知时段判断主路径
  * - getDaysBetween：跨零点 / 跨夏令时 / #166 场景
- * - getTimezoneMidnightTimestamp：用户 TZ 零点反推
+ * - getTimezoneMidnightTimestamp：使用者時區零點反推
  * - formatLocalDate：4 种格式
  * - 向后兼容 wrapper：getCurrentTimeInTimezone / convertUTCToTimezone
  */
@@ -184,7 +184,7 @@ describe('getDaysBetween（剩余天数计算 / #166 修复）', () => {
   });
 
   it('#166 场景：UTC 凌晨 02:00（北京 10:00）创建订阅，期望"今天"是北京 5/24 而非 UTC 5/24', () => {
-    // 用户在北京时间 2026-05-24 10:00 创建订阅，开始日期取"今日"
+    // 使用者在北京時間 2026-05-24 10:00 创建订阅，开始日期取"今日"
     // 此时 UTC 是 2026-05-24 02:00
     const utcNow = new Date('2026-05-24T02:00:00Z');
     const userTzNow = getNowInTimezone('Asia/Shanghai', utcNow);
