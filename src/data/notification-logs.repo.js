@@ -2,20 +2,20 @@
 /**
  * 通知日志仓库
  *
- * 用途：每次发送通知（成功 / 失败）都记录一条；用于"通知历史"页和
+ * 用途：每次傳送通知（成功／失敗）都會記錄一筆；用於「通知歷史」頁面及
  * "为什么没收到通知"自助排查。
  *
  * Key 规则：
  *   notify_log:{ymdh}:{subId}:{ruleId}:{channel}
- *     ymdh    = "YYYYMMDDHH"（UTC，方便按时间区间 list）
+ *     ymdh    = "YYYYMMDDHH"（UTC，方便依時間區間列出）
  *     subId   = 订阅 ID
  *     ruleId  = 触发的规则 ID（手动触发可填 'manual'，第三方 API 可填 'thirdparty'）
- *     channel = 通知渠道（telegram, bark, ...）
+ *     channel = 通知管道（telegram, bark, ...）
  *
  *   一条 KV 同时还存储进 metadata 里 ymdhmsRand，避免同小时内重复 key 覆盖。
  *
- * 默认 TTL：30 天，过期自动清理。失败日志可单独配置更长 TTL（这里统一 30 天即可，
- * 后续如需可改 writeLog 接受 ttl 参数）。
+ * 預設 TTL：30 天，到期後自動清理。失败日志可单独配置更长 TTL（这里统一 30 天即可，
+ * 後續如有需要可改為 writeLog 接受 ttl 参数）。
  *
  */
 
@@ -32,8 +32,8 @@ const DEFAULT_TTL_SEC = 30 * 24 * 3600;
  * @property {'success'|'failed'} status
  * @property {string} [title]
  * @property {string} [content]
- * @property {string} [error] 失败原因
- * @property {any} [raw] 三方原始返回，便于排查
+ * @property {string} [error] 失敗原因
+ * @property {any} [raw] 第三方原始回應，方便排查
  */
 
 /**
@@ -129,7 +129,7 @@ export async function query(env, filter = {}) {
     cursor = res.list_complete ? undefined : res.cursor;
   } while (cursor && all.length < 5000);
 
-  // 按 key 字典序倒序 = 时间倒序（因为 ymdh 在前缀后）
+  // 依 key 字典序倒序，即時間倒序（因为 ymdh 在前缀后）
   all.sort((a, b) => b.localeCompare(a));
 
   const sinceTs = filter.since ? new Date(filter.since).getTime() : 0;
@@ -157,7 +157,7 @@ export async function query(env, filter = {}) {
 }
 
 /**
- * 取某订阅最近 N 条日志（仪表盘 / 详情页用）。
+ * 取得某筆訂閱最近 N 筆記錄（儀表板／詳情頁使用）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} subId
