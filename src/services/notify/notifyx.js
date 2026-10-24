@@ -15,12 +15,12 @@ export const notifyxChannel = {
 
   async send(payload, config) {
     const v = notifyxChannel.validateConfig(config);
-    if (!v.ok) return fail('notifyx', v.error || '配置无效');
+    if (!v.ok) return fail('notifyx', v.error || '設定無效');
 
     const url = `https://www.notifyx.cn/api/v1/send/${config.NOTIFYX_API_KEY}`;
     const body = JSON.stringify({
-      title: payload.title || '订阅提醒',
-      content: `## ${payload.title || '订阅提醒'}\n\n${payload.content || ''}`,
+      title: payload.title || '訂閱提醒',
+      content: `## ${payload.title || '訂閱提醒'}\n\n${payload.content || ''}`,
       description: '订阅提醒'
     });
 
@@ -41,7 +41,7 @@ export const notifyxChannel = {
 
   async test(config) {
     return notifyxChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則 NotifyX 測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則 NotifyX 測試通知。' },
       config
     );
   }
