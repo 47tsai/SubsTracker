@@ -8,8 +8,8 @@
  *   - 自動續訂筆數 / 通知傳送統計
  *   - 錯誤（如有）
  *
- * 配合 notification-logs（细粒度）形成"链路日志"：
- *   sched_log:{isoUtc}                  ← 一次调度的总览
+ * 配合 notification-logs（細部紀錄）形成"链路日志"：
+ *   sched_log:{isoUtc}                  ← 單次排程總覽
  *   notify_log:{ymdh}:{sub}:{rule}:{ch} ← 該次排程發出的每筆通知
  *
  * Key 規則：sched_log:{ISO_UTC}（如 sched_log:2026-05-24T17:00:00.000Z）
@@ -27,22 +27,22 @@ const DEFAULT_TTL_SEC = 30 * 24 * 3600;
  * @property {string} key 完整 KV key
  * @property {string} startedAt ISO
  * @property {string} finishedAt ISO
- * @property {string} timezone 调度生效时区
+ * @property {string} timezone 排程生效時區
  * @property {string} currentHour 使用者時區下的目前小時（"HH"）
  * @property {string[]} configuredHours 通知時段設定（使用者時區小時）
  * @property {boolean} inWindow 是否位於通知時段內
- * @property {number} checkedCount 检查订阅数
+ * @property {number} checkedCount 檢查訂閱數
  * @property {number} matchedCount 命中規則的（訂閱 × 規則）組數
  * @property {number} dedupedCount 因去重略過數
  * @property {number} sentCount 實際傳送通知數
- * @property {number} autoRenewedCount 自动续订订阅数
+ * @property {number} autoRenewedCount 自動續訂的訂閱數
  * @property {string} status 'ok' | 'skipped' | 'error'
  * @property {string} [reason] 略過原因或錯誤摘要
  * @property {any} [extra] 附加資訊（選填）
  */
 
 /**
- * 写入一条调度日志。
+ * 寫入一筆排程紀錄。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {Omit<SchedulerLogEntry, 'key'>} entry
