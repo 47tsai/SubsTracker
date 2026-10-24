@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * PushPlus 通知渠道
+ * PushPlus 通知管道
  */
 import { ok, fail, errorMessage } from './channel.js';
 
@@ -36,7 +36,7 @@ export const pushplusChannel = {
       const result = await r.json().catch(() => ({}));
       return result && result.code === 200
         ? ok('pushplus', result)
-        : fail('pushplus', `PushPlus 返回 code=${result?.code} ${result?.msg || ''}`, result);
+        : fail('pushplus', `PushPlus 回傳 code=${result?.code} ${result?.msg || ''}`, result);
     } catch (err) {
       return fail('pushplus', errorMessage(err));
     }
@@ -50,7 +50,7 @@ export const pushplusChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendPushPlusNotification(title, content, config) {
   const r = await pushplusChannel.send({ title, content }, config);
   if (!r.success) console.error('[PushPlus]', r.error);
