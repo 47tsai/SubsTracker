@@ -26,13 +26,13 @@ export const wpushChannel = {
 
   async send(payload, config) {
     const v = wpushChannel.validateConfig(config);
-    if (!v.ok) return fail('wpush', v.error || '配置无效');
+    if (!v.ok) return fail('wpush', v.error || '設定無效');
 
     /** @type {Record<string, any>} */
     const body = {
       apikey: String(config.WPUSH_APIKEY).trim(),
-      title: payload.title || '订阅提醒',
-      content: payload.content || payload.title || '订阅提醒'
+      title: payload.title || '訂閱提醒',
+      content: payload.content || payload.title || '訂閱提醒'
     };
     if (config.WPUSH_CHANNEL && String(config.WPUSH_CHANNEL).trim()) {
       body.channel = String(config.WPUSH_CHANNEL).trim();
@@ -62,7 +62,7 @@ export const wpushChannel = {
 
   async test(config) {
     return wpushChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則 WPUSH 測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則 WPUSH 測試通知。' },
       config
     );
   }
