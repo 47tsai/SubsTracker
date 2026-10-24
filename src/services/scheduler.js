@@ -22,7 +22,7 @@
  *     check window →
  *     for each (sub, rule):
  *       - daysDiff／hoursDiff 使用 getDaysBetween 計算（依使用者時區）
- *       - 自動續訂（针对 sub 整体，仅算一次）
+ *       - 自動續訂（針對整筆訂閱，只計算一次）
  *       - shouldFire? → dedupe → dispatch.send → notify_log
  *     → sched_log
  *
@@ -183,7 +183,7 @@ export async function checkExpiringSubscriptions(env) {
     // 持久化自動續訂結果
     if (updatedSubsToSave.length > 0) {
       await subRepo.saveMany(env, updatedSubsToSave);
-      console.log(`[定时任务] 已自動續訂 ${updatedSubsToSave.length} 筆訂閱`);
+      console.log(`[排程工作] 已自動續訂 ${updatedSubsToSave.length} 筆訂閱`);
     }
 
     // 不在通知時段 → 寫入紀錄後回傳
@@ -271,7 +271,7 @@ export async function checkExpiringSubscriptions(env) {
         env,
         subId: primary.sub.id,
         ruleId: primary.rule.id,
-        logPrefix: '[定时任务]',
+        logPrefix: '[排程工作]',
         metadata: {
           tags: enrichedSubs.map((s) => s.name),
           daysRemaining: primary.daysDiff,
@@ -418,7 +418,7 @@ function autoRenew(sub, now, timezone, config) {
     date: now.toISOString(),
     amount: sub.amount || 0,
     type: 'auto',
-    note: `自動續訂 (${mode === 'reset' ? '重置模式' : '接續模式'}${
+    note: `自動續訂 (${mode === 'reset' ? '重設模式' : '接續模式'}${
       periodsAdded > 1 ? '，補齊 ' + periodsAdded + ' 個週期' : ''
     })`,
     periodStart: newStartDate.toISOString(),
