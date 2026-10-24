@@ -1,11 +1,11 @@
 // @ts-check
 /**
- * 调度器执行日志仓库
+ * 排程器執行記錄資料庫
  *
- * 用途：每次 Cron `scheduled` 触发都写一条聚合日志，包含本次执行的：
- *   - 起止时间、用户时区、是否在通知时段
+ * 用途：每次 Cron `scheduled` 觸發時，都會寫入一筆彙總記錄，包含本次執行的：
+ *   - 起訖時間、使用者時區、是否位於通知時段
  *   - 检查的订阅总数 / 命中提醒规则数 / 去重跳过数
- *   - 自动续订条数 / 通知发送统计
+ *   - 自動續訂筆數 / 通知发送统计
  *   - 错误（如有）
  *
  * 配合 notification-logs（细粒度）形成"链路日志"：
@@ -13,9 +13,9 @@
  *   notify_log:{ymdh}:{sub}:{rule}:{ch} ← 该调度发出的每条通知
  *
  * Key 规则：sched_log:{ISO_UTC}（如 sched_log:2026-05-24T17:00:00.000Z）
- *   ISO 字典序 == 时间序，便于 list 倒序读取。
+ *   ISO 字典序等於時間順序，方便倒序讀取清單。
  *
- * 默认 TTL：30 天。
+ * 預設 TTL：30 天。
  *
  */
 
@@ -28,8 +28,8 @@ const DEFAULT_TTL_SEC = 30 * 24 * 3600;
  * @property {string} startedAt ISO
  * @property {string} finishedAt ISO
  * @property {string} timezone 调度生效时区
- * @property {string} currentHour 用户 TZ 下的当前小时（"HH"）
- * @property {string[]} configuredHours 通知时段配置（用户 TZ 小时）
+ * @property {string} currentHour 使用者時區下的目前小時（"HH"）
+ * @property {string[]} configuredHours 通知時段設定（使用者時區小時）
  * @property {boolean} inWindow 是否在通知时段内
  * @property {number} checkedCount 检查订阅数
  * @property {number} matchedCount 命中规则的（订阅×规则）对数
@@ -74,7 +74,7 @@ export async function writeLog(env, entry, opts = {}) {
 }
 
 /**
- * 取最近 N 条调度日志（按时间倒序）。
+ * 取得最近 N 筆排程記錄（依時間倒序）。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {number} [limit=20]
@@ -83,7 +83,7 @@ export async function writeLog(env, entry, opts = {}) {
 export async function getRecent(env, limit = 20) {
   const safeLimit = Math.min(200, Math.max(1, Number(limit) || 20));
 
-  // KV.list 默认升序；想要倒序需要拉全后排序
+  // KV.list 預設升序；若要倒序，需先取得全部資料再排序
   const allKeys = [];
   let cursor;
   do {
