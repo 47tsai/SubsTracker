@@ -1,4 +1,4 @@
-// 页面模板 - 使用 text import 避免嵌套模板字面量问题
+// 頁面範本 - 使用 text import 避免巢狀範本字面值問題
 import themeResourcesHtml from './theme-resources.html';
 import adminPageHtml from './adminPage.html';
 import loginPageHtml from './loginPage.html';
