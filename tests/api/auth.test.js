@@ -64,7 +64,7 @@ describe('JWT 单元', () => {
     expect(payload.username).toBe('admin');
   });
 
-  it('错误密钥验证失败', async () => {
+  it('錯誤金鑰驗證失敗', async () => {
     const token = await generateJWT('admin', 'sec');
     expect(await verifyJWT(token, 'other')).toBeNull();
   });
