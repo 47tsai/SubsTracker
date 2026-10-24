@@ -106,7 +106,7 @@ async function handleSubscriptions(request, env, path) {
         );
       }
       const result = await createSubscription(subscription, env);
-      // 建立成功後寫入提醒規則，並同步舊版 提醒欄位（清單顯示所需）
+      // 建立成功後寫入提醒規則，並同步舊版提醒欄位（清單顯示所需）
       if (result.success && result.subscription) {
         try {
           const remindersRepo = await import('../../data/reminders.repo.js');
