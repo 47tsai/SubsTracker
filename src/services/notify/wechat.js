@@ -17,7 +17,7 @@ export const wecomChannel = {
 
   async send(payload, config) {
     const v = wecomChannel.validateConfig(config);
-    if (!v.ok) return fail('wechatbot', v.error || '配置无效');
+    if (!v.ok) return fail('wechatbot', v.error || '設定無效');
 
     const msgType = config.WECHATBOT_MSG_TYPE || 'text';
     let messageData;
@@ -67,7 +67,7 @@ export const wecomChannel = {
 
   async test(config) {
     return wecomChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則企業微信測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則企業微信測試通知。' },
       config
     );
   }
