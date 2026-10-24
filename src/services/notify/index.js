@@ -3,7 +3,7 @@
  * 通知调度入口
  *
  * 旧 sendNotificationToAllChannels 现在是 dispatch.dispatch 的薄壳，
- * 保留签名向后兼容。新代码请直接使用 dispatch / testChannel。
+ * 保留簽章以維持向後相容。新程式碼請直接使用 dispatch / testChannel。
  *
  */
 import { dispatch } from './dispatch.js';
@@ -12,14 +12,14 @@ import { dispatch } from './dispatch.js';
  * @param {string} title
  * @param {string} commonContent
  * @param {any} config
- * @param {string} [logPrefix='[定时任务]']
+ * @param {string} [logPrefix='[排程工作]']
  * @param {{ env?: any, subId?: string, ruleId?: string, metadata?: Object }} [options]
  */
 export async function sendNotificationToAllChannels(
   title,
   commonContent,
   config,
-  logPrefix = '[定时任务]',
+  logPrefix = '[排程工作]',
   options = {}
 ) {
   const result = await dispatch(
