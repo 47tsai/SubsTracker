@@ -110,7 +110,7 @@ const lunarCalendar = {
     const ganIndex = (lunarYear - 4) % 10;
     const zhiIndex = (lunarYear - 4) % 12;
     const yearStr = this.gan[ganIndex] + this.zhi[zhiIndex] + '年';
-    const monthStr = (isLeap ? '闰' : '') + this.months[lunarMonth - 1] + '月';
+    const monthStr = (isLeap ? '閏' : '') + this.months[lunarMonth - 1] + '月';
     const dayStr = this.days[lunarDay - 1];
 
     return {
