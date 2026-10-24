@@ -4,7 +4,7 @@
  *
  * 文档：https://wpush.cn/docs
  * 发送：POST https://api.wpush.cn/api/v1/send
- * 成功条件：响应 JSON 的 code === 0（注意：与 PushPlus 的 200 不同）
+ * 成功條件：回應 JSON 的 code === 0（注意：與 PushPlus 的 200 不同）
  *
  * 配置：
  * - WPUSH_APIKEY     API Key（必填，勿写入日志）
