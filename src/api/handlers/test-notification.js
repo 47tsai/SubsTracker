@@ -91,7 +91,7 @@ async function handleTestNotification(request, env) {
       };
 
       const title = '測試通知';
-      const content = '這是一則測試通知，用來確認企業微信機器人功能是否正常工作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
+      const content = '這是一則測試通知，用來確認企業微信機器人功能是否正常運作。\n\n傳送時間：' + formatLocalDate(new Date(), config.TIMEZONE || 'Asia/Taipei', 'datetime');
 
       success = await sendWechatBotNotification(title, content, testConfig);
       message = success ? '企業微信機器人通知傳送成功' : '企業微信機器人通知傳送失敗，請檢查設定';
