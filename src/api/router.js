@@ -25,7 +25,7 @@ async function handleApiRequest(request, env) {
     return handleLogout();
   }
 
-  // 第三方通知 API 使用独立 token 鉴权，必须在 JWT 门禁之前放行
+  // 第三方通知 API 使用獨立 token 驗證，必須在 JWT 門禁之前放行
   if (path.startsWith('/notify/')) {
     const thirdPartyResponse = await handleThirdPartyNotify(request, env, config, url);
     if (thirdPartyResponse) return thirdPartyResponse;
@@ -73,7 +73,7 @@ async function handleApiRequest(request, env) {
   if (thirdPartyResponse) return thirdPartyResponse;
 
   return new Response(
-    JSON.stringify({ success: false, message: '未找到请求的资源' }),
+    JSON.stringify({ success: false, message: '找不到要求的資源' }),
     { status: 404, headers: { 'Content-Type': 'application/json' } }
   );
 }
