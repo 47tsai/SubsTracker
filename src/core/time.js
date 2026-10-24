@@ -135,7 +135,7 @@ export function getTimezoneDateParts(date, timezone = 'UTC') {
  * 業務程式碼請優先使用本函式，而非 `getCurrentTimeInTimezone`，
  * 本函式會明確提供以下資訊：
  * - utc：原生 UTC Date（用於儲存及計算時間差）
- * - parts.hour：你設定的時區下的目前小時（用于通知时段判斷）
+ * - parts.hour：你設定的時區下的目前小時（用於通知時段判斷）
  * - hourString：可直接與 NOTIFICATION_HOURS 字串陣列比對
  *
  * @param {string} [timezone='UTC']
@@ -395,7 +395,7 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
       day = last.getUTCDate();
     } else {
       const temp = new Date(Date.UTC(year, targetMonthIndex, day, 0, 0, 0));
-      // 若溢出到下月（如 1/31 + 1 月），钳制到目标月最后一天更符合「同号续订」预期
+      // 若溢出到下月（如 1/31 + 1 月），限制為目標月份的最後一天，更符合「同日續訂」的預期
       // 此處維持與舊版 JS setUTCMonth 一致：允許日期溢位，避免改變既有使用者行為
       year = temp.getUTCFullYear();
       month = temp.getUTCMonth() + 1;
@@ -570,10 +570,10 @@ export function formatBeijingTime(date = new Date(), format = 'full') {
 }
 
 /**
- * 从请求中推断时区：query > Header > Accept-Language。
+ * 從請求中推斷時區：query > Header > Accept-Language。
  *
  * 注意：本版本前端展示用的是 config.TIMEZONE（使用者設定的時區），
- * 此函数主要用于 API 兼容场景。
+ * 此函式主要用於 API 相容情境。
  *
  * @param {Request} request
  * @returns {string}
@@ -616,7 +616,7 @@ export function getCurrentTimeInTimezone(timezone = 'UTC') {
 }
 
 /**
- * 兼容老调用：返回当前 UTC 毫秒時間戳記。
+ * 兼容老调用：回傳目前 UTC 毫秒時間戳記。
  *
  * @param {string} [timezone='UTC']
  * @returns {number}
@@ -630,7 +630,7 @@ export function getTimestampInTimezone(timezone = 'UTC') {
  * 兼容老调用：把 UTC 时刻"转换到"目标时区。
  *
  * 注意：这是个语义陷阱——Date 本身永远是 UTC 时刻（绝对时刻），
- * "转到"另一个时区只影响显示，不影响 Date 实例。本函数仅返回原 Date 拷贝。
+ * 「轉換至」另一個時區只影響顯示，不影響 Date 實例。本函式僅回傳原 Date 的複本。
  *
  * @param {Date | string | number} utcTime
  * @param {string} [timezone='UTC']
