@@ -21,7 +21,7 @@ export const pushplusChannel = {
     const body = {
       token: config.PUSHPLUS_TOKEN,
       title: payload.title || '訂閱提醒',
-      content: `## ${payload.title || '订阅提醒'}\n\n${payload.content || ''}`,
+      content: `## ${payload.title || '訂閱提醒'}\n\n${payload.content || ''}`,
       template: 'markdown'
     };
     if (config.PUSHPLUS_TOPIC) body.topic = config.PUSHPLUS_TOPIC;
