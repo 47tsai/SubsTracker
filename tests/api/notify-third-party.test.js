@@ -30,7 +30,7 @@ afterEach(() => {
 });
 
 describe('POST /api/notify/:token', () => {
-  it('未配置 token → 403（无需登录）', async () => {
+  it('未設定 token → 403（無須登入）', async () => {
     await env.SUBSCRIPTIONS_KV.put(
       'config',
       JSON.stringify({ JWT_SECRET: 'k', THIRD_PARTY_API_TOKEN: '' })
