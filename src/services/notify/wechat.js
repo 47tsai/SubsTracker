@@ -2,7 +2,7 @@
 /**
  * 企业微信机器人通知渠道
  *
- * 支持 text / markdown 两种消息格式，可配置 @所有人 / @手机号。
+ * 支持 text / markdown 兩種訊息格式，可設定 @所有人 / @手机号。
  */
 import { ok, fail, errorMessage, stripMarkdown } from './channel.js';
 
