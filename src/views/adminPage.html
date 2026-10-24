@@ -839,7 +839,7 @@
         return sum + this.leapDays(year);
       },
 
-      // 獲取闰月天數
+      // 取得閏月天數
       leapDays: function(year) {
         if (this.leapMonth(year)) {
           return (this.lunarInfo[year - 1900] & 0x10000) ? 30 : 29;
@@ -847,7 +847,7 @@
         return 0;
       },
 
-      // 獲取闰月月份
+      // 取得閏月月份
       leapMonth: function(year) {
         return this.lunarInfo[year - 1900] & 0xf;
       },
