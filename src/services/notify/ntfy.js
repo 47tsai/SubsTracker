@@ -25,7 +25,7 @@ export const ntfyChannel = {
 
   async send(payload, config) {
     const v = ntfyChannel.validateConfig(config);
-    if (!v.ok) return fail('ntfy', v.error || '配置无效');
+    if (!v.ok) return fail('ntfy', v.error || '設定無效');
 
     const server = String(config.NTFY_SERVER || 'https://ntfy.sh').replace(/\/+$/, '');
     const topic = String(config.NTFY_TOPIC).trim().replace(/^\/+/, '');
@@ -33,7 +33,7 @@ export const ntfyChannel = {
 
     /** @type {Record<string, string>} */
     const headers = {
-      Title: payload.title || '订阅提醒',
+      Title: payload.title || '訂閱提醒',
       'Content-Type': 'text/plain; charset=utf-8'
     };
     const token = config.NTFY_TOKEN ? String(config.NTFY_TOKEN).trim() : '';
@@ -65,7 +65,7 @@ export const ntfyChannel = {
 
   async test(config) {
     return ntfyChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則 ntfy 測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則 ntfy 測試通知。' },
       config
     );
   }
