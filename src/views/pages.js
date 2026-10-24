@@ -6,7 +6,7 @@ import configPageHtml from './configPage.html';
 import dashboardPageHtml from './dashboardPage.html';
 import notifyLogsPageHtml from './notifyLogsPage.html';
 
-// themeResources 需要注入到每个页面模板中
+// themeResources 需要注入到每個頁面範本中
 function injectTheme(html) {
   return html.replace(/\$\{themeResources\}/g, themeResourcesHtml);
 }
