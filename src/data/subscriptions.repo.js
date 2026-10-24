@@ -59,7 +59,7 @@ async function writeIds(env, ids) {
 }
 
 /**
- * 根据 ID 读取单条订阅。
+ * 根據 ID 讀取單筆訂閱。
  *
  * @param {{ SUBSCRIPTIONS_KV: KVNamespace }} env
  * @param {string} id
@@ -78,7 +78,7 @@ export async function getById(env, id) {
 }
 
 /**
- * 一次性读取所有订阅（按索引顺序）。
+ * 一次讀取所有訂閱（依索引順序）。
  *
  * 實作：先讀取索引，再透過 Promise.all 並行取得個別訂閱；缺少的項目會被過濾。
  * N 為數十筆時仍可在一秒內完成；若超過千筆，建議分批處理或改用分頁介面。
@@ -171,7 +171,7 @@ export async function deleteById(env, id) {
 }
 
 /**
- * 整个仓库覆盖（用于迁移、导入等场景）。
+ * 整個資料庫覆寫（用於遷移、匯入等情境）。
  *
  * 流程：先清除舊的 sub:{id}（依目前索引），再寫入新資料。
  *
