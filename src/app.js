@@ -52,7 +52,7 @@ app.onError((err, c) => {
   return c.json(
     {
       success: false,
-      message: err && err.message ? err.message : '服务异常',
+      message: err && err.message ? err.message : '服務異常',
       code: 'internal_error'
     },
     500
