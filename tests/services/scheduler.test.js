@@ -1,11 +1,11 @@
 // @ts-check
 /**
- * 调度器集成测试
+ * 排程器整合測試
  *
  * 4 个核心场景（修复 #91 / #52 / #166）：
  * 1. UTC 0点 + TZ Asia/Shanghai + NOTIFICATION_HOURS=["08"] + 北京 8 点 → 应发送
  * 2. 同上但 NOTIFICATION_HOURS=["00"] → 不发送
- * 3. 多规则订阅（7/3/1/当天）：到期前 3 天 → 仅命中 value:3
+ * 3. 多規則訂閱（7/3/1/當天）：到期前 3 天 → 仅命中 value:3
  * 4. 同规则同小时第二次调用 → 去重跳过
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
@@ -48,7 +48,7 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe('调度器 - 时区 + 通知时段', () => {
+describe('排程器：時區與通知時段', () => {
   it('场景1：UTC 0点 + TZ Asia/Shanghai + NOTIFICATION_HOURS=[08] + 北京 8 点 → 发送', async () => {
     // mock 当前时间为 UTC 2026-05-24 00:00 = 北京 5/24 08:00
     vi.useFakeTimers();
@@ -65,7 +65,7 @@ describe('调度器 - 时区 + 通知时段', () => {
       TG_CHAT_ID: 'C'
     });
 
-    // 一条订阅，5 月 31 日北京时间到期，距今 7 天
+    // 一条订阅，5 月 31 日北京時間到期，距今 7 天
     await subRepo.save(env, {
       id: 's-netflix',
       name: 'Netflix',
@@ -100,7 +100,7 @@ describe('调度器 - 时区 + 通知时段', () => {
     await setConfig({
       JWT_SECRET: 's',
       TIMEZONE: 'Asia/Shanghai',
-      NOTIFICATION_HOURS: ['00'], // 用户配的是北京 0 点
+      NOTIFICATION_HOURS: ['00'], // 使用者設定的是北京時間 0 點
       ENABLED_NOTIFIERS: ['telegram'],
       TG_BOT_TOKEN: 'B',
       TG_CHAT_ID: 'C'
@@ -123,7 +123,7 @@ describe('调度器 - 时区 + 通知时段', () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it('场景3：多规则订阅（7/3/1/0），到期前 3 天 → 仅 value=3 命中', async () => {
+  it('情境 3：多規則訂閱（7/3/1/0），到期前 3 天 → 仅 value=3 命中', async () => {
     // 北京 5/24 08:00 → 到期 5/27 11:00 北京 → 距 3 天
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-05-24T00:00:00.000Z'));
@@ -229,7 +229,7 @@ describe('调度器 - 时区 + 通知时段', () => {
   });
 });
 
-describe('调度器 - 自动续订', () => {
+describe('排程器：自動續訂', () => {
   it('已过期 + autoRenew=false → 保留到期日和支付历史', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-05-24T00:00:00.000Z'));
@@ -285,7 +285,7 @@ describe('调度器 - 自动续订', () => {
   });
 });
 
-describe('调度器 - 写入日志', () => {
+describe('排程器：寫入紀錄', () => {
   it('每次执行都写一条 sched_log', async () => {
     await setConfig({
       JWT_SECRET: 's',
