@@ -21,7 +21,7 @@ export const barkChannel = {
 
   async send(payload, config) {
     const v = barkChannel.validateConfig(config);
-    if (!v.ok) return fail('bark', v.error || '配置无效');
+    if (!v.ok) return fail('bark', v.error || '設定無效');
 
     const serverUrl = (config.BARK_SERVER || 'https://api.day.app').replace(/\/+$/, '');
 
@@ -73,7 +73,7 @@ export const barkChannel = {
 
   async test(config) {
     return barkChannel.send(
-      { title: '订阅管理 - 测试通知', content: '這是一則 Bark 測試通知。' },
+      { title: '訂閱管理 - 測試通知', content: '這是一則 Bark 測試通知。' },
       config
     );
   }
