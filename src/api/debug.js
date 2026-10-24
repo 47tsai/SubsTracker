@@ -103,10 +103,10 @@ async function handleDebug(request, env) {
     <h3>基本</h3>
     <div class="row"><span class="k">UTC 時間</span><span class="v">${esc(debugInfo.timestamp)}</span></div>
     <div class="row"><span class="k">存取路徑</span><span class="v">${esc(debugInfo.pathname)}</span></div>
-    <div class="row"><span class="k">KV 绑定</span><span class="v ${debugInfo.kvBinding ? 'success' : 'error'}">${debugInfo.kvBinding ? '✓ 已绑定' : '✗ 未绑定'}</span></div>
+    <div class="row"><span class="k">KV 綁定</span><span class="v ${debugInfo.kvBinding ? 'success' : 'error'}">${debugInfo.kvBinding ? '✓ 已绑定' : '✗ 未绑定'}</span></div>
     <div class="row"><span class="k">設定可讀</span><span class="v ${debugInfo.configExists ? 'success' : 'error'}">${debugInfo.configExists ? '✓' : '✗'}</span></div>
     <div class="row"><span class="k">管理員使用者名稱</span><span class="v">${esc(debugInfo.adminUsername || '（未設定）')}</span></div>
-    <div class="row"><span class="k">JWT 密钥</span><span class="v ${debugInfo.hasJwtSecret ? 'success' : 'error'}">${debugInfo.hasJwtSecret ? `✓ 已設定 (${debugInfo.jwtSecretLength} 個字元)` : '✗ 缺失'}</span></div>
+    <div class="row"><span class="k">JWT 金鑰</span><span class="v ${debugInfo.hasJwtSecret ? 'success' : 'error'}">${debugInfo.hasJwtSecret ? `✓ 已設定 (${debugInfo.jwtSecretLength} 個字元)` : '✗ 缺少'}</span></div>
   </div>
 
   <div class="info">
@@ -115,7 +115,7 @@ async function handleDebug(request, env) {
     <div class="row"><span class="k">時區偏移</span><span class="v">UTC${debugInfo.timezoneOffsetHours >= 0 ? '+' : ''}${debugInfo.timezoneOffsetHours} 小時</span></div>
     <div class="row"><span class="k">目前 UTC</span><span class="v">${esc(debugInfo.utcIso)}</span></div>
     <div class="row"><span class="k">目前使用者當地時間</span><span class="v">${esc(debugInfo.localIso)}</span></div>
-    <div class="row"><span class="k">用于通知时段判断的小時</span><span class="v">${esc(debugInfo.currentHour)}</span></div>
+    <div class="row"><span class="k">用於通知時段判斷的小時</span><span class="v">${esc(debugInfo.currentHour)}</span></div>
     <div class="row"><span class="k">設定的通知小時（使用者時區）</span><span class="v">${notificationHours.length === 0 ? '<em class="warn">空白（預設全天允許傳送）</em>' : `<code>${esc(notificationHours.join(', '))}</code>`}</span></div>
     <div class="row"><span class="k">目前是否允許傳送</span><span class="v ${debugInfo.inNotificationWindow ? 'success' : 'warn'}">${debugInfo.inNotificationWindow ? '✓ 位於允許時段內' : '✗ 不在允許時段內'}</span></div>
   </div>
