@@ -18,7 +18,7 @@ const FALLBACK_RATES = {
 
 async function getDynamicRates(env) {
   const CACHE_KEY = 'SYSTEM_EXCHANGE_RATES_TWD_V2';
-  const CACHE_TTL = 86400000; // 24小时
+  const CACHE_TTL = 86400000; // 24 小時
 
   try {
     const cached = await env.SUBSCRIPTIONS_KV.get(CACHE_KEY, { type: 'json' });
