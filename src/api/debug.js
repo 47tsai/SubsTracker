@@ -103,7 +103,7 @@ async function handleDebug(request, env) {
     <h3>基本</h3>
     <div class="row"><span class="k">UTC 時間</span><span class="v">${esc(debugInfo.timestamp)}</span></div>
     <div class="row"><span class="k">存取路徑</span><span class="v">${esc(debugInfo.pathname)}</span></div>
-    <div class="row"><span class="k">KV 綁定</span><span class="v ${debugInfo.kvBinding ? 'success' : 'error'}">${debugInfo.kvBinding ? '✓ 已绑定' : '✗ 未绑定'}</span></div>
+    <div class="row"><span class="k">KV 綁定</span><span class="v ${debugInfo.kvBinding ? 'success' : 'error'}">${debugInfo.kvBinding ? '✓ 已綁定' : '✗ 未綁定'}</span></div>
     <div class="row"><span class="k">設定可讀</span><span class="v ${debugInfo.configExists ? 'success' : 'error'}">${debugInfo.configExists ? '✓' : '✗'}</span></div>
     <div class="row"><span class="k">管理員使用者名稱</span><span class="v">${esc(debugInfo.adminUsername || '（未設定）')}</span></div>
     <div class="row"><span class="k">JWT 金鑰</span><span class="v ${debugInfo.hasJwtSecret ? 'success' : 'error'}">${debugInfo.hasJwtSecret ? `✓ 已設定 (${debugInfo.jwtSecretLength} 個字元)` : '✗ 缺少'}</span></div>
