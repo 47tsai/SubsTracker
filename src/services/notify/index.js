@@ -2,8 +2,8 @@
 /**
  * 通知排程入口
  *
- * 旧 sendNotificationToAllChannels 现在是 dispatch.dispatch 的薄壳，
- * 保留簽章以維持向後相容。新程式碼請直接使用 dispatch / testChannel。
+ * 舊版 sendNotificationToAllChannels 現在只是 dispatch.dispatch 的包裝層，
+ * 保留函式簽章以維持向後相容。新程式碼請直接使用 dispatch / testChannel。
  *
  */
 import { dispatch } from './dispatch.js';
