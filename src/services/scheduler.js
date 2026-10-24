@@ -418,7 +418,7 @@ function autoRenew(sub, now, timezone, config) {
     date: now.toISOString(),
     amount: sub.amount || 0,
     type: 'auto',
-    note: `自動續訂 (${mode === 'reset' ? '重置模式' : '接续模式'}${
+    note: `自動續訂 (${mode === 'reset' ? '重置模式' : '接續模式'}${
       periodsAdded > 1 ? '，補齊 ' + periodsAdded + ' 個週期' : ''
     })`,
     periodStart: newStartDate.toISOString(),
