@@ -830,7 +830,7 @@
              '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
              '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'],
 
-      // 獲取農曆年天數
+      // 取得農曆年天數
       lunarYearDays: function(year) {
         let sum = 348;
         for (let i = 0x8000; i > 0x8; i >>= 1) {
@@ -852,7 +852,7 @@
         return this.lunarInfo[year - 1900] & 0xf;
       },
 
-      // 獲取農曆月天數
+      // 取得農曆月天數
       monthDays: function(year, month) {
         return (this.lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29;
       },
@@ -1903,7 +1903,7 @@ const lunarBiz = {
       listShowLunar.addEventListener('change', handleListLunarToggle);
     }
 
-    // 獲取所有訂閱並按到期時間排序
+    // 取得所有訂閱並按到期時間排序
     async function loadSubscriptions(showLoading = true) {
       try {
         const listShowLunar = document.getElementById('listShowLunar');
@@ -1946,7 +1946,7 @@ const lunarBiz = {
 
         const id = button.dataset.id;
         if (!id) {
-          showToast('訂閱 ID 缺失，無法傳送測試通知', 'error');
+          showToast('缺少訂閱 ID，無法傳送測試通知', 'error');
           return;
         }
 
@@ -1987,15 +1987,15 @@ const lunarBiz = {
             const subscription = await response.json();
             showRenewFormModal(subscription);
         } catch (error) {
-            console.error('獲取訂閱資訊失敗:', error);
-            showToast('獲取訂閱資訊時發生錯誤', 'error');
+            console.error('取得訂閱資訊失敗:', error);
+            showToast('取得訂閱資訊時發生錯誤', 'error');
         }
     }
 
     function showRenewFormModal(subscription) {
         const today = getTodayDateStringInTimezone(globalTimezone);
         
-        // 獲取目前到期日的顯示文本
+        // 取得目前到期日的顯示文字
         let currentExpiryDisplay = '無';
         if (subscription.expiryDate) {
             const datePart = formatDateInputInTimezone(subscription.expiryDate, globalTimezone);
@@ -2018,7 +2018,7 @@ const lunarBiz = {
 
         const defaultAmount = subscription.amount !== null && subscription.amount !== undefined ? subscription.amount : 0;
         
-        // 獲取動態貨幣符號
+        // 取得動態貨幣符號
         const currencySymbols = {
           'CNY': '¥', 'USD': '$', 'HKD': 'HK$', 'TWD': 'NT$', 
           'JPY': '¥', 'EUR': '€', 'GBP': '£', 'KRW': '₩', 'TRY': '₺'
@@ -2117,7 +2117,7 @@ const lunarBiz = {
         const subscription = JSON.parse(form.dataset.subscriptionData);
         const multiplier = parseInt(document.getElementById('renewPeriodMultiplier').value) || 1;
 
-        // 獲取基準日期，避免直接 new Date() 的時區問題
+        // 取得基準日期，避免直接 new Date() 的時區問題
         const parts = parseCalendarDateParts(formatDateInputInTimezone(subscription.expiryDate, globalTimezone)) || { year: 2024, month: 1, day: 1 };
         
         if (subscription.useLunar) {
@@ -2135,7 +2135,7 @@ const lunarBiz = {
                     // 3. 轉回國曆
                     const solar = lunarBiz.lunar2solar(nextLunar);
                     
-                    // 重點：用計算出的國曆日期重新獲取完整的農曆物件，確保有 fullStr 屬性
+                    // 重點：用計算出的國曆日期重新取得完整的農曆物件，確保有 fullStr 屬性
                     const fullNextLunar = lunarCalendar.solar2lunar(solar.year, solar.month, solar.day);
                     
                     // 格式化輸出 YYYY-MM-DD
@@ -2225,7 +2225,7 @@ const lunarBiz = {
             const result = await response.json();
 
             if (!result.success) {
-                showToast(result.message || '獲取付款歷史失敗', 'error');
+                showToast(result.message || '取得付款歷史失敗', 'error');
                 return;
             }
 
@@ -2236,8 +2236,8 @@ const lunarBiz = {
 
             showPaymentHistoryModal(subscription, payments);
         } catch (error) {
-            console.error('獲取付款歷史失敗:', error);
-            showToast('獲取付款歷史時發生錯誤', 'error');
+            console.error('取得付款歷史失敗:', error);
+            showToast('取得付款歷史時發生錯誤', 'error');
         }
     }
 
@@ -2386,11 +2386,11 @@ const lunarBiz = {
 
     window.editPaymentRecord = async function(subscriptionId, paymentId) {
         try {
-            // 獲取訂閱資訊
+            // 取得訂閱資訊
             const subResponse = await apiFetch(`/api/subscriptions/${subscriptionId}`);
             const subscription = await subResponse.json();
 
-            // 獲取付款歷史
+            // 取得付款歷史
             const payResponse = await apiFetch(`/api/subscriptions/${subscriptionId}/payments`);
             const payResult = await payResponse.json();
 
@@ -2402,8 +2402,8 @@ const lunarBiz = {
 
             showEditPaymentModal(subscription, payment);
         } catch (error) {
-            console.error('獲取付款紀錄失敗:', error);
-            showToast('獲取付款紀錄時發生錯誤', 'error');
+            console.error('取得付款紀錄失敗:', error);
+            showToast('取得付款紀錄時發生錯誤', 'error');
         }
     };
 
@@ -2996,7 +2996,7 @@ const lunarBiz = {
             dayElement.classList.add('selected');
           }
           
-          // 獲取農曆資訊
+          // 取得農曆資訊
           let lunarText = '';
           try {
             const lunar = lunarCalendar.solar2lunar(date.getFullYear(), date.getMonth() + 1, date.getDate());
@@ -3238,7 +3238,7 @@ const lunarBiz = {
     });
 
     function setupModalEventListeners() {     
-      const calculateExpiryBtn = document.getElementById('calculateExpiryBtn'); // 獲取DOM元素
+      const calculateExpiryBtn = document.getElementById('calculateExpiryBtn'); // 取得 DOM 元素
       const useLunar = document.getElementById('useLunar');
       const showLunar = document.getElementById('showLunar');
       const startDate = document.getElementById('startDate');
@@ -3585,8 +3585,8 @@ const lunarBiz = {
           }, 100);
         }
       } catch (error) {
-        console.error('獲取訂閱資訊失敗:', error);
-        showToast('獲取訂閱資訊失敗', 'error');
+        console.error('取得訂閱資訊失敗:', error);
+        showToast('取得訂閱資訊失敗', 'error');
         isEditingLoading = false;
       } finally {
         if (button) { button.disabled = false; button.innerHTML = originalButtonContent; }
