@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * 企业微信机器人通知渠道
+ * 企業微信機器人通知管道
  *
  * 支持 text / markdown 兩種訊息格式，可設定 @所有人 / @手机号。
  */
@@ -55,11 +55,11 @@ export const wecomChannel = {
       try {
         result = JSON.parse(text);
       } catch {
-        return fail('wechatbot', '响应非 JSON', text);
+        return fail('wechatbot', '回應內容不是 JSON', text);
       }
       return result.errcode === 0
         ? ok('wechatbot', result)
-        : fail('wechatbot', `企业微信返回 errcode=${result.errcode} ${result.errmsg || ''}`, result);
+        : fail('wechatbot', `企業微信回傳 errcode=${result.errcode} ${result.errmsg || ''}`, result);
     } catch (err) {
       return fail('wechatbot', errorMessage(err));
     }
@@ -73,7 +73,7 @@ export const wecomChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendWechatBotNotification(title, content, config) {
   const r = await wecomChannel.send({ title, content }, config);
   if (!r.success) console.error('[企业微信]', r.error);
