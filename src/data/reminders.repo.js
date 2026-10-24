@@ -260,7 +260,7 @@ export function formatRulesSummary(rules) {
     parts.push(`提前 ${beforeDays.join('/')} 天`);
   }
   if (beforeHours.length > 0) {
-    parts.push(`提前 ${beforeHours.join('/')} 小时`);
+    parts.push(`提前 ${beforeHours.join('/')} 小時`);
   }
   if (list.some((r) => r.type === 'on_expiry' || (r.type === 'before_expiry' && r.value === 0))) {
     parts.push('到期當天');
@@ -268,7 +268,7 @@ export function formatRulesSummary(rules) {
   const after = list.find((r) => r.type === 'after_expiry');
   if (after) {
     const interval = after.repeatInterval && after.repeatInterval > 0 ? after.repeatInterval : 24;
-    parts.push(`到期后每 ${interval} 小时`);
+    parts.push(`到期後每 ${interval} 小時`);
   }
 
   return parts.length > 0 ? parts.join(' · ') : '未設定提醒';
