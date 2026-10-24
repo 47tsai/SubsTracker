@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * ntfy 通知渠道
+ * ntfy 通知管道
  *
  * 文档：https://docs.ntfy.sh/publish/
  * 預設公共伺服器 https://ntfy.sh，也可填自建地址。
@@ -71,7 +71,7 @@ export const ntfyChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendNtfyNotification(title, content, config) {
   const r = await ntfyChannel.send({ title, content }, config);
   if (!r.success) console.error('[ntfy]', r.error);
