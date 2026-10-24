@@ -13,7 +13,7 @@
  * - on_expiry: 僅在到期日（daysDiff===0）触发。
  * - after_expiry: 已過期的情境。每隔 repeatInterval 小时触发一次，直到符合終止條件
  *   （renewed/acknowledged/never）。本引擎不處理終止條件判斷（由 scheduler 在載入規則前篩選），
- *   但會檢查"距上次触发是否超过 repeatInterval"。
+ *   但會檢查"距離上次觸發是否超過 repeatInterval"。
  *
  */
 
@@ -23,16 +23,16 @@
 
 /**
  * @typedef {Object} FireContext
- * @property {number} daysDiff 距離到期的天數（依使用者時區的午夜計算；可为负数 = 已过期天数）
- * @property {number} hoursDiff 距離到期的小時數（可为负数 = 已过期小时数）
- * @property {string} [lastFireAtIso] 同一規則上次觸發的 ISO 時間（用于 after_expiry 重复间隔）
+ * @property {number} daysDiff 距離到期的天數（依使用者時區的午夜計算；可為負數，代表已過期天數）
+ * @property {number} hoursDiff 距離到期的小時數（可為負數，代表已過期小時數）
+ * @property {string} [lastFireAtIso] 同一規則上次觸發的 ISO 時間（用於 after_expiry 的重複間隔）
  * @property {string} [nowIso] 目前的 ISO 時間，預設 new Date().toISOString()
  */
 
 /**
  * @typedef {Object} FireDecision
  * @property {boolean} fire 是否應該觸發
- * @property {string} [reason] 觸發或拒絕的原因（便于日志诊断）
+ * @property {string} [reason] 觸發或拒絕的原因（方便診斷記錄）
  */
 
 /**
