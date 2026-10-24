@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * 调度器：日规则按本地日去重；发送失败不占 dedupe；after_expiry 写 lastFire
+ * 排程器：每日規則依本地日期去重；傳送失敗不占用 dedupe；after_expiry 寫入 lastFire
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 // @ts-ignore
@@ -74,7 +74,7 @@ describe('日级去重与成功后占位', () => {
     expect(second.sentCount).toBe(0);
   });
 
-  it('发送全失败时不写 dedupe，同小时可重试', async () => {
+  it('傳送全部失敗時不寫入 dedupe，同一小時可重試', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-06-01T08:00:00Z'));
     await env.SUBSCRIPTIONS_KV.put(
