@@ -45,11 +45,11 @@ describe('before_expiry / days', () => {
     [7, 7, true, '到期前 7 天命中 value=7'],
     [7, 8, false, '到期前 8 天不命中 value=7'],
     [7, 6, false, '到期前 6 天不命中 value=7'],
-    [7, 0, false, '到期当天不命中 value=7（要 on_expiry 类型）'],
+    [7, 0, false, '到期當天不命中 value=7（要 on_expiry 类型）'],
     [7, -1, false, '已过期 1 天不命中 before_expiry'],
     [3, 3, true, '到期前 3 天命中 value=3'],
     [1, 1, true, '到期前 1 天命中 value=1'],
-    [0, 0, true, 'value=0 到期当天命中（等价 on_expiry）'],
+    [0, 0, true, 'value=0 到期當天命中（等价 on_expiry）'],
     [0, 1, false, 'value=0 非到期日不命中']
   ];
   cases.forEach(([v, days, expected, desc]) => {
