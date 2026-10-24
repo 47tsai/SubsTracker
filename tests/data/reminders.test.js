@@ -106,7 +106,7 @@ describe('reminders.repo', () => {
     ]);
     expect(summary).toContain('30');
     expect(summary).toContain('7');
-    expect(summary).toContain('到期当天');
+    expect(summary).toContain('到期當天');
   });
 
   it('deriveLegacyFromRules：取最大 before_expiry', () => {
