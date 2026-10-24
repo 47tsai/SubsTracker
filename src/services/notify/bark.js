@@ -2,7 +2,7 @@
 /**
  * Bark 通知渠道（iOS）
  *
- * 支持两种 URL 模式：
+ * 支援兩種 URL 模式：
  *   1. 标准：BARK_SERVER + BARK_DEVICE_KEY → POST {server}/push
  *   2. 自定义：BARK_SERVER 路径不为 / → POST {server}（已含 key 的完整 URL）
  */
