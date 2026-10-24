@@ -1,14 +1,14 @@
 // @ts-check
 /**
- * WPUSH 通知渠道
+ * WPUSH 通知管道
  *
  * 文档：https://wpush.cn/docs
  * 发送：POST https://api.wpush.cn/api/v1/send
  * 成功條件：回應 JSON 的 code === 0（注意：與 PushPlus 的 200 不同）
  *
  * 配置：
- * - WPUSH_APIKEY     API Key（必填，勿写入日志）
- * - WPUSH_CHANNEL    可选推送渠道（wechat/app/sms/mail/webhook/dingtalk/feishu/wechat_work/clawbot/qqbot）
+ * - WPUSH_APIKEY     API Key（必填，勿寫入紀錄）
+ * - WPUSH_CHANNEL    可選推播管道（wechat/app/sms/mail/webhook/dingtalk/feishu/wechat_work/clawbot/qqbot）
  * - WPUSH_TOPIC_CODE 可选 Topic 广播编码
  */
 import { ok, fail, errorMessage } from './channel.js';
@@ -48,12 +48,12 @@ export const wpushChannel = {
         body: JSON.stringify(body)
       });
       const result = await r.json().catch(() => ({}));
-      // 第三方响应可能回显 apikey；dispatch 会把 raw/error 写入通知日志。
+      // 第三方回應可能回傳 apikey；dispatch 会把 raw/error 写入通知日志。
       const responseCode = typeof result?.code === 'number' ? result.code : null;
       const diagnostic = { httpStatus: r.status, code: responseCode };
       return r.ok && responseCode === 0
         ? ok('wpush', diagnostic)
-        : fail('wpush', `WPUSH 返回 HTTP ${r.status}，code=${responseCode ?? '未知'}`, diagnostic);
+        : fail('wpush', `WPUSH 回傳 HTTP ${r.status}，code=${responseCode ?? '未知'}`, diagnostic);
     } catch (err) {
       const apiKey = String(config.WPUSH_APIKEY).trim();
       return fail('wpush', errorMessage(err).replaceAll(apiKey, '[REDACTED]'));
@@ -68,7 +68,7 @@ export const wpushChannel = {
   }
 };
 
-/** @deprecated 旧版兼容函数 */
+/** @deprecated 舊版相容函式 */
 export async function sendWPushNotification(title, content, config) {
   const r = await wpushChannel.send({ title, content }, config);
   if (!r.success) console.error('[WPUSH]', r.error);
