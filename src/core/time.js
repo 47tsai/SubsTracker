@@ -28,10 +28,10 @@ export const MS_PER_DAY = MS_PER_HOUR * 24;
 
 /**
  * @typedef {Object} TimezoneDateParts 指定時區下的日期分量
- * @property {number} year 年（4 位整数）
+ * @property {number} year 年（4 位整數）
  * @property {number} month 月（1-12）
  * @property {number} day 日（1-31）
- * @property {number} hour 时（0-23）
+ * @property {number} hour 小時（0-23）
  * @property {number} minute 分（0-59）
  * @property {number} second 秒（0-59）
  */
@@ -75,7 +75,7 @@ function safeTimezone(timezone) {
 /**
  * 將 Date／ISO 字串／時間戳記轉換為目標時區的年月日時分秒。
  *
- * 内部用 Intl.DateTimeFormat（en-US 12h=false）解析，无 DST/夏令时手算坑。
+ * 内部用 Intl.DateTimeFormat（en-US 12h=false）解析，無須手動處理 DST／夏令時間。
  *
  * @param {Date | string | number} date
  * @param {string} [timezone='UTC']
@@ -197,7 +197,7 @@ export function getDaysBetween(from, to, timezone = 'UTC') {
  * 計算指定時刻在指定時區下「午夜」對應的 UTC 時間戳記。
  *
  * 例：date=2026-05-24T15:30:00Z、tz=Asia/Shanghai → 北京時間 2026-05-24 23:30
- *     → 该日北京零点 = 2026-05-24T16:00:00Z (因为北京 00:00 = UTC 前一天 16:00)
+ *     → 當日北京零點 = 2026-05-24T16:00:00Z (因為北京 00:00 = UTC 前一天 16:00)
  *     → 回傳 1748015200000
  *
  * @param {Date | string | number} date
@@ -210,9 +210,9 @@ export function getTimezoneMidnightTimestamp(date, timezone = 'UTC') {
   // 無效日期不可交給 getTimezoneDateParts，否則會被當成「現在」而產生錯誤的日期差。
   if (!Number.isFinite(inputDate.getTime())) return Number.NaN;
   const { year, month, day } = getTimezoneDateParts(inputDate, tz);
-  // 通过反推：tz 下 (year,month,day) 0:00 对应的 UTC 时刻
-  // 算法：构造一个临时 UTC 时刻 t0 = Date.UTC(y,m-1,d), 求它在 tz 下的偏移分钟数 offsetMin,
-  //      则 tz 下零点的 UTC ms = t0 - offsetMin*60_000
+  // 透過反推：時區下 (year,month,day) 0:00 对应的 UTC 时刻
+  // 演算法：建立一個暫時的 UTC 時刻 t0 = Date.UTC(y,m-1,d), 求它在 時區下的偏移分钟数 offsetMin,
+  //      则 時區下零点的 UTC ms = t0 - offsetMin*60_000
   const t0 = Date.UTC(year, month - 1, day, 0, 0, 0);
   const probeParts = getTimezoneDateParts(new Date(t0), tz);
   const probeAsUtc = Date.UTC(
@@ -366,7 +366,7 @@ export function getTodayDateStringInTimezone(timezone = 'UTC', now) {
  * @param {number} amount
  * @param {'day'|'month'|'year'} unit
  * @param {string} [timezone='UTC']
- * @param {{ endOfMonth?: boolean }} [options] endOfMonth=true 时（仅公历 month）落到目标月最后一天
+ * @param {{ endOfMonth?: boolean }} [options] endOfMonth=true 時（僅限國曆 month）落在目標月份的最後一天
  * @returns {Date}
  */
 export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC', options = {}) {
@@ -385,10 +385,10 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
     month = temp.getUTCMonth() + 1;
     day = temp.getUTCDate();
   } else if (unit === 'month') {
-    // 先移到目标月，再用 day=0 取月末，或保留原日（JS overflow 行为）
+    // 先移至目標月份，再用 day=0 取月末，或保留原日期（JS overflow 行为）
     const targetMonthIndex = month - 1 + amount;
     if (options && options.endOfMonth) {
-      // 目标月最后一天：下月的第 0 天
+      // 目標月份的最後一天：下個月的第 0 天
       const last = new Date(Date.UTC(year, targetMonthIndex + 1, 0));
       year = last.getUTCFullYear();
       month = last.getUTCMonth() + 1;
@@ -403,7 +403,7 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
     }
   } else if (unit === 'year') {
     if (options && options.endOfMonth && month === 2 && day >= 28) {
-      // 年末月场景少见；仍按年推进后取该月最后一天
+      // 年末月份的情境較少見；仍先推進年份，再取得該月最後一天
       const last = new Date(Date.UTC(year + amount, month, 0));
       year = last.getUTCFullYear();
       month = last.getUTCMonth() + 1;
@@ -433,7 +433,7 @@ export function addCalendarPeriodInTimezone(value, amount, unit, timezone = 'UTC
 /**
  * 依指定時區格式化日期。
  *
- * 不同 fmt 用于：
+ * 不同 fmt 的用途：
  * - 'date'      → "2026/05/24"
  * - 'datetime'  → "2026/05/24 17:30:00"
  * - 'full'（預設）→ 包含星期等資訊的完整在地化字串
@@ -496,7 +496,7 @@ export function formatTimeInTimezone(time, timezone = 'UTC', format = 'full') {
  * 計算時區相對 UTC 的整數小時偏移（夏令時間以目前時刻的偏移為準）。
  *
  * @param {string} [timezone='UTC']
- * @returns {number} 偏移小时数（如 +8 表示 UTC+8）
+ * @returns {number} 偏移小時數（例如 +8 表示 UTC+8）
  */
 export function getTimezoneOffset(timezone = 'UTC') {
   const tz = safeTimezone(timezone);
@@ -511,7 +511,7 @@ export function getTimezoneOffset(timezone = 'UTC') {
       parts.minute,
       parts.second
     );
-    // 用 `+ 0` 归一化 -0 为 +0，避免 Object.is 比较时困扰
+    // 使用 `+ 0` 正規化 -0 为 +0，避免 Object.is 比較時產生問題
     return Math.round((zoned - now.getTime()) / MS_PER_HOUR) + 0;
   } catch {
     return 0;
@@ -519,7 +519,7 @@ export function getTimezoneOffset(timezone = 'UTC') {
 }
 
 /**
- * 生成时区显示文本。
+ * 產生時區顯示文字。
  *
  * 例：formatTimezoneDisplay('Asia/Shanghai') → "中國標準時間 (UTC+8)"
  *
@@ -532,7 +532,7 @@ export function formatTimezoneDisplay(timezone = 'UTC') {
     const offset = getTimezoneOffset(tz);
     const offsetStr = offset >= 0 ? `+${offset}` : `${offset}`;
     const names = {
-      UTC: '世界标准时间',
+      UTC: '世界標準時間',
       'Asia/Shanghai': '中國標準時間',
       'Asia/Hong_Kong': '香港時間',
       'Asia/Taipei': '台灣時間',
@@ -543,13 +543,13 @@ export function formatTimezoneDisplay(timezone = 'UTC') {
       'America/Los_Angeles': '美國太平洋時間',
       'America/Chicago': '美國中部時間',
       'America/Denver': '美國山地時間',
-      'Europe/London': '英国时间',
-      'Europe/Paris': '巴黎时间',
-      'Europe/Berlin': '柏林时间',
-      'Europe/Moscow': '莫斯科时间',
-      'Australia/Sydney': '悉尼时间',
+      'Europe/London': '英國時間',
+      'Europe/Paris': '巴黎時間',
+      'Europe/Berlin': '柏林時間',
+      'Europe/Moscow': '莫斯科時間',
+      'Australia/Sydney': '雪梨時間',
       'Australia/Melbourne': '墨尔本时间',
-      'Pacific/Auckland': '奥克兰时间'
+      'Pacific/Auckland': '奧克蘭時間'
     };
     const cn = names[tz] || tz;
     return `${cn} (UTC${offsetStr})`;
@@ -598,20 +598,20 @@ export function extractTimezone(request) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// 兼容层（仅供旧调用方使用，新代码请用上面的 getNowInTimezone）
+// 相容層（僅供舊呼叫端使用，新程式碼請使用上方的 getNowInTimezone）
 // ─────────────────────────────────────────────────────────────
 
 /**
  * 兼容老调用：返回目前的 UTC 時刻的 Date。
  *
  * 舊 API 名稱容易誤導（"InTimezone"），實際語意是「目前時刻」。
- * 后续 Task 会把所有调用方迁移到 getNowInTimezone。
+ * 後續 Task 會將所有呼叫端遷移至 getNowInTimezone。
  *
  * @param {string} [timezone='UTC']
  * @returns {Date}
  */
 export function getCurrentTimeInTimezone(timezone = 'UTC') {
-  void timezone; // 仅占位保持签名；Date 本身就是 UTC 时刻
+  void timezone; // 僅作為佔位以維持函式簽章；Date 本身就是 UTC 时刻
   return new Date();
 }
 
@@ -627,9 +627,9 @@ export function getTimestampInTimezone(timezone = 'UTC') {
 }
 
 /**
- * 兼容老调用：把 UTC 时刻"转换到"目标时区。
+ * 相容舊呼叫：將 UTC 時刻"转换到"目标时区。
  *
- * 注意：这是个语义陷阱——Date 本身永远是 UTC 时刻（绝对时刻），
+ * 注意：這是個語意陷阱——Date 本身永遠代表 UTC 時刻（絕對時刻），
  * 「轉換至」另一個時區只影響顯示，不影響 Date 實例。本函式僅回傳原 Date 的複本。
  *
  * @param {Date | string | number} utcTime
